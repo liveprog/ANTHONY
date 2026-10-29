@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(circle at 20% 0%, #15202a 0%, #07090b 55%, #05060700 100%), #07090b;
+  color: #e8edf2;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+input,
+button,
+select,
+textarea {
+  font: inherit;
+}
+
+/* Masque la barre de défilement à l'intérieur de la maquette. */
+.sans-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.sans-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Champs numériques sans flèches : on tape, ou on utilise les boutons. */
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+@keyframes apparait {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.anim-apparait {
+  animation: apparait 0.22s ease-out both;
+}
+
+@keyframes pulse-lime {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(198, 249, 72, 0.45);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(198, 249, 72, 0);
+  }
+}
+
+.anim-pulse {
+  animation: pulse-lime 1.6s ease-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-apparait,
+  .anim-pulse {
+    animation: none;
+  }
+}
