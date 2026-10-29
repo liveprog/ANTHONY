@@ -1,6 +1,9 @@
 import { useMemo, useState } from 'react'
 import type { Navigation } from '../App'
 import BonhommeMuscles, { musclesHorsVue, type Vue } from '../components/BonhommeMuscles'
+import DemoExercice from '../components/DemoExercice'
+import { animationDe } from '../data/animations'
+import { ETAPES } from '../data/tutoriels'
 import { EntetePage } from '../components/Entete'
 import { Carte, Compteur, Etiquette, Titre, Vide } from '../components/Ui'
 import { LIBELLE_CATEGORIE, exercice } from '../data/exercices'
@@ -32,6 +35,9 @@ function Legende() {
 export default function FicheExercice({ exerciceId, nav }: { exerciceId: string; nav: Navigation }) {
   const ex = exercice(exerciceId)
   const [vue, setVue] = useState<Vue>('face')
+  const [phase, setPhase] = useState(0)
+  const animation = animationDe(ex.id)
+  const etapes = ETAPES[ex.id] ?? []
   const repos = useRepos()
   const seances = useSeances()
   const histo = useMemo(() => historiqueExercice(ex.id, seances).slice(0, 6), [ex.id, seances])
@@ -81,6 +87,54 @@ export default function FicheExercice({ exerciceId, nav }: { exerciceId: string;
           )}
         </Carte>
 
+        {animation && (
+          <section>
+            <Titre
+              action={<span className="text-[12px] text-white/35">{animation.phases.length} temps</span>}
+            >
+              Comment faire
+            </Titre>
+            <DemoExercice animation={animation} onPhase={setPhase} />
+            {etapes.length > 0 && (
+              <ol className="mt-3 space-y-2">
+                {etapes.map((etape, i) => {
+                  const active = i === phase
+                  return (
+                    <li
+                      key={i}
+                      className={`rounded-xl border px-3 py-2.5 transition ${
+                        active
+                          ? 'bg-lime-500/10 border-lime-500/30'
+                          : 'bg-ink-850/60 border-white/5'
+                      }`}
+                    >
+                      <div className="flex gap-2.5">
+                        <span
+                          className={`shrink-0 w-5 h-5 mt-0.5 rounded-full text-[11px] font-bold grid place-items-center ${
+                            active ? 'bg-lime-500 text-ink-950' : 'bg-white/10 text-white/50'
+                          }`}
+                        >
+                          {i + 1}
+                        </span>
+                        <div className="min-w-0">
+                          <p
+                            className={`text-[11px] font-bold uppercase tracking-wider ${
+                              active ? 'text-lime-400' : 'text-white/35'
+                            }`}
+                          >
+                            {animation.phases[i]?.nom ?? `Temps ${i + 1}`}
+                          </p>
+                          <p className="text-[13.5px] leading-relaxed text-white/75 mt-0.5">{etape}</p>
+                        </div>
+                      </div>
+                    </li>
+                  )
+                })}
+              </ol>
+            )}
+          </section>
+        )}
+
         <section>
           <Titre>Muscles travaillés</Titre>
           <Carte className="p-4 space-y-3">
@@ -112,7 +166,7 @@ export default function FicheExercice({ exerciceId, nav }: { exerciceId: string;
         </section>
 
         <section>
-          <Titre>Technique</Titre>
+          <Titre>Points de technique</Titre>
           <Carte className="p-4">
             <ol className="space-y-2.5">
               {ex.conseils.map((c, i) => (

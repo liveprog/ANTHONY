@@ -38,7 +38,13 @@ export et import JSON de toutes les données.
 
 ### Fiche exercice
 
-Un appui sur un exercice ouvre sa fiche : bonhomme SVG de face et de dos (bouton pour basculer)
+Un appui sur un exercice ouvre sa fiche. Elle commence par le **tuto animé** : un mannequin
+articulé en SVG rejoue le mouvement en boucle (départ, descente, poussée…), avec bouton
+pause et vitesse ×0,5, et les étapes d'exécution écrites en dessous, celle en cours étant
+surlignée au rythme de l'animation. Les animations respectent `prefers-reduced-motion` : elles
+démarrent en pause si le système demande de limiter les animations.
+
+Vient ensuite le bonhomme SVG de face et de dos (bouton pour basculer)
 avec les seize groupes musculaires dessinés séparément — pectoraux, deltoïdes antérieurs /
 latéraux / postérieurs, biceps, triceps, avant-bras, abdos, obliques, trapèzes, dorsaux,
 lombaires, fessiers, quadriceps, ischio-jambiers, mollets. Les muscles principaux sont en vert
@@ -61,11 +67,22 @@ Les photos sont compressées (420 px, JPEG) avant d’être stockées, et celles
 
 ```
 src/
-  data/        programme de la semaine, catalogue d'exercices, muscles, base alimentaire
+  data/        programme de la semaine, catalogue d'exercices, muscles, animations, étapes,
+               base alimentaire
   lib/         stockage versionné, calculs (volume, records, historique), chrono, analyse photo
-  components/  maquette d'iPhone, bonhomme SVG, chrono de repos, éditeur de repas, primitives UI
+  components/  maquette d'iPhone, bonhomme SVG, mannequin animé, chrono de repos, éditeur de
+               repas, primitives UI
   screens/     Programme, JourDetail, FicheExercice, Séance, Calories, Progrès, Réglages
 ```
+
+## Les animations
+
+Chaque exercice a une suite de poses clés (`src/data/animations.ts`). Une pose est un jeu
+d'angles — inclinaison du torse, bras, avant-bras, cuisse, tibia, pied — et la position du
+bassin ; le composant calcule les articulations par cinématique directe, interpole d'une pose
+à la suivante avec un lissage, et dessine le matériel (barre, haltères, banc, poulie, barre
+fixe, roue) accroché aux poignets calculés. Ajouter un exercice, c'est écrire ses poses et ses
+étapes : aucun fichier vidéo, aucune image.
 
 ## Bon à savoir
 
