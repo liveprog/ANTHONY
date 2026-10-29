@@ -1,6 +1,7 @@
 import { CLES, creerStore, useStore } from './stockage'
 import type { ExportDonnees, Reglages, Repas, SeanceLog, SerieLog } from './types'
 import { EXERCICES, REPOS_PAR_DEFAUT, exercice } from '../data/exercices'
+import { prescriptionDe } from '../data/programme'
 
 const REGLAGES_DEFAUT: Reglages = {
   objectifKcal: 2600,
@@ -22,28 +23,64 @@ export const useSeanceEnCours = () => useStore(storeSeanceEnCours)
 export const useRepas = () => useStore(storeRepas)
 export const useReglages = () => ({ ...REGLAGES_DEFAUT, ...useStore(storeReglages) })
 
-/** Temps de repos effectif d'un exercice : réglage perso sinon valeur par défaut de sa catégorie. */
-export function reposDe(exerciceId: string, repos: Record<string, number>): number {
-  const perso = repos[exerciceId]
-  if (typeof perso === 'number' && Number.isFinite(perso)) return perso
+/**
+ * Le repos dépend du jour : le même exercice peut être enchaîné un jour
+ * (0 s) et posé un autre (60 s). La clé de réglage est donc « jour:exercice ».
+ */
+export function cleRepos(jourId: string, exerciceId: string): string {
+  return `${jourId}:${exerciceId}`
+}
+
+/** Valeur prévue par le programme, avant personnalisation. */
+export function reposProgramme(jourId: string, exerciceId: string): number {
+  const prescription = prescriptionDe(jourId, exerciceId)
+  if (prescription) return prescription.reposSecondes
   return REPOS_PAR_DEFAUT[exercice(exerciceId).categorie]
 }
 
-export function changerRepos(exerciceId: string, delta: number) {
-  storeRepos.set((precedent) => {
-    const actuel = reposDe(exerciceId, precedent)
-    const suivant = Math.min(300, Math.max(15, actuel + delta))
-    return { ...precedent, [exerciceId]: suivant }
-  })
+/** Repos effectif : réglage perso s'il existe, sinon la valeur du programme. */
+export function reposDe(
+  jourId: string,
+  exerciceId: string,
+  repos: Record<string, number>,
+): number {
+  const perso = repos[cleRepos(jourId, exerciceId)]
+  if (typeof perso === 'number' && Number.isFinite(perso)) return perso
+  return reposProgramme(jourId, exerciceId)
 }
 
-export function reinitialiserRepos(exerciceId: string) {
+export function estReposPersonnalise(
+  jourId: string,
+  exerciceId: string,
+  repos: Record<string, number>,
+): boolean {
+  return typeof repos[cleRepos(jourId, exerciceId)] === 'number'
+}
+
+export function definirRepos(jourId: string, exerciceId: string, secondes: number) {
+  const borne = Math.min(300, Math.max(0, secondes))
+  storeRepos.set((precedent) => ({ ...precedent, [cleRepos(jourId, exerciceId)]: borne }))
+}
+
+export function reinitialiserRepos(jourId: string, exerciceId: string) {
   storeRepos.set((precedent) => {
     const copie = { ...precedent }
-    delete copie[exerciceId]
+    delete copie[cleRepos(jourId, exerciceId)]
     return copie
   })
 }
+
+/** Nettoie les réglages de l'ancien format (clés sans jour). */
+function migrerRepos() {
+  const actuel = storeRepos.get()
+  const cles = Object.keys(actuel)
+  if (cles.every((c) => c.includes(':'))) return
+  storeRepos.set(
+    Object.fromEntries(cles.filter((c) => c.includes(':')).map((c) => [c, actuel[c]])),
+  )
+}
+
+migrerRepos()
 
 export function identifiant(prefixe = 'id'): string {
   return `${prefixe}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`

@@ -37,6 +37,7 @@ export type Materiel =
   | 'machine'
   | 'barre-fixe'
   | 'poulie-haute'
+  | 'corde'
   | 'barres-paralleles'
   | 'roue'
   | 'rampe'
@@ -299,7 +300,7 @@ export const ANIMATIONS: Record<string, Animation> = {
 
   'crunch-poulie-haute': {
     vue: 'cote',
-    materiel: ['sol', 'poulie-haute'],
+    materiel: ['sol', 'corde'],
     phases: [
       {
         nom: 'À genoux, dos droit',
@@ -1130,6 +1131,112 @@ export const ANIMATIONS: Record<string, Animation> = {
           piedLoin: 96,
         },
       },
+    ],
+  },
+  'extensions-triceps': {
+    vue: 'face',
+    materiel: ['corde'],
+    phases: [
+      {
+        nom: 'Coudes pliés, collés au buste',
+        duree: 800,
+        pose: debout({ torse: 8, brasHaut: 12, brasBas: 148 }),
+      },
+      {
+        nom: 'Extension complète',
+        duree: 800,
+        pose: debout({ torse: 8, brasHaut: 10, brasBas: 14 }),
+      },
+      {
+        nom: 'Retour contrôlé',
+        duree: 1100,
+        pose: debout({ torse: 8, brasHaut: 12, brasBas: 148 }),
+      },
+    ],
+  },
+
+  'tirage-horizontal': {
+    vue: 'cote',
+    materiel: ['banc', 'machine'],
+    decalage: [-6, -6],
+    phases: [
+      {
+        nom: 'Bras tendus, dos étiré',
+        duree: 900,
+        pose: {
+          hanche: [86, 128],
+          torse: 4,
+          brasHaut: 82,
+          brasBas: 86,
+          cuisse: 86,
+          tibia: 20,
+          pied: 80,
+          cuisseLoin: 88,
+          tibiaLoin: 22,
+        },
+      },
+      {
+        nom: 'Coudes le long des côtes',
+        duree: 900,
+        pose: {
+          hanche: [86, 128],
+          torse: -8,
+          brasHaut: -4,
+          brasBas: 48,
+          cuisse: 86,
+          tibia: 20,
+          pied: 80,
+          cuisseLoin: 88,
+          tibiaLoin: 22,
+        },
+      },
+      {
+        nom: 'Retour lent',
+        duree: 1200,
+        pose: {
+          hanche: [86, 128],
+          torse: 4,
+          brasHaut: 82,
+          brasBas: 86,
+          cuisse: 86,
+          tibia: 20,
+          pied: 80,
+          cuisseLoin: 88,
+          tibiaLoin: 22,
+        },
+      },
+    ],
+  },
+
+  'face-pull': {
+    vue: 'face',
+    materiel: ['corde'],
+    phases: [
+      {
+        nom: 'Bras tendus vers la poulie',
+        duree: 800,
+        pose: debout({ brasHaut: 148, brasBas: 160 }),
+      },
+      {
+        nom: 'Corde vers le front, coudes hauts',
+        duree: 900,
+        pose: debout({ brasHaut: 102, brasBas: 150 }),
+      },
+      {
+        nom: 'Retour contrôlé',
+        duree: 1100,
+        pose: debout({ brasHaut: 148, brasBas: 160 }),
+      },
+    ],
+  },
+
+  'curl-marteau': {
+    vue: 'face',
+    materiel: ['halteres'],
+    phases: [
+      { nom: 'Bras déroulés, prise neutre', duree: 900, pose: debout({ brasHaut: 10, brasBas: 12 }) },
+      { nom: 'Flexion, coudes fixes', duree: 900, pose: debout({ brasHaut: 16, brasBas: 160 }) },
+      { nom: 'Descente contrôlée', duree: 1200, pose: debout({ brasHaut: 10, brasBas: 12 }) },
     ],
   },
 }

@@ -117,4 +117,24 @@ export const ETAPES: Record<string, string[]> = {
     'Déroule le pas complètement, du talon à la pointe.',
     'Garde une allure où tu peux parler mais pas chanter, 25-30 min.',
   ],
+  'extensions-triceps': [
+    'Debout face à la poulie, buste légèrement penché, coudes collés au buste et immobiles.',
+    'Déroule les avant-bras jusqu’à l’extension complète et serre les triceps une demi-seconde.',
+    'Remonte en contrôlant jusqu’à ce que les avant-bras touchent les biceps.',
+  ],
+  'tirage-horizontal': [
+    'Assis, buste droit et figé, genoux à peine fléchis, bras tendus : laisse les dorsaux s’étirer.',
+    'Tire les coudes le long des côtes jusqu’au nombril et serre les omoplates.',
+    'Reviens lentement jusqu’à l’extension complète sans arrondir le dos.',
+  ],
+  'face-pull': [
+    'Poulie à hauteur du visage, corde en prise neutre, bras tendus, épaules basses.',
+    'Tire vers le front en écartant les mains, coudes au-dessus des poignets, et serre une seconde.',
+    'Reviens en contrôlant, sans laisser les épaules partir vers l’avant.',
+  ],
+  'curl-marteau': [
+    'Debout, haltères en prise neutre, paumes face à face, coudes collés au buste.',
+    'Monte sans balancier et serre une demi-seconde en haut.',
+    'Déroule complètement les bras en freinant la descente.',
+  ],
 }

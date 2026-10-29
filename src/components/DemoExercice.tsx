@@ -314,6 +314,23 @@ function Equipement({ type, s, vue }: { type: Materiel; s: Squelette; vue: 'cote
           />
         </g>
       )
+    case 'corde': {
+      // Poulie haute à la corde : le câble descend puis se sépare en deux brins.
+      const jonction: Point = [milieuPoignets[0], milieuPoignets[1] - 14]
+      return (
+        <g>
+          <line x1="40" y1="20" x2="160" y2="20" stroke="#2b333c" strokeWidth="5" strokeLinecap="round" />
+          <circle cx="100" cy="24" r="5" fill="#2b333c" />
+          <line x1="100" y1="26" x2={jonction[0]} y2={jonction[1]} stroke={LIME} strokeWidth="2.5" />
+          {[s.poignet, s.poignetLoin].map((pt, i) => (
+            <g key={i}>
+              <line x1={jonction[0]} y1={jonction[1]} x2={pt[0]} y2={pt[1]} stroke={LIME} strokeWidth="2.5" strokeLinecap="round" />
+              <circle cx={pt[0]} cy={pt[1]} r="3.5" fill={LIME} />
+            </g>
+          ))}
+        </g>
+      )
+    }
     case 'barres-paralleles':
       return (
         <g>
@@ -431,7 +448,18 @@ export default function DemoExercice({
             }
           >
           {animation.materiel
-            .filter((m) => m === 'sol' || m === 'piste' || m === 'rampe' || m === 'banc' || m === 'banc-incline' || m === 'machine' || m === 'barre-fixe' || m === 'poulie-haute')
+            .filter(
+              (m) =>
+                m === 'sol' ||
+                m === 'piste' ||
+                m === 'rampe' ||
+                m === 'banc' ||
+                m === 'banc-incline' ||
+                m === 'machine' ||
+                m === 'barre-fixe' ||
+                m === 'poulie-haute' ||
+                m === 'corde',
+            )
             .map((m) => (
               <Equipement key={m} type={m} s={s} vue={animation.vue} />
             ))}

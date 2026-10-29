@@ -1,9 +1,9 @@
 import type { Navigation } from '../App'
-import { SEMAINE, jourDuJour, toutesLesPrescriptions } from '../data/programme'
-import { exercice, LIBELLE_CATEGORIE } from '../data/exercices'
+import { REGLES, SEMAINE, jourDuJour, toutesLesPrescriptions } from '../data/programme'
+import { exercice } from '../data/exercices'
 import { EnteteOnglet } from '../components/Entete'
 import { Bouton, Carte, Etiquette, Titre } from '../components/Ui'
-import { reposDe, useRepos, useSeances } from '../lib/donnees'
+import { useRepos, useSeances } from '../lib/donnees'
 
 const ETIQUETTE_TYPE = {
   seance: { texte: 'Séance', ton: 'lime' as const },
@@ -15,7 +15,8 @@ export default function Programme({ nav }: { nav: Navigation }) {
   const aujourdhui = jourDuJour()
   const repos = useRepos()
   const seances = useSeances()
-  const faitesCetteSemaine = seances.filter((s) => s.terminee).length
+  const faites = seances.filter((s) => s.terminee).length
+  const persos = Object.keys(repos).length
 
   return (
     <div className="pb-6">
@@ -41,11 +42,12 @@ export default function Programme({ nav }: { nav: Navigation }) {
         <Carte className="p-4 relative overflow-hidden">
           <div className="absolute -right-10 -top-10 w-36 h-36 rounded-full bg-lime-500/10 blur-2xl" />
           <div className="relative">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               <Etiquette ton="lime">Aujourd’hui</Etiquette>
               <Etiquette ton={ETIQUETTE_TYPE[aujourdhui.type].ton}>
                 {ETIQUETTE_TYPE[aujourdhui.type].texte}
               </Etiquette>
+              {aujourdhui.duree && <Etiquette>{aujourdhui.duree}</Etiquette>}
             </div>
             <h2 className="text-[22px] font-extrabold mt-2 leading-tight">{aujourdhui.titre}</h2>
             <p className="text-[13px] text-white/45 mt-1">
@@ -77,8 +79,7 @@ export default function Programme({ nav }: { nav: Navigation }) {
         <Titre
           action={
             <span className="text-[12px] text-white/35">
-              {faitesCetteSemaine} séance{faitesCetteSemaine > 1 ? 's' : ''} enregistrée
-              {faitesCetteSemaine > 1 ? 's' : ''}
+              {faites} séance{faites > 1 ? 's' : ''} enregistrée{faites > 1 ? 's' : ''}
             </span>
           }
         >
@@ -130,47 +131,31 @@ export default function Programme({ nav }: { nav: Navigation }) {
       </section>
 
       <section className="px-4 mt-6">
-        <Titre>Temps de repos par défaut</Titre>
-        <Carte className="p-4 space-y-2.5">
-          {(['compose', 'moyen', 'isolation'] as const).map((cat) => (
-            <div key={cat} className="flex items-center justify-between text-sm">
-              <span className="text-white/60">{LIBELLE_CATEGORIE[cat]}</span>
-              <span className="font-bold tabular-nums">
-                {cat === 'compose' ? 150 : cat === 'moyen' ? 90 : 60} s
+        <Titre
+          action={
+            persos > 0 ? (
+              <span className="text-[12px] text-white/35">
+                {persos} repos personnalisé{persos > 1 ? 's' : ''}
               </span>
-            </div>
+            ) : undefined
+          }
+        >
+          Les règles
+        </Titre>
+        <div className="space-y-2">
+          {REGLES.map((regle) => (
+            <Carte key={regle.titre} className="p-3.5">
+              <p className="text-[13px] leading-relaxed text-white/70">
+                <span className="font-bold text-lime-400">{regle.titre}.</span> {regle.texte}
+              </p>
+            </Carte>
           ))}
-          <p className="text-[12px] text-white/35 pt-1 leading-snug border-t border-white/5 mt-1">
-            Modifiable exercice par exercice (par pas de 15 s) dans le détail d’un jour ou sur la fiche
-            de l’exercice.
-            {Object.keys(repos).length > 0 &&
-              ` ${Object.keys(repos).length} exercice${Object.keys(repos).length > 1 ? 's' : ''} déjà personnalisé${
-                Object.keys(repos).length > 1 ? 's' : ''
-              }.`}
-          </p>
-        </Carte>
-      </section>
-
-      <section className="px-4 mt-6">
-        <Carte className="p-4 border-lime-500/20">
-          <p className="text-[13px] leading-relaxed text-white/70">
-            <span className="font-bold text-lime-400">La règle.</span> Si la dernière répétition ne
-            ressemble plus à la première, c’est trop lourd. Tu baisses la charge et tu gardes la forme
-            technique propre.
-          </p>
-        </Carte>
-      </section>
-
-      {aujourdhui.type !== 'repos' && (
-        <p className="px-4 mt-4 text-[12px] text-white/30">
-          Repos du jour :{' '}
-          {toutesLesPrescriptions(aujourdhui)
-            .slice(0, 2)
-            .map((p) => `${exercice(p.exerciceId).nom} ${reposDe(p.exerciceId, repos)} s`)
-            .join(', ')}
-          …
+        </div>
+        <p className="text-[12px] text-white/35 mt-2 leading-snug">
+          Les temps de repos viennent du programme, séance par séance. Tu les modifies par pas de
+          15 s dans le détail d’un jour ou sur la fiche d’un exercice.
         </p>
-      )}
+      </section>
     </div>
   )
 }

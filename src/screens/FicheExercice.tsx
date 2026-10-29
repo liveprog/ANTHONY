@@ -8,7 +8,18 @@ import { EntetePage } from '../components/Entete'
 import { Carte, Compteur, Etiquette, Titre, Vide } from '../components/Ui'
 import { LIBELLE_CATEGORIE, exercice } from '../data/exercices'
 import { MUSCLES } from '../data/muscles'
-import { historiqueExercice, reposDe, storeRepos, useRepos, useSeances } from '../lib/donnees'
+import {
+  definirRepos,
+  estReposPersonnalise,
+  historiqueExercice,
+  reinitialiserRepos,
+  reposDe,
+  useRepos,
+  useSeances,
+} from '../lib/donnees'
+import { joursAvecExercice } from '../data/programme'
+import { EtiquetteEchec } from './JourDetail'
+import { formaterDuree } from '../lib/format'
 import { formaterDateCourte, nombre } from '../lib/format'
 
 function Legende() {
@@ -32,7 +43,15 @@ function Legende() {
   )
 }
 
-export default function FicheExercice({ exerciceId, nav }: { exerciceId: string; nav: Navigation }) {
+export default function FicheExercice({
+  exerciceId,
+  jourId,
+  nav,
+}: {
+  exerciceId: string
+  jourId?: string
+  nav: Navigation
+}) {
   const ex = exercice(exerciceId)
   const [vue, setVue] = useState<Vue>('face')
   const [phase, setPhase] = useState(0)
@@ -42,13 +61,20 @@ export default function FicheExercice({ exerciceId, nav }: { exerciceId: string;
   const seances = useSeances()
   const histo = useMemo(() => historiqueExercice(ex.id, seances).slice(0, 6), [ex.id, seances])
   const manquants = musclesHorsVue(vue, [...ex.principaux, ...ex.secondaires])
+  const jours = useMemo(() => joursAvecExercice(ex.id), [ex.id])
+  const prescriptionDuJour = jours.find((j) => j.jour.id === jourId)?.prescription
 
   return (
     <div className="pb-6">
       <EntetePage
         titre={ex.nom}
-        sous={LIBELLE_CATEGORIE[ex.categorie]}
+        sous={
+          prescriptionDuJour
+            ? `${prescriptionDuJour.series} × ${prescriptionDuJour.reps} · ${LIBELLE_CATEGORIE[ex.categorie]}`
+            : LIBELLE_CATEGORIE[ex.categorie]
+        }
         onRetour={nav.fermer}
+        action={prescriptionDuJour ? <EtiquetteEchec echec={prescriptionDuJour.echec} /> : undefined}
       />
 
       <div className="px-4 pt-4 space-y-5">
@@ -82,7 +108,7 @@ export default function FicheExercice({ exerciceId, nav }: { exerciceId: string;
           {manquants.length > 0 && (
             <p className="text-[11.5px] text-white/35 text-center mt-2">
               Aussi sollicité, visible de {vue === 'face' ? 'dos' : 'face'} :{' '}
-              {manquants.map((m) => MUSCLES[m].court).join(', ')}.
+              {manquants.map((m) => MUSCLES[m].court.replace(/\.$/, '')).join(', ')}.
             </p>
           )}
         </Carte>
@@ -193,35 +219,56 @@ export default function FicheExercice({ exerciceId, nav }: { exerciceId: string;
 
         <section>
           <Titre>Temps de repos</Titre>
-          <Carte className="p-4">
-            <div className="flex items-center justify-between gap-3">
-              <div className="min-w-0">
-                <p className="font-bold">{reposDe(ex.id, repos)} secondes</p>
-                <p className="text-[12px] text-white/40">
-                  {repos[ex.id] !== undefined ? 'Valeur personnalisée' : `Défaut ${LIBELLE_CATEGORIE[ex.categorie].toLowerCase()}`}
-                </p>
-              </div>
-              <Compteur
-                valeur={reposDe(ex.id, repos)}
-                onChange={(v) => storeRepos.set((p) => ({ ...p, [ex.id]: v }))}
-              />
+          {jours.length === 0 ? (
+            <Carte className="p-4">
+              <p className="text-[13px] text-white/50">
+                Cet exercice n’est pas dans le programme de la semaine : il garde le repos par
+                défaut de sa catégorie ({reposDe('', ex.id, repos)} s).
+              </p>
+            </Carte>
+          ) : (
+            <div className="space-y-2">
+              {jours.map(({ jour, prescription }) => {
+                const secondes = reposDe(jour.id, ex.id, repos)
+                const perso = estReposPersonnalise(jour.id, ex.id, repos)
+                return (
+                  <Carte
+                    key={jour.id}
+                    className={`p-3.5 ${jour.id === jourId ? 'ring-1 ring-lime-500/40' : ''}`}
+                  >
+                    <div className="flex items-center justify-between gap-3">
+                      <div className="min-w-0">
+                        <p className="font-bold text-[14px]">{jour.jour}</p>
+                        <p className="text-[12px] text-white/40">
+                          {prescription.series} × {prescription.reps} ·{' '}
+                          {secondes === 0 ? (
+                            <span className="text-lime-400 font-semibold">enchaîné</span>
+                          ) : (
+                            `repos ${formaterDuree(secondes)}`
+                          )}
+                          {perso && <span className="text-white/30"> · personnalisé</span>}
+                        </p>
+                      </div>
+                      <Compteur
+                        valeur={secondes}
+                        min={0}
+                        onChange={(v) => definirRepos(jour.id, ex.id, v)}
+                      />
+                    </div>
+                    {perso && (
+                      <button
+                        type="button"
+                        onClick={() => reinitialiserRepos(jour.id, ex.id)}
+                        className="mt-2 text-[12px] text-lime-500 font-semibold underline underline-offset-2"
+                      >
+                        Revenir à la valeur du programme
+                      </button>
+                    )}
+                  </Carte>
+                )
+              })}
             </div>
-            {repos[ex.id] !== undefined && (
-              <button
-                type="button"
-                onClick={() =>
-                  storeRepos.set((p) => {
-                    const copie = { ...p }
-                    delete copie[ex.id]
-                    return copie
-                  })
-                }
-                className="mt-3 text-[12px] text-lime-500 font-semibold underline underline-offset-2"
-              >
-                Revenir à la valeur par défaut
-              </button>
-            )}
-          </Carte>
+          )}
         </section>
 
         <section>

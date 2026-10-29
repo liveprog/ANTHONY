@@ -21,9 +21,15 @@ Aucun backend : tout tourne dans le navigateur et tout est enregistré en `local
 
 ## Les quatre onglets
 
-**Programme** — la semaine complète, du samedi au vendredi : Pecs·Épaules·Bras, repos, Jambes,
-deux jours libres (marche inclinée optionnelle), Sprint + street, Full body. Chaque jour détaille
-ses exercices, ses séries et son temps de repos, modifiable par pas de 15 s et sauvegardé.
+**Programme** — la semaine complète, du samedi au vendredi : Pecs·Épaules·Bras (≈ 1 h), repos,
+Jambes (≈ 1 h), marche inclinée facultative, Dos·Biceps (≈ 1 h), Sprint·Street (≈ 50 min),
+Corps entier (≈ 1 h). Chaque jour détaille ses exercices, ses séries, ses séries à l'échec et
+ses enchaînements (deux exercices sans repos entre les deux).
+
+Le temps de repos est porté par le programme, **séance par séance** : le même exercice peut être
+enchaîné un jour (0 s) et posé un autre (60 s). Chaque valeur se modifie par pas de 15 s, dans le
+détail d'un jour ou sur la fiche de l'exercice, et la modification est enregistrée pour ce jour-là
+seulement (clé `jour:exercice`).
 
 **Séance** — le suivi en direct. Poids et répétitions sont préremplis avec la dernière séance,
 « valider la série » lance le chronomètre de repos (bip + vibration en fin), tout est sauvegardé

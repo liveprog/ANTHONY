@@ -2,9 +2,11 @@ import { useState } from 'react'
 import type { Navigation } from '../App'
 import { EntetePage } from '../components/Entete'
 import { Bouton, Carte, Compteur, Titre } from '../components/Ui'
-import { REPOS_PAR_DEFAUT, LIBELLE_CATEGORIE, exercice } from '../data/exercices'
+import { exercice } from '../data/exercices'
+import { JOURS_PAR_ID, REGLES } from '../data/programme'
 import { bip } from '../lib/chrono'
 import { effacerTout, reinitialiserRepos, storeReglages, useReglages, useRepos } from '../lib/donnees'
+import { formaterDuree } from '../lib/format'
 import { VERSION_DONNEES } from '../lib/stockage'
 
 function Interrupteur({
@@ -125,13 +127,12 @@ export default function Reglages({ nav }: { nav: Navigation }) {
         </section>
 
         <section>
-          <Titre>Temps de repos par défaut</Titre>
-          <Carte className="p-4 space-y-2">
-            {(['compose', 'moyen', 'isolation'] as const).map((c) => (
-              <div key={c} className="flex items-center justify-between text-[13.5px]">
-                <span className="text-white/55">{LIBELLE_CATEGORIE[c]}</span>
-                <span className="font-bold tabular-nums">{REPOS_PAR_DEFAUT[c]} s</span>
-              </div>
+          <Titre>Les règles</Titre>
+          <Carte className="p-4 space-y-2.5">
+            {REGLES.map((regle) => (
+              <p key={regle.titre} className="text-[12.5px] leading-relaxed text-white/60">
+                <span className="font-bold text-lime-400">{regle.titre}.</span> {regle.texte}
+              </p>
             ))}
           </Carte>
         </section>
@@ -140,21 +141,31 @@ export default function Reglages({ nav }: { nav: Navigation }) {
           <section>
             <Titre>Repos personnalisés ({persos.length})</Titre>
             <Carte className="divide-y divide-white/5">
-              {persos.map((id) => (
-                <div key={id} className="px-4 py-3 flex items-center justify-between gap-3">
-                  <span className="text-[13.5px] truncate">{exercice(id).nom}</span>
-                  <div className="flex items-center gap-2 shrink-0">
-                    <span className="font-bold tabular-nums text-[13.5px]">{repos[id]} s</span>
-                    <button
-                      type="button"
-                      onClick={() => reinitialiserRepos(id)}
-                      className="text-[12px] text-lime-500 font-semibold"
-                    >
-                      défaut
-                    </button>
+              {persos.map((cle) => {
+                const [jourId, exerciceId] = cle.split(':')
+                const jour = JOURS_PAR_ID[jourId]
+                if (!jour || !exerciceId) return null
+                return (
+                  <div key={cle} className="px-4 py-3 flex items-center justify-between gap-3">
+                    <div className="min-w-0">
+                      <p className="text-[13.5px] truncate">{exercice(exerciceId).nom}</p>
+                      <p className="text-[11.5px] text-white/35">{jour.jour}</p>
+                    </div>
+                    <div className="flex items-center gap-2 shrink-0">
+                      <span className="font-bold tabular-nums text-[13.5px]">
+                        {formaterDuree(repos[cle])}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => reinitialiserRepos(jourId, exerciceId)}
+                        className="text-[12px] text-lime-500 font-semibold"
+                      >
+                        programme
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ))}
+                )
+              })}
             </Carte>
           </section>
         )}

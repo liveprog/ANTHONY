@@ -14,7 +14,7 @@ export type Onglet = 'programme' | 'seance' | 'calories' | 'progres'
 
 export type Page =
   | { type: 'jour'; id: string }
-  | { type: 'exercice'; id: string }
+  | { type: 'exercice'; id: string; jourId?: string }
   | { type: 'reglages' }
 
 export type Navigation = {
@@ -115,7 +115,9 @@ export default function App() {
           )}
 
           {page?.type === 'jour' && <JourDetail jourId={page.id} nav={nav} />}
-          {page?.type === 'exercice' && <FicheExercice exerciceId={page.id} nav={nav} />}
+          {page?.type === 'exercice' && (
+            <FicheExercice exerciceId={page.id} jourId={page.jourId} nav={nav} />
+          )}
           {page?.type === 'reglages' && <Reglages nav={nav} />}
         </main>
 

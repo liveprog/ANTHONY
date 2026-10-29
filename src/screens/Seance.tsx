@@ -2,7 +2,14 @@ import { useEffect, useMemo, useState } from 'react'
 import type { Navigation } from '../App'
 import { EnteteOnglet } from '../components/Entete'
 import { Bouton, Carte, Etiquette, Stat, Titre, Vide } from '../components/Ui'
-import { JOURS_PAR_ID, SEMAINE, jourDuJour, toutesLesPrescriptions, type Prescription } from '../data/programme'
+import {
+  JOURS_PAR_ID,
+  SEMAINE,
+  exerciceEnchaineApres,
+  jourDuJour,
+  toutesLesPrescriptions,
+  type Prescription,
+} from '../data/programme'
 import { exercice } from '../data/exercices'
 import { lancerChrono } from '../lib/chrono'
 import {
@@ -19,7 +26,8 @@ import {
   useSeances,
   volumeSeance,
 } from '../lib/donnees'
-import { nombre } from '../lib/format'
+import { formaterDuree, nombre } from '../lib/format'
+import { EtiquetteEchec } from './JourDetail'
 import type { SeanceLog, SerieLog } from '../lib/types'
 
 /** « 6-8 » -> 6 ; « max » -> 0 ; « 45 s » -> 0 rep et 45 s. */
@@ -162,7 +170,11 @@ export default function Seance({
   function validerSerie(exerciceId: string, index: number) {
     const ex = exercice(exerciceId)
     majSerie(exerciceId, index, { validee: true })
-    lancerChrono(reposDe(exerciceId, repos), exerciceId, `${ex.nom} · série ${index + 1}`)
+    const secondes = reposDe(jourId, exerciceId, repos)
+    // Repos à 0 : l'exercice est enchaîné, on ne lance pas le chrono.
+    if (secondes > 0) {
+      lancerChrono(secondes, exerciceId, `${ex.nom} · série ${index + 1}`)
+    }
   }
 
   function ajouterSerie(exerciceId: string) {
@@ -226,7 +238,7 @@ export default function Seance({
     <div className="pb-6">
       <EnteteOnglet
         titre={jour.titre}
-        sous={`${jour.jour} · ${validees}/${total} séries validées`}
+        sous={`${jour.jour}${jour.duree ? ` · ${jour.duree}` : ''} · ${validees}/${total} séries validées`}
       />
 
       <div className="px-4 space-y-4">
@@ -253,6 +265,7 @@ export default function Seance({
               const ex = exercice(exLog.exerciceId)
               const presc = prescriptions.find((p) => p.exerciceId === exLog.exerciceId)
               const histo = dernieresSeries(exLog.exerciceId, seances)
+              const suivantEnchaine = exerciceEnchaineApres(jourId, exLog.exerciceId)
               return (
                 <li key={exLog.exerciceId}>
                   <Carte className="p-3.5">
@@ -265,15 +278,24 @@ export default function Seance({
                         <h3 className="font-bold leading-tight">{ex.nom}</h3>
                         <p className="text-[12.5px] text-lime-400 font-semibold">
                           {presc ? `${presc.series} × ${presc.reps}` : ''}
+                          {presc?.note ? (
+                            <span className="text-white/35 font-normal"> · {presc.note}</span>
+                          ) : null}
                           <span className="text-white/35 font-normal">
                             {' '}
-                            · repos {reposDe(ex.id, repos)} s
+                            ·{' '}
+                            {reposDe(jourId, ex.id, repos) === 0
+                              ? 'enchaîné'
+                              : `repos ${formaterDuree(reposDe(jourId, ex.id, repos))}`}
                           </span>
                         </p>
                       </button>
-                      <Etiquette ton={exLog.series.every((s) => s.validee) ? 'lime' : 'neutre'}>
-                        {exLog.series.filter((s) => s.validee).length}/{exLog.series.length}
-                      </Etiquette>
+                      <div className="flex flex-col items-end gap-1 shrink-0">
+                        <Etiquette ton={exLog.series.every((s) => s.validee) ? 'lime' : 'neutre'}>
+                          {exLog.series.filter((s) => s.validee).length}/{exLog.series.length}
+                        </Etiquette>
+                        <EtiquetteEchec echec={presc?.echec} />
+                      </div>
                     </div>
 
                     {histo && (
@@ -374,6 +396,12 @@ export default function Seance({
                         </li>
                       ))}
                     </ul>
+
+                    {suivantEnchaine && (
+                      <p className="text-[11.5px] text-lime-400/90 font-semibold mt-2">
+                        ↓ enchaîne tout de suite avec {exercice(suivantEnchaine).nom}, puis repose-toi
+                      </p>
+                    )}
 
                     <div className="flex items-center gap-2 mt-2.5">
                       <button
