@@ -1,5 +1,6 @@
-import { Suspense, lazy, useCallback, useMemo, useState } from 'react'
+import { Suspense, lazy, useCallback, useEffect, useMemo, useState } from 'react'
 import Maquette from './components/Maquette'
+import { demarrerSauvegarde } from './lib/sync'
 import ChronoRepos from './components/ChronoRepos'
 import Programme from './screens/Programme'
 import JourDetail from './screens/JourDetail'
@@ -71,6 +72,10 @@ const ONGLETS: { id: Onglet; libelle: string; icone: (actif: boolean) => JSX.Ele
 ]
 
 export default function App() {
+  useEffect(() => {
+    void demarrerSauvegarde()
+  }, [])
+
   const [onglet, setOnglet] = useState<Onglet>('programme')
   // Pile de pages : ouvrir empile, le bouton retour dépile.
   const [pile, setPile] = useState<Page[]>([])

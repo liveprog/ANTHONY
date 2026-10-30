@@ -23,11 +23,13 @@ import {
   volumeSeance,
 } from '../lib/donnees'
 import { formaterDateCourte, nombre } from '../lib/format'
+import BandeauSauvegarde, { useEtatSauvegarde } from '../components/EtatSauvegarde'
 
 const COULEUR = '#c6f948'
 
 export default function Progres({ nav }: { nav: Navigation }) {
   const seances = useSeances()
+  const sauvegarde = useEtatSauvegarde()
   const terminees = useMemo(() => seances.filter((s) => s.terminee), [seances])
   const prs = useMemo(() => records(terminees), [terminees])
 
@@ -94,6 +96,8 @@ export default function Progres({ nav }: { nav: Navigation }) {
       />
 
       <div className="px-4 space-y-5">
+        <BandeauSauvegarde />
+
         <div className="grid grid-cols-3 gap-2">
           <Stat valeur={terminees.length} libelle="Séances" />
           <Stat
@@ -278,8 +282,9 @@ export default function Progres({ nav }: { nav: Navigation }) {
           <Titre>Sauvegarde</Titre>
           <Carte className="p-4 space-y-3">
             <p className="text-[12.5px] text-white/50 leading-relaxed">
-              Tes données vivent dans ce navigateur. Exporte-les avant de changer de téléphone, de
-              vider le cache ou de passer en navigation privée.
+              {sauvegarde.mode === 'cloud'
+                ? 'Tes données sont enregistrées en ligne sur ton compte. L’export JSON reste la copie que tu gardes chez toi.'
+                : 'Tes données vivent dans ce navigateur. Exporte-les avant de changer de téléphone, de vider le cache ou de passer en navigation privée.'}
             </p>
             <div className="flex gap-2">
               <Bouton variante="secondaire" className="flex-1" onClick={exporter}>

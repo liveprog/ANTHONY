@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import type { Navigation } from '../App'
 import { EnteteOnglet } from '../components/Entete'
+import BandeauSauvegarde, { useEtatSauvegarde } from '../components/EtatSauvegarde'
 import { Bouton, Carte, Etiquette, Stat, Titre, Vide } from '../components/Ui'
 import {
   JOURS_PAR_ID,
@@ -128,6 +129,7 @@ export default function Seance({
   const enCours = useSeanceEnCours()
   const repos = useRepos()
   const [resume, setResume] = useState<SeanceLog | null>(null)
+  const sauvegarde = useEtatSauvegarde()
 
   const jourId = jourChoisi ?? jourDuJour().id
   const jour = JOURS_PAR_ID[jourId]
@@ -243,6 +245,8 @@ export default function Seance({
 
       <div className="px-4 space-y-4">
         <ChoixJour jourId={jourId} setJourChoisi={setJourChoisi} />
+
+        <BandeauSauvegarde />
 
         <div className="grid grid-cols-3 gap-2">
           <Stat valeur={validees} libelle="Séries validées" />
@@ -432,7 +436,9 @@ export default function Seance({
           Terminer la séance
         </Bouton>
         <p className="text-[11.5px] text-white/30 text-center">
-          Tout est sauvegardé automatiquement, même si tu fermes l’app.
+          {sauvegarde.mode === 'cloud'
+            ? 'Chaque série validée part dans ta sauvegarde en ligne.'
+            : 'Séance enregistrée dans ce navigateur. Exporte tes données depuis Progrès.'}
         </p>
       </div>
 

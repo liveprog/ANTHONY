@@ -21,11 +21,32 @@ function lire<T>(cle: string, defaut: T): T {
   }
 }
 
+/** Vrai dès qu'une écriture locale a échoué : le navigateur ne garde rien. */
+let stockageLocalCasse = false
+const temoinsStockage = new Set<(casse: boolean) => void>()
+
+export function stockageLocalFiable(): boolean {
+  return !stockageLocalCasse
+}
+
+export function surEtatStockageLocal(fn: (casse: boolean) => void): () => void {
+  temoinsStockage.add(fn)
+  return () => temoinsStockage.delete(fn)
+}
+
+function signalerEchecLocal() {
+  if (stockageLocalCasse) return
+  stockageLocalCasse = true
+  temoinsStockage.forEach((fn) => fn(true))
+}
+
 function ecrire(cle: string, valeur: unknown) {
   try {
     localStorage.setItem(cle, JSON.stringify(valeur))
   } catch {
-    /* quota dépassé ou stockage indisponible : on garde la valeur en mémoire */
+    // Quota plein, stockage bloqué ou iframe cloisonnée : rien n'est gardé ici.
+    // On le signale au lieu de laisser croire que c'est enregistré.
+    signalerEchecLocal()
   }
 }
 

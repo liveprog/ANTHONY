@@ -16,8 +16,11 @@ npm run build    # build de production dans dist/
 npm run preview  # prévisualise le build
 ```
 
-Aucun backend : tout tourne dans le navigateur et tout est enregistré en `localStorage`
-(clés versionnées `anthofit.v1.*`).
+Aucun backend à écrire : publiée comme artefact claude.ai, l'app enregistre ses données dans la
+base de l'artefact (capacité `db`), dans le sous-arbre privé du compte qui regarde la page —
+elles survivent donc à la fermeture de la page et suivent d'un appareil à l'autre. En dehors de
+ce contexte (dev local, hébergement statique), elle retombe sur le `localStorage`
+(clés versionnées `anthofit.v1.*`), qui sert aussi de cache et de secours hors ligne.
 
 ## Les quatre onglets
 
@@ -90,10 +93,23 @@ bassin ; le composant calcule les articulations par cinématique directe, interp
 fixe, roue) accroché aux poignets calculés. Ajouter un exercice, c'est écrire ses poses et ses
 étapes : aucun fichier vidéo, aucune image.
 
+## La sauvegarde
+
+`src/lib/sync.ts` tient la persistance. Au démarrage il demande `claude.use('db')` et
+`claude.use('user')` : s'il obtient les deux, il charge le document `data/users/<id>/antho-fit`
+(réglages, repos personnalisés, séance en cours) et les collections `seances` et `repas`, fusionne
+avec ce qui est déjà local — l'union par identifiant, jamais un écrasement — puis écrit les
+différences à chaque changement, groupées après 400 ms. `visibilitychange`, `pagehide` et `blur`
+déclenchent l'écriture immédiatement : c'est là qu'une séance se perdait. Si la photo d'un repas
+fait dépasser le quota, le repas est réenregistré sans elle plutôt que perdu.
+
+Sans base disponible, l'app bascule en mode local et **le dit** : bandeau dans Séance, Progrès et
+Réglages. Une écriture `localStorage` qui échoue n'est plus avalée en silence — elle déclenche un
+avertissement rouge, parce qu'une sauvegarde qui ment est pire que pas de sauvegarde.
+
 ## Bon à savoir
 
-- Les données restent sur l’appareil : exporte le JSON depuis l’onglet Progrès avant de changer
-  de téléphone ou de vider le cache du navigateur.
+- L'export JSON de l'onglet Progrès reste la copie à garder chez soi, surtout en mode local.
 - Le bip de fin de repos utilise l’API Web Audio et démarre au premier appui ; la vibration
   dépend du navigateur (surtout Android).
 - Les valeurs nutritionnelles de la base alimentaire sont des moyennes arrondies pour 100 g.

@@ -5,6 +5,8 @@ import { Bouton, Carte, Compteur, Titre } from '../components/Ui'
 import { exercice } from '../data/exercices'
 import { JOURS_PAR_ID, REGLES } from '../data/programme'
 import { bip } from '../lib/chrono'
+import BandeauSauvegarde, { texteSauvegarde, useEtatSauvegarde } from '../components/EtatSauvegarde'
+import { sauvegarderMaintenant } from '../lib/sync'
 import { effacerTout, reinitialiserRepos, storeReglages, useReglages, useRepos } from '../lib/donnees'
 import { formaterDuree } from '../lib/format'
 import { VERSION_DONNEES } from '../lib/stockage'
@@ -48,6 +50,7 @@ function Interrupteur({
 
 export default function Reglages({ nav }: { nav: Navigation }) {
   const reglages = useReglages()
+  const sauvegarde = useEtatSauvegarde()
   const repos = useRepos()
   const [confirmation, setConfirmation] = useState(false)
   const persos = Object.keys(repos)
@@ -57,6 +60,50 @@ export default function Reglages({ nav }: { nav: Navigation }) {
       <EntetePage titre="Réglages" sous={`Antho Fit · données v${VERSION_DONNEES}`} onRetour={nav.fermer} />
 
       <div className="px-4 pt-4 space-y-5">
+        <section>
+          <Titre
+            action={
+              <span
+                className={`text-[11px] font-bold uppercase tracking-wider ${
+                  sauvegarde.mode === 'cloud' && sauvegarde.phase === 'pret'
+                    ? 'text-lime-400'
+                    : 'text-amber-300'
+                }`}
+              >
+                {sauvegarde.mode === 'cloud' ? 'En ligne' : 'Local'}
+              </span>
+            }
+          >
+            Sauvegarde
+          </Titre>
+          <Carte className="p-4 space-y-3">
+            <p className="text-[12.5px] leading-relaxed text-white/60">{texteSauvegarde(sauvegarde)}</p>
+            {sauvegarde.derniereEcriture && (
+              <p className="text-[11.5px] text-white/35">
+                Dernier enregistrement à{' '}
+                {new Date(sauvegarde.derniereEcriture).toLocaleTimeString('fr-FR', {
+                  hour: '2-digit',
+                  minute: '2-digit',
+                })}
+                .
+              </p>
+            )}
+            {sauvegarde.mode === 'cloud' && (
+              <Bouton
+                variante="secondaire"
+                className="w-full"
+                disabled={sauvegarde.enEcriture}
+                onClick={() => void sauvegarderMaintenant()}
+              >
+                {sauvegarde.enEcriture ? 'Enregistrement…' : 'Enregistrer maintenant'}
+              </Bouton>
+            )}
+          </Carte>
+          <div className="mt-2">
+            <BandeauSauvegarde />
+          </div>
+        </section>
+
         <section>
           <Titre>Objectifs du jour</Titre>
           <Carte className="p-4 space-y-4">
