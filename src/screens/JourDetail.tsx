@@ -1,5 +1,5 @@
 import type { Navigation } from '../App'
-import { JOURS_PAR_ID, type Prescription } from '../data/programme'
+import { JOURS_PAR_ID, estEnchaine, libelleRepos, type Prescription } from '../data/programme'
 import { LIBELLE_CATEGORIE, exercice } from '../data/exercices'
 import { EntetePage } from '../components/Entete'
 import { Bouton, Carte, Compteur, Etiquette, Titre } from '../components/Ui'
@@ -10,7 +10,6 @@ import {
   reposDe,
   useRepos,
 } from '../lib/donnees'
-import { formaterDuree } from '../lib/format'
 
 export function EtiquetteEchec({ echec }: { echec: Prescription['echec'] }) {
   if (!echec) return null
@@ -77,6 +76,7 @@ export default function JourDetail({ jourId, nav }: { jourId: string; nav: Navig
                   const ex = exercice(p.exerciceId)
                   const secondes = reposDe(jour.id, ex.id, repos)
                   const perso = estReposPersonnalise(jour.id, ex.id, repos)
+                  const enchaineIci = estEnchaine(jour.id, ex.id)
                   const enchaine = bloc.enchainement && idx < bloc.exercices.length - 1
                   return (
                     <li key={`${p.exerciceId}-${idx}`}>
@@ -94,6 +94,9 @@ export default function JourDetail({ jourId, nav }: { jourId: string; nav: Navig
                                 {p.note && <span className="text-white/35 font-normal"> · {p.note}</span>}
                               </p>
                               <div className="flex flex-wrap items-center gap-1.5 mt-1.5">
+                                <Etiquette ton={secondes === 0 ? 'lime' : 'neutre'}>
+                                  ⏱ {libelleRepos(secondes, enchaineIci)}
+                                </Etiquette>
                                 <Etiquette ton="sombre">{LIBELLE_CATEGORIE[ex.categorie]}</Etiquette>
                                 <EtiquetteEchec echec={p.echec} />
                               </div>
@@ -106,13 +109,7 @@ export default function JourDetail({ jourId, nav }: { jourId: string; nav: Navig
 
                         <div className="flex items-center justify-between gap-2 mt-3 pt-3 border-t border-white/5">
                           <div className="text-[12px] text-white/45 min-w-0">
-                            {secondes === 0 ? (
-                              <span className="text-lime-400 font-semibold">
-                                Enchaîné — pas de repos
-                              </span>
-                            ) : (
-                              <>Repos {formaterDuree(secondes)}</>
-                            )}
+                            {perso ? 'Repos personnalisé' : 'Repos du programme'}
                             {perso && (
                               <button
                                 type="button"

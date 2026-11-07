@@ -435,6 +435,36 @@ export const EXERCICES: Exercice[] = [
     ],
     erreur: 'Balancer le buste pour lancer les haltères : le brachial et l’avant-bras, la cible du marteau, sont court-circuités.',
   },
+  {
+    id: 'footing',
+    nom: 'Footing à allure facile',
+    categorie: 'moyen',
+    saisie: 'temps',
+    principaux: ['quadriceps', 'ischios', 'mollets'],
+    secondaires: ['fessiers', 'abdos', 'lombaires', 'deltoideAnterieur'],
+    conseils: [
+      'Allure de conversation : tu dois pouvoir parler en courant, sinon tu vas trop vite.',
+      'Foulée courte et fréquente, appuis sous le bassin plutôt que devant.',
+      'Buste droit, épaules relâchées, bras qui balancent dans l’axe, pas en travers.',
+      'Respiration régulière ; si tu dois souffler fort, ralentis sans culpabiliser.',
+    ],
+    erreur: 'Partir trop vite et finir à bout de souffle : le footing facile construit du fond, ce n’est pas un chrono.',
+  },
+  {
+    id: 'pompes-serrees',
+    nom: 'Pompes mains rapprochées ou déclinées',
+    categorie: 'moyen',
+    saisie: 'reps',
+    principaux: ['triceps', 'pectoraux'],
+    secondaires: ['deltoideAnterieur', 'abdos', 'obliques'],
+    conseils: [
+      'Version serrée : mains à largeur d’épaules ou moins, coudes qui frôlent les côtes.',
+      'Version déclinée : pieds surélevés sur une marche ou un banc, mains à plat au sol.',
+      'Corps en planche d’un bout à l’autre, fessiers serrés, bassin qui ne tombe pas.',
+      'Descente contrôlée jusqu’à frôler le sol, puis extension complète des bras.',
+    ],
+    erreur: 'Écarter les coudes en T pour arracher les dernières répétitions : les triceps sortent du mouvement et les épaules prennent tout.',
+  },
 ]
 
 export const EXERCICES_PAR_ID: Record<string, Exercice> = Object.fromEntries(

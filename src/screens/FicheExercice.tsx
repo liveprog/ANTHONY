@@ -17,9 +17,8 @@ import {
   useRepos,
   useSeances,
 } from '../lib/donnees'
-import { joursAvecExercice } from '../data/programme'
+import { estEnchaine, joursAvecExercice, libelleRepos } from '../data/programme'
 import { EtiquetteEchec } from './JourDetail'
-import { formaterDuree } from '../lib/format'
 import { formaterDateCourte, nombre } from '../lib/format'
 
 function Legende() {
@@ -242,9 +241,11 @@ export default function FicheExercice({
                         <p className="text-[12px] text-white/40">
                           {prescription.series} × {prescription.reps} ·{' '}
                           {secondes === 0 ? (
-                            <span className="text-lime-400 font-semibold">enchaîné</span>
+                            <span className="text-lime-400 font-semibold">
+                              {libelleRepos(0, estEnchaine(jour.id, ex.id)).toLowerCase()}
+                            </span>
                           ) : (
-                            `repos ${formaterDuree(secondes)}`
+                            `repos ${libelleRepos(secondes, false)}`
                           )}
                           {perso && <span className="text-white/30"> · personnalisé</span>}
                         </p>

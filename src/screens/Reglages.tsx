@@ -3,12 +3,11 @@ import type { Navigation } from '../App'
 import { EntetePage } from '../components/Entete'
 import { Bouton, Carte, Compteur, Titre } from '../components/Ui'
 import { exercice } from '../data/exercices'
-import { JOURS_PAR_ID, REGLES } from '../data/programme'
+import { JOURS_PAR_ID, REGLES, estEnchaine, libelleRepos } from '../data/programme'
 import { bip } from '../lib/chrono'
 import BandeauSauvegarde, { texteSauvegarde, useEtatSauvegarde } from '../components/EtatSauvegarde'
 import { sauvegarderMaintenant } from '../lib/sync'
 import { effacerTout, reinitialiserRepos, storeReglages, useReglages, useRepos } from '../lib/donnees'
-import { formaterDuree } from '../lib/format'
 import { VERSION_DONNEES } from '../lib/stockage'
 
 function Interrupteur({
@@ -200,7 +199,7 @@ export default function Reglages({ nav }: { nav: Navigation }) {
                     </div>
                     <div className="flex items-center gap-2 shrink-0">
                       <span className="font-bold tabular-nums text-[13.5px]">
-                        {formaterDuree(repos[cle])}
+                        {libelleRepos(repos[cle], estEnchaine(jourId, exerciceId))}
                       </span>
                       <button
                         type="button"

@@ -6,8 +6,10 @@ import { Bouton, Carte, Etiquette, Stat, Titre, Vide } from '../components/Ui'
 import {
   JOURS_PAR_ID,
   SEMAINE,
+  estEnchaine,
   exerciceEnchaineApres,
   jourDuJour,
+  libelleRepos,
   toutesLesPrescriptions,
   type Prescription,
 } from '../data/programme'
@@ -27,7 +29,7 @@ import {
   useSeances,
   volumeSeance,
 } from '../lib/donnees'
-import { formaterDuree, nombre } from '../lib/format'
+import { nombre } from '../lib/format'
 import { EtiquetteEchec } from './JourDetail'
 import type { SeanceLog, SerieLog } from '../lib/types'
 
@@ -287,10 +289,10 @@ export default function Seance({
                           ) : null}
                           <span className="text-white/35 font-normal">
                             {' '}
-                            ·{' '}
+                            · ⏱{' '}
                             {reposDe(jourId, ex.id, repos) === 0
-                              ? 'enchaîné'
-                              : `repos ${formaterDuree(reposDe(jourId, ex.id, repos))}`}
+                              ? libelleRepos(0, estEnchaine(jourId, ex.id)).toLowerCase()
+                              : `repos ${libelleRepos(reposDe(jourId, ex.id, repos), false)}`}
                           </span>
                         </p>
                       </button>
@@ -469,9 +471,7 @@ function ChoixJour({
             }`}
           >
             {j.jour.slice(0, 3)}
-            <span className="block text-[10px] font-semibold opacity-70">
-              {j.type === 'repos' ? 'repos' : j.type === 'libre' ? 'libre' : j.titre.split(' ')[0]}
-            </span>
+            <span className="block text-[10px] font-semibold opacity-70">{j.court}</span>
           </button>
         ))}
       </div>

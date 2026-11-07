@@ -137,4 +137,14 @@ export const ETAPES: Record<string, string[]> = {
     'Monte sans balancier et serre une demi-seconde en haut.',
     'Déroule complètement les bras en freinant la descente.',
   ],
+  footing: [
+    'Pars lentement : allure où tu peux tenir une conversation, foulée courte, appuis sous le bassin.',
+    'Garde le buste droit et les épaules relâchées, bras qui balancent dans l’axe.',
+    'Tiens 20 minutes à cette allure ; si le souffle s’emballe, ralentis au lieu de t’arrêter.',
+  ],
+  'pompes-serrees': [
+    'Mains à largeur d’épaules ou moins (version serrée), ou pieds surélevés sur une marche (version déclinée).',
+    'Descends en gardant les coudes près des côtes, corps en planche du talon à la tête.',
+    'Pousse jusqu’à l’extension complète ; va jusqu’à ne plus pouvoir faire une répétition propre.',
+  ],
 }

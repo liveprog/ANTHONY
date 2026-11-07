@@ -1,3 +1,5 @@
+import { formaterDuree } from '../lib/format'
+
 /** « derniere » : seule la dernière série va à l'échec. « toutes » : chaque série. */
 export type Echec = 'derniere' | 'toutes'
 
@@ -28,77 +30,105 @@ export type Jour = {
   titre: string
   type: TypeJour
   resume: string
+  /** Étiquette courte, pour les puces de choix du jour. */
+  court: string
   duree?: string
   blocs: Bloc[]
   note?: string
 }
 
-/** La semaine commence le samedi, comme le programme. */
+/** La semaine va du lundi au dimanche. */
 export const SEMAINE: Jour[] = [
   {
-    id: 'samedi',
-    jour: 'Samedi',
-    titre: 'Pecs · Épaules · Bras',
+    id: 'lundi',
+    jour: 'Lundi',
+    titre: 'Repos complet',
+    type: 'repos',
+    resume: 'Cours, révisions, sommeil',
+    court: 'repos',
+    blocs: [],
+    note: 'Repos complet : cours, révisions, sommeil. Aucune séance — c’est pendant ces jours-là que le travail du week-end se transforme en muscle.',
+  },
+  {
+    id: 'mardi',
+    jour: 'Mardi',
+    titre: 'Repos complet',
+    type: 'repos',
+    resume: 'Cours, révisions, sommeil',
+    court: 'repos',
+    blocs: [],
+    note: 'Repos complet : cours, révisions, sommeil. Aucune séance.',
+  },
+  {
+    id: 'mercredi',
+    jour: 'Mercredi',
+    titre: 'Repos complet',
+    type: 'repos',
+    resume: 'Cours, révisions, sommeil',
+    court: 'repos',
+    blocs: [],
+    note: 'Repos complet : cours, révisions, sommeil. Aucune séance.',
+  },
+  {
+    id: 'jeudi',
+    jour: 'Jeudi',
+    titre: 'Course · Street',
     type: 'seance',
-    resume: 'Haut du corps',
-    duree: '≈ 1 h',
+    resume: 'Footing et poids du corps',
+    court: 'course',
+    duree: '≈ 50 min',
     blocs: [
       {
-        exercices: [
-          { exerciceId: 'developpe-couche-barre', series: 4, reps: '6-8', reposSecondes: 180 },
-          {
-            exerciceId: 'chest-press-incline-machine',
-            series: 3,
-            reps: '8-12',
-            reposSecondes: 120,
-            echec: 'derniere',
-          },
-          { exerciceId: 'developpe-militaire-halteres', series: 3, reps: '8-10', reposSecondes: 150 },
-        ],
-      },
-      {
-        titre: 'Enchaînement',
-        enchainement: true,
-        note: '0 s entre les deux exercices, 90 s après la paire.',
+        titre: 'Course',
         exercices: [
           {
-            exerciceId: 'elevations-laterales',
-            series: 4,
-            reps: '12-15',
+            exerciceId: 'footing',
+            series: 1,
+            reps: '20 min',
             reposSecondes: 0,
-            echec: 'derniere',
+            note: 'allure facile, tu peux parler en courant',
           },
-          { exerciceId: 'extensions-triceps', series: 3, reps: '10-12', reposSecondes: 90 },
         ],
       },
       {
+        titre: 'Street',
         exercices: [
           {
-            exerciceId: 'curl-biceps-barre',
+            exerciceId: 'tractions',
+            series: 4,
+            reps: 'max',
+            reposSecondes: 120,
+            echec: 'toutes',
+          },
+          {
+            exerciceId: 'pompes',
             series: 3,
-            reps: '10-12',
+            reps: '15-20',
             reposSecondes: 90,
             echec: 'derniere',
           },
+          {
+            exerciceId: 'pompes-serrees',
+            series: 2,
+            reps: 'max',
+            reposSecondes: 90,
+            echec: 'toutes',
+          },
         ],
+      },
+      {
+        titre: 'Gainage',
+        exercices: [{ exerciceId: 'planche', series: 3, reps: '45 s', reposSecondes: 60 }],
       },
     ],
   },
   {
-    id: 'dimanche',
-    jour: 'Dimanche',
-    titre: 'Repos complet',
-    type: 'repos',
-    resume: 'Aucune séance',
-    blocs: [],
-    note: 'Repos complet : pas de salle, pas de cardio. C’est le jour où le muscle construit ce que tu as gagné samedi.',
-  },
-  {
-    id: 'lundi',
-    jour: 'Lundi',
+    id: 'vendredi',
+    jour: 'Vendredi',
     titre: 'Jambes',
     type: 'seance',
     resume: 'Bas du corps',
+    court: 'jambes',
     duree: '≈ 1 h',
     blocs: [
       {
@@ -141,39 +171,25 @@ export const SEMAINE: Jour[] = [
     ],
   },
   {
-    id: 'mardi',
-    jour: 'Mardi',
-    titre: 'Marche inclinée',
-    type: 'libre',
-    resume: 'Facultatif · 25 min',
-    duree: '25 min',
-    blocs: [
-      {
-        titre: 'Facultatif',
-        exercices: [
-          {
-            exerciceId: 'marche-inclinee',
-            series: 1,
-            reps: '25 min',
-            reposSecondes: 0,
-            note: 'pente 10-12 %, 5-6 km/h',
-          },
-        ],
-      },
-    ],
-    note: 'Marche inclinée facultative : 25 min, pente 10 à 12 %, vitesse 5 à 6 km/h. C’est de la récupération active, pas une séance.',
-  },
-  {
-    id: 'mercredi',
-    jour: 'Mercredi',
-    titre: 'Dos · Biceps',
+    id: 'samedi',
+    jour: 'Samedi',
+    titre: 'Haut du corps A',
     type: 'seance',
-    resume: 'Tirages et bras',
+    resume: 'Pecs et dos',
+    court: 'pecs · dos',
     duree: '≈ 1 h',
     blocs: [
       {
         exercices: [
+          { exerciceId: 'developpe-couche-barre', series: 4, reps: '6-8', reposSecondes: 180 },
           { exerciceId: 'tirage-vertical', series: 4, reps: '8-10', reposSecondes: 120 },
+          {
+            exerciceId: 'chest-press-incline-machine',
+            series: 3,
+            reps: '8-12',
+            reposSecondes: 120,
+            echec: 'derniere',
+          },
           {
             exerciceId: 'rowing-haltere-un-bras',
             series: 3,
@@ -181,10 +197,36 @@ export const SEMAINE: Jour[] = [
             reposSecondes: 120,
             note: 'par bras',
           },
+        ],
+      },
+      {
+        titre: 'Enchaînement',
+        enchainement: true,
+        note: '0 s entre les deux exercices, 90 s après la paire.',
+        exercices: [
+          { exerciceId: 'elevations-laterales', series: 3, reps: '12-15', reposSecondes: 0 },
+          { exerciceId: 'extensions-triceps', series: 3, reps: '10-12', reposSecondes: 90 },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'dimanche',
+    jour: 'Dimanche',
+    titre: 'Haut du corps B',
+    type: 'seance',
+    resume: 'Épaules, dos et bras',
+    court: 'épaules',
+    duree: '≈ 1 h',
+    blocs: [
+      {
+        exercices: [
+          { exerciceId: 'developpe-militaire-halteres', series: 4, reps: '8-10', reposSecondes: 150 },
+          { exerciceId: 'tirage-horizontal', series: 4, reps: '8-10', reposSecondes: 120 },
           {
-            exerciceId: 'tirage-horizontal',
+            exerciceId: 'dips',
             series: 3,
-            reps: '10-12',
+            reps: '8-12',
             reposSecondes: 120,
             echec: 'derniere',
           },
@@ -193,90 +235,27 @@ export const SEMAINE: Jour[] = [
       {
         titre: 'Enchaînement',
         enchainement: true,
-        note: '0 s entre les deux exercices, 75 s après la paire.',
+        note: '0 s entre les deux exercices, 90 s après la paire.',
         exercices: [
           { exerciceId: 'face-pull', series: 3, reps: '15', reposSecondes: 0 },
           {
-            exerciceId: 'curl-marteau',
+            exerciceId: 'curl-biceps-barre',
             series: 3,
             reps: '10-12',
-            reposSecondes: 75,
-            echec: 'toutes',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: 'jeudi',
-    jour: 'Jeudi',
-    titre: 'Sprint · Street',
-    type: 'seance',
-    resume: 'Sprints et poids du corps',
-    duree: '≈ 50 min',
-    blocs: [
-      {
-        titre: 'Préparation',
-        exercices: [{ exerciceId: 'echauffement', series: 1, reps: '10 min', reposSecondes: 0 }],
-      },
-      {
-        titre: 'Sprints',
-        exercices: [
-          {
-            exerciceId: 'sprints-60m',
-            series: 6,
-            reps: '60 m',
-            reposSecondes: 120,
-            note: 'à 90 % — retour en marchant',
+            reposSecondes: 90,
+            echec: 'derniere',
           },
         ],
       },
       {
-        titre: 'Tractions',
-        tours: 4,
         exercices: [
-          { exerciceId: 'tractions', series: 4, reps: 'max', reposSecondes: 120, echec: 'toutes' },
-        ],
-      },
-      {
-        titre: 'Circuit',
-        tours: 3,
-        enchainement: true,
-        note: '0 s entre les exercices, 90 s entre les tours.',
-        exercices: [
-          { exerciceId: 'dips', series: 3, reps: 'max', reposSecondes: 0 },
-          { exerciceId: 'pompes', series: 3, reps: '15', reposSecondes: 0 },
-          { exerciceId: 'squats-sautes', series: 3, reps: '10', reposSecondes: 90 },
-        ],
-      },
-      {
-        titre: 'Gainage',
-        exercices: [{ exerciceId: 'planche', series: 3, reps: '45 s', reposSecondes: 60 }],
-      },
-    ],
-  },
-  {
-    id: 'vendredi',
-    jour: 'Vendredi',
-    titre: 'Corps entier',
-    type: 'seance',
-    resume: 'Full body',
-    duree: '≈ 1 h',
-    blocs: [
-      {
-        exercices: [
-          { exerciceId: 'squat-ou-presse', series: 3, reps: '8', reposSecondes: 180 },
-          { exerciceId: 'developpe-couche-barre', series: 3, reps: '8', reposSecondes: 180 },
-          { exerciceId: 'tirage-vertical', series: 3, reps: '8-10', reposSecondes: 120 },
-          { exerciceId: 'developpe-militaire-halteres', series: 2, reps: '8-10', reposSecondes: 150 },
           {
             exerciceId: 'elevations-laterales',
-            series: 4,
+            series: 3,
             reps: '12-15',
             reposSecondes: 60,
             echec: 'derniere',
           },
-          { exerciceId: 'releves-jambes-suspendu', series: 3, reps: '12', reposSecondes: 90 },
         ],
       },
     ],
@@ -328,17 +307,31 @@ export function exerciceEnchaineApres(jourId: string, exerciceId: string): strin
 export const REGLES = [
   {
     titre: 'Jusqu’à l’échec',
+    texte: 'Tu t’arrêtes quand tu ne peux plus faire une répétition propre.',
+  },
+  {
+    titre: 'Les gros exercices',
     texte:
-      'Tu t’arrêtes quand tu ne peux plus faire une répétition propre. Sur les gros exercices lourds, tu t’arrêtes 1 à 2 répétitions avant l’échec.',
+      'Sur le squat, le développé couché, le développé militaire et le soulevé de terre roumain, tu t’arrêtes 1 à 2 répétitions avant l’échec.',
   },
   {
     titre: 'Enchaînement',
     texte:
-      'Une série du premier exercice, puis une série du second sans repos, et seulement ensuite le repos indiqué.',
-  },
-  {
-    titre: 'La charge',
-    texte:
-      'Si la dernière rep ne ressemble plus à la première, c’est trop lourd : tu baisses la charge et tu gardes la forme propre.',
+      'Une série du premier exercice, puis une série du second sans repos, et seulement ensuite le repos indiqué, avant de recommencer.',
   },
 ]
+
+/** Vrai si l'exercice fait partie d'un bloc enchaîné ce jour-là. */
+export function estEnchaine(jourId: string, exerciceId: string): boolean {
+  const jour = JOURS_PAR_ID[jourId]
+  if (!jour) return false
+  return jour.blocs.some(
+    (bloc) => bloc.enchainement && bloc.exercices.some((p) => p.exerciceId === exerciceId),
+  )
+}
+
+/** Libellé du repos affiché à côté d'un exercice. */
+export function libelleRepos(secondes: number, enchaine: boolean): string {
+  if (secondes > 0) return formaterDuree(secondes)
+  return enchaine ? 'Enchaîné — pas de repos' : 'Pas de repos'
+}

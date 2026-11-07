@@ -41,6 +41,7 @@ export type Materiel =
   | 'barres-paralleles'
   | 'roue'
   | 'rampe'
+  | 'caisse'
   | 'piste'
 
 export type Phase = {
@@ -1237,6 +1238,122 @@ export const ANIMATIONS: Record<string, Animation> = {
       { nom: 'Bras déroulés, prise neutre', duree: 900, pose: debout({ brasHaut: 10, brasBas: 12 }) },
       { nom: 'Flexion, coudes fixes', duree: 900, pose: debout({ brasHaut: 16, brasBas: 160 }) },
       { nom: 'Descente contrôlée', duree: 1200, pose: debout({ brasHaut: 10, brasBas: 12 }) },
+    ],
+  },
+  footing: {
+    vue: 'cote',
+    materiel: ['sol'],
+    phases: [
+      {
+        nom: 'Appui sous le bassin',
+        duree: 520,
+        pose: {
+          hanche: [100, 98],
+          torse: 8,
+          brasHaut: -22,
+          brasBas: 58,
+          brasHautLoin: 30,
+          brasBasLoin: 86,
+          cuisse: -20,
+          tibia: -4,
+          pied: 96,
+          cuisseLoin: 38,
+          tibiaLoin: 6,
+          piedLoin: 100,
+        },
+      },
+      {
+        nom: 'Passage du genou',
+        duree: 520,
+        pose: {
+          hanche: [100, 94],
+          torse: 8,
+          brasHaut: 4,
+          brasBas: 72,
+          brasHautLoin: 4,
+          brasBasLoin: 72,
+          cuisse: 16,
+          tibia: -34,
+          pied: 104,
+          cuisseLoin: 10,
+          tibiaLoin: 34,
+          piedLoin: 100,
+        },
+      },
+      {
+        nom: 'Appui opposé',
+        duree: 520,
+        pose: {
+          hanche: [100, 98],
+          torse: 8,
+          brasHaut: 30,
+          brasBas: 86,
+          brasHautLoin: -22,
+          brasBasLoin: 58,
+          cuisse: 38,
+          tibia: 6,
+          pied: 100,
+          cuisseLoin: -20,
+          tibiaLoin: -4,
+          piedLoin: 96,
+        },
+      },
+    ],
+  },
+
+  'pompes-serrees': {
+    vue: 'cote',
+    materiel: ['sol', 'caisse'],
+    decalage: [6, -16],
+    phases: [
+      {
+        nom: 'Pieds surélevés, bras tendus',
+        duree: 800,
+        pose: {
+          hanche: [100, 124],
+          torse: 100,
+          brasHaut: 8,
+          brasBas: 8,
+          cuisse: -100,
+          tibia: -98,
+          pied: -96,
+          cuisseLoin: -102,
+          tibiaLoin: -96,
+          piedLoin: -96,
+        },
+      },
+      {
+        nom: 'Descente, coudes aux côtes',
+        duree: 1000,
+        pose: {
+          hanche: [100, 131],
+          torse: 106,
+          brasHaut: -18,
+          brasBas: 44,
+          cuisse: -104,
+          tibia: -100,
+          pied: -96,
+          cuisseLoin: -106,
+          tibiaLoin: -98,
+          piedLoin: -96,
+        },
+      },
+      {
+        nom: 'Poussée complète',
+        duree: 800,
+        pose: {
+          hanche: [100, 124],
+          torse: 100,
+          brasHaut: 8,
+          brasBas: 8,
+          cuisse: -100,
+          tibia: -98,
+          pied: -96,
+          cuisseLoin: -102,
+          tibiaLoin: -96,
+          piedLoin: -96,
+        },
+      },
     ],
   },
 }

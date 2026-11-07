@@ -331,6 +331,21 @@ function Equipement({ type, s, vue }: { type: Materiel; s: Squelette; vue: 'cote
         </g>
       )
     }
+    case 'caisse': {
+      const appui: Point = [s.orteils[0], s.cheville[1]]
+      return (
+        <g>
+          <rect
+            x={Math.min(appui[0] - 6, 40)}
+            y={appui[1] + 4}
+            width={46}
+            height={Math.max(12, SOL - appui[1] - 4)}
+            rx="3"
+            fill="#2b333c"
+          />
+        </g>
+      )
+    }
     case 'barres-paralleles':
       return (
         <g>
@@ -458,7 +473,8 @@ export default function DemoExercice({
                 m === 'machine' ||
                 m === 'barre-fixe' ||
                 m === 'poulie-haute' ||
-                m === 'corde',
+                m === 'corde' ||
+                m === 'caisse',
             )
             .map((m) => (
               <Equipement key={m} type={m} s={s} vue={animation.vue} />
