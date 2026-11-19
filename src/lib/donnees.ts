@@ -239,12 +239,27 @@ export function importerDonnees(brut: string): { ok: true; seances: number; repa
   if (d.app !== 'antho-fit') {
     return { ok: false, erreur: 'Ce fichier ne vient pas d’Antho Fit.' }
   }
-  if (d.repos && typeof d.repos === 'object') storeRepos.set(d.repos)
-  if (Array.isArray(d.seances)) storeSeances.set(d.seances)
-  if (Array.isArray(d.repas)) storeRepas.set(d.repas)
+  // Fusion, jamais remplacement : importer un fichier ne supprime rien. Un élément présent des
+  // deux côtés prend la version du fichier. C'est ce qui permet de rapatrier une version hors
+  // ligne dans la version en ligne (et inversement) sans risquer de perdre des séances.
+  const seances = Array.isArray(d.seances) ? d.seances.filter(estElementValide) : []
+  const repas = Array.isArray(d.repas) ? d.repas.filter(estElementValide) : []
+  if (d.repos && typeof d.repos === 'object') storeRepos.set({ ...storeRepos.get(), ...d.repos })
+  if (seances.length > 0) storeSeances.set(fusionnerParIdentifiant(storeSeances.get(), seances))
+  if (repas.length > 0) storeRepas.set(fusionnerParIdentifiant(storeRepas.get(), repas))
   if (d.reglages && typeof d.reglages === 'object')
-    storeReglages.set({ ...REGLAGES_DEFAUT, ...d.reglages })
-  return { ok: true, seances: d.seances?.length ?? 0, repas: d.repas?.length ?? 0 }
+    storeReglages.set({ ...REGLAGES_DEFAUT, ...storeReglages.get(), ...d.reglages })
+  return { ok: true, seances: seances.length, repas: repas.length }
+}
+
+function estElementValide(e: unknown): e is { id: string } {
+  return typeof e === 'object' && e !== null && typeof (e as { id?: unknown }).id === 'string'
+}
+
+function fusionnerParIdentifiant<T extends { id: string }>(actuels: T[], importes: T[]): T[] {
+  const parId = new Map<string, T>(actuels.map((e) => [e.id, e]))
+  for (const e of importes) parId.set(e.id, e)
+  return [...parId.values()]
 }
 
 export function effacerTout() {

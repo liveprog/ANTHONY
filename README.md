@@ -94,6 +94,29 @@ bassin ; le composant calcule les articulations par cinématique directe, interp
 fixe, roue) accroché aux poignets calculés. Ajouter un exercice, c'est écrire ses poses et ses
 étapes : aucun fichier vidéo, aucune image.
 
+## Sans connexion
+
+L'app est entièrement locale : une fois chargée, elle n'a besoin d'aucun réseau (aucune police ni
+ressource externe, la police Inter est embarquée). Trois façons de l'utiliser sans connexion :
+
+- **Page déjà ouverte** (y compris dans l'artefact claude.ai) : si le réseau coupe en pleine
+  séance, tout continue de marcher. Ce qui n'est pas encore dans la sauvegarde en ligne est compté
+  « en attente » (visible dans Séance et Réglages) et part tout seul au retour du réseau, sans
+  recharger la page (`src/lib/sync.ts` : délais d'attente, reprise sur l'événement `online`,
+  au retour au premier plan et toutes les 20 s).
+- **App installée** : `npm run build` produit dans `dist/` une app installable (manifeste, icônes
+  et service worker `sw.js`). Hébergée en https, elle met tous ses fichiers en cache à la première
+  visite et s'ouvre ensuite sans connexion, avec ses graphiques. Le service worker n'est volontairement
+  pas activé dans l'artefact claude.ai (page republiée à chaque version, un cache permanent y
+  servirait d'anciennes versions).
+- **Fichier unique** : `npm run build:offline` produit `dist-offline/antho-fit-hors-ligne.html`
+  (≈ 800 ko, tout dedans) qui s'ouvre directement depuis le disque.
+
+Hors artefact, il n'y a pas de sauvegarde en ligne : les données restent sur l'appareil, et
+l'export/import JSON (onglet Progrès) sert de passerelle. L'import **fusionne** (par identifiant)
+au lieu de remplacer : rien n'est supprimé, et une séance présente des deux côtés prend la
+version du fichier.
+
 ## La sauvegarde
 
 `src/lib/sync.ts` tient la persistance. Au démarrage il demande `claude.use('db')` et

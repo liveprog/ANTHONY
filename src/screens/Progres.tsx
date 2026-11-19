@@ -76,7 +76,7 @@ export default function Progres({ nav }: { nav: Navigation }) {
     if (res.ok) {
       setMessage({
         ton: 'ok',
-        texte: `Import réussi : ${res.seances} séance(s) et ${res.repas} repas chargés.`,
+        texte: `Import réussi : ${res.seances} séance(s) et ${res.repas} repas fusionnés avec tes données.`,
       })
     } else {
       setMessage({ ton: 'ko', texte: res.erreur })
@@ -283,8 +283,8 @@ export default function Progres({ nav }: { nav: Navigation }) {
           <Carte className="p-4 space-y-3">
             <p className="text-[12.5px] text-white/50 leading-relaxed">
               {sauvegarde.mode === 'cloud'
-                ? 'Tes données sont enregistrées en ligne sur ton compte. L’export JSON reste la copie que tu gardes chez toi.'
-                : 'Tes données vivent dans ce navigateur. Exporte-les avant de changer de téléphone, de vider le cache ou de passer en navigation privée.'}
+                ? 'Tes données sont enregistrées en ligne sur ton compte. L’export JSON reste la copie que tu gardes chez toi, et le moyen de passer d’une version hors ligne à la version en ligne.'
+                : 'Tes données vivent sur cet appareil. Exporte-les avant de changer de téléphone, de vider le cache ou de passer en navigation privée.'}
             </p>
             <div className="flex gap-2">
               <Bouton variante="secondaire" className="flex-1" onClick={exporter}>
@@ -310,7 +310,8 @@ export default function Progres({ nav }: { nav: Navigation }) {
               </div>
             )}
             <p className="text-[11.5px] text-white/30">
-              L’import remplace les séances et les repas actuels par ceux du fichier.
+              L’import fusionne le fichier avec les données de cet appareil : rien n’est supprimé, et si
+              une séance existe des deux côtés, celle du fichier est gardée.
             </p>
           </Carte>
         </section>

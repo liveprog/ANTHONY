@@ -5,7 +5,11 @@ import { Bouton, Carte, Compteur, Titre } from '../components/Ui'
 import { exercice } from '../data/exercices'
 import { JOURS_PAR_ID, REGLES, estEnchaine, libelleRepos } from '../data/programme'
 import { bip } from '../lib/chrono'
-import BandeauSauvegarde, { texteSauvegarde, useEtatSauvegarde } from '../components/EtatSauvegarde'
+import {
+  libelleMode,
+  texteSauvegarde,
+  useEtatSauvegarde,
+} from '../components/EtatSauvegarde'
 import { sauvegarderMaintenant } from '../lib/sync'
 import { effacerTout, reinitialiserRepos, storeReglages, useReglages, useRepos } from '../lib/donnees'
 import { VERSION_DONNEES } from '../lib/stockage'
@@ -64,12 +68,12 @@ export default function Reglages({ nav }: { nav: Navigation }) {
             action={
               <span
                 className={`text-[11px] font-bold uppercase tracking-wider ${
-                  sauvegarde.mode === 'cloud' && sauvegarde.phase === 'pret'
+                  sauvegarde.mode === 'cloud' && sauvegarde.phase === 'pret' && sauvegarde.enLigne
                     ? 'text-lime-400'
                     : 'text-amber-300'
                 }`}
               >
-                {sauvegarde.mode === 'cloud' ? 'En ligne' : 'Local'}
+                {libelleMode(sauvegarde)}
               </span>
             }
           >
@@ -87,20 +91,22 @@ export default function Reglages({ nav }: { nav: Navigation }) {
                 .
               </p>
             )}
+            {sauvegarde.mode === 'cloud' && sauvegarde.enAttente > 0 && (
+              <p className="text-[11.5px] text-white/35">
+                {sauvegarde.enAttente} élément{sauvegarde.enAttente > 1 ? 's' : ''} en attente d’envoi.
+              </p>
+            )}
             {sauvegarde.mode === 'cloud' && (
               <Bouton
                 variante="secondaire"
                 className="w-full"
-                disabled={sauvegarde.enEcriture}
+                disabled={sauvegarde.enEcriture || !sauvegarde.enLigne}
                 onClick={() => void sauvegarderMaintenant()}
               >
                 {sauvegarde.enEcriture ? 'Enregistrement…' : 'Enregistrer maintenant'}
               </Bouton>
             )}
           </Carte>
-          <div className="mt-2">
-            <BandeauSauvegarde />
-          </div>
         </section>
 
         <section>

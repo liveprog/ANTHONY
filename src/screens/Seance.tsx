@@ -438,9 +438,11 @@ export default function Seance({
           Terminer la séance
         </Bouton>
         <p className="text-[11.5px] text-white/30 text-center">
-          {sauvegarde.mode === 'cloud'
-            ? 'Chaque série validée part dans ta sauvegarde en ligne.'
-            : 'Séance enregistrée dans ce navigateur. Exporte tes données depuis Progrès.'}
+          {!sauvegarde.enLigne
+            ? 'Hors ligne : la séance est gardée sur cet appareil et sera envoyée au retour du réseau.'
+            : sauvegarde.mode === 'cloud'
+              ? 'Chaque série validée part dans ta sauvegarde en ligne.'
+              : 'Séance enregistrée sur cet appareil. Exporte tes données depuis Progrès.'}
         </p>
       </div>
 
