@@ -1,5 +1,12 @@
 import type { Navigation } from '../App'
-import { REGLES, SEMAINE, jourDuJour, toutesLesPrescriptions } from '../data/programme'
+import {
+  EXCEPTIONS,
+  REGLES,
+  SEMAINE,
+  exceptionPour,
+  jourDuJour,
+  toutesLesPrescriptions,
+} from '../data/programme'
 import { exercice } from '../data/exercices'
 import { EnteteOnglet } from '../components/Entete'
 import { Bouton, Carte, Etiquette, Titre } from '../components/Ui'
@@ -12,6 +19,7 @@ const ETIQUETTE_TYPE = {
 }
 
 export default function Programme({ nav }: { nav: Navigation }) {
+  const exception = exceptionPour()
   const aujourdhui = jourDuJour()
   const repos = useRepos()
   const seances = useSeances()
@@ -48,8 +56,12 @@ export default function Programme({ nav }: { nav: Navigation }) {
                 {ETIQUETTE_TYPE[aujourdhui.type].texte}
               </Etiquette>
               {aujourdhui.duree && <Etiquette>{aujourdhui.duree}</Etiquette>}
+              {exception && <Etiquette ton="alerte">Exception</Etiquette>}
             </div>
             <h2 className="text-[22px] font-extrabold mt-2 leading-tight">{aujourdhui.titre}</h2>
+            {exception && (
+              <p className="text-[12.5px] text-amber-300 mt-1 leading-snug">{exception.texte}</p>
+            )}
             <p className="text-[13px] text-white/45 mt-1">
               {aujourdhui.type === 'repos'
                 ? 'Rien à faire, et c’est voulu.'
@@ -129,6 +141,18 @@ export default function Programme({ nav }: { nav: Navigation }) {
           })}
         </ul>
       </section>
+
+      {EXCEPTIONS.length > 0 && (
+        <section className="px-4 mt-4">
+          <Carte className="p-3.5 border-amber-400/25 bg-amber-400/[0.05]">
+            <p className="text-[12.5px] leading-relaxed text-amber-100/85">
+              <span className="font-bold">Exception au calendrier.</span>{' '}
+              {EXCEPTIONS.map((e) => e.texte).join(' ')} Les vendredis suivants restent des jours de
+              repos.
+            </p>
+          </Carte>
+        </section>
+      )}
 
       <section className="px-4 mt-6">
         <Titre

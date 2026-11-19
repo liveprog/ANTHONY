@@ -42,6 +42,7 @@ export type Materiel =
   | 'roue'
   | 'rampe'
   | 'caisse'
+  | 'elastique'
   | 'piste'
 
 export type Phase = {
@@ -1353,6 +1354,266 @@ export const ANIMATIONS: Record<string, Animation> = {
           tibiaLoin: -96,
           piedLoin: -96,
         },
+      },
+    ],
+  },
+  'suspension-barre': {
+    vue: 'face',
+    materiel: ['barre-fixe'],
+    decalage: [0, -8],
+    phases: [
+      {
+        nom: 'Suspension, épaules actives',
+        duree: 1500,
+        pose: {
+          hanche: [100, 124],
+          torse: 0,
+          brasHaut: 166,
+          brasBas: 172,
+          cuisse: 4,
+          tibia: -14,
+          pied: 80,
+        },
+      },
+      {
+        nom: 'Gainé, sans balancer',
+        duree: 1500,
+        pose: {
+          hanche: [100, 127],
+          torse: 2,
+          brasHaut: 168,
+          brasBas: 174,
+          cuisse: 6,
+          tibia: -16,
+          pied: 80,
+        },
+      },
+    ],
+  },
+
+  'tractions-assistees': {
+    vue: 'face',
+    materiel: ['barre-fixe', 'elastique'],
+    decalage: [0, -8],
+    phases: [
+      {
+        nom: 'Bras tendus, genoux sur l’appui',
+        duree: 900,
+        pose: {
+          hanche: [100, 122],
+          torse: 0,
+          brasHaut: 166,
+          brasBas: 172,
+          cuisse: 14,
+          tibia: -76,
+          pied: 40,
+        },
+      },
+      {
+        nom: 'Menton au-dessus de la barre',
+        duree: 900,
+        pose: {
+          hanche: [100, 90],
+          torse: -4,
+          brasHaut: 128,
+          brasBas: 196,
+          cuisse: 16,
+          tibia: -78,
+          pied: 40,
+        },
+      },
+      {
+        nom: 'Descente contrôlée',
+        duree: 1200,
+        pose: {
+          hanche: [100, 122],
+          torse: 0,
+          brasHaut: 166,
+          brasBas: 172,
+          cuisse: 14,
+          tibia: -76,
+          pied: 40,
+        },
+      },
+    ],
+  },
+
+  'negatives-tractions': {
+    vue: 'face',
+    materiel: ['barre-fixe'],
+    decalage: [0, -8],
+    phases: [
+      {
+        nom: 'Départ en haut',
+        duree: 800,
+        pose: {
+          hanche: [100, 90],
+          torse: -4,
+          brasHaut: 128,
+          brasBas: 196,
+          cuisse: 6,
+          tibia: -20,
+          pied: 80,
+        },
+      },
+      {
+        nom: 'Descente en 5 secondes',
+        duree: 2600,
+        pose: {
+          hanche: [100, 124],
+          torse: 0,
+          brasHaut: 166,
+          brasBas: 172,
+          cuisse: 4,
+          tibia: -14,
+          pied: 80,
+        },
+      },
+      {
+        nom: 'Remonte avec les jambes',
+        duree: 600,
+        pose: {
+          hanche: [100, 90],
+          torse: -4,
+          brasHaut: 128,
+          brasBas: 196,
+          cuisse: 6,
+          tibia: -20,
+          pied: 80,
+        },
+      },
+    ],
+  },
+
+  'dips-assistes': {
+    vue: 'cote',
+    materiel: ['barres-paralleles', 'elastique'],
+    decalage: [0, -12],
+    phases: [
+      {
+        nom: 'Bras tendus, genoux sur l’appui',
+        duree: 800,
+        pose: {
+          hanche: [100, 118],
+          torse: 16,
+          brasHaut: 2,
+          brasBas: 0,
+          cuisse: 30,
+          tibia: -64,
+          pied: 60,
+          cuisseLoin: 28,
+          tibiaLoin: -62,
+        },
+      },
+      {
+        nom: 'Épaules au niveau des coudes',
+        duree: 1000,
+        pose: {
+          hanche: [100, 142],
+          torse: 24,
+          brasHaut: -24,
+          brasBas: 36,
+          cuisse: 30,
+          tibia: -64,
+          pied: 60,
+          cuisseLoin: 28,
+          tibiaLoin: -62,
+        },
+      },
+      {
+        nom: 'Poussée',
+        duree: 800,
+        pose: {
+          hanche: [100, 118],
+          torse: 16,
+          brasHaut: 2,
+          brasBas: 0,
+          cuisse: 30,
+          tibia: -64,
+          pied: 60,
+          cuisseLoin: 28,
+          tibiaLoin: -62,
+        },
+      },
+    ],
+  },
+
+  'negatives-dips': {
+    vue: 'cote',
+    materiel: ['barres-paralleles'],
+    decalage: [0, -12],
+    phases: [
+      {
+        nom: 'Départ bras tendus',
+        duree: 800,
+        pose: {
+          hanche: [100, 118],
+          torse: 16,
+          brasHaut: 2,
+          brasBas: 0,
+          cuisse: 26,
+          tibia: -52,
+          pied: 86,
+          cuisseLoin: 24,
+          tibiaLoin: -50,
+        },
+      },
+      {
+        nom: 'Descente en 5 secondes',
+        duree: 2600,
+        pose: {
+          hanche: [100, 142],
+          torse: 24,
+          brasHaut: -24,
+          brasBas: 36,
+          cuisse: 26,
+          tibia: -52,
+          pied: 86,
+          cuisseLoin: 24,
+          tibiaLoin: -50,
+        },
+      },
+      {
+        nom: 'Remonte avec les jambes',
+        duree: 600,
+        pose: {
+          hanche: [100, 118],
+          torse: 16,
+          brasHaut: 2,
+          brasBas: 0,
+          cuisse: 26,
+          tibia: -52,
+          pied: 86,
+          cuisseLoin: 24,
+          tibiaLoin: -50,
+        },
+      },
+    ],
+  },
+
+  'curl-halteres-alternes': {
+    vue: 'face',
+    materiel: ['halteres'],
+    phases: [
+      {
+        nom: 'Bras droit qui monte',
+        duree: 900,
+        pose: debout({ brasHaut: 16, brasBas: 164, brasHautLoin: -10, brasBasLoin: -12 }),
+      },
+      {
+        nom: 'Croisement, bras déroulés',
+        duree: 700,
+        pose: debout({ brasHaut: 10, brasBas: 12, brasHautLoin: -10, brasBasLoin: -12 }),
+      },
+      {
+        nom: 'Bras gauche qui monte',
+        duree: 900,
+        pose: debout({ brasHaut: 10, brasBas: 12, brasHautLoin: -16, brasBasLoin: -164 }),
+      },
+      {
+        nom: 'Retour, bras déroulés',
+        duree: 700,
+        pose: debout({ brasHaut: 10, brasBas: 12, brasHautLoin: -10, brasBasLoin: -12 }),
       },
     ],
   },

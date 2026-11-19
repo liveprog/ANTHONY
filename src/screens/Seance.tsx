@@ -339,7 +339,7 @@ export default function Seance({
                                 <ChampNombre
                                   valeur={serie.poids}
                                   onChange={(v) => majSerie(ex.id, i, { poids: v })}
-                                  suffixe="kg"
+                                  suffixe={ex.libelleCharge ?? 'kg'}
                                   pas={2.5}
                                   aria={`Poids série ${i + 1}`}
                                 />
@@ -364,9 +364,9 @@ export default function Seance({
                                 <ChampNombre
                                   valeur={serie.poids}
                                   onChange={(v) => majSerie(ex.id, i, { poids: v })}
-                                  suffixe="kg+"
+                                  suffixe={ex.libelleCharge ?? 'kg+'}
                                   pas={2.5}
-                                  aria={`Lest série ${i + 1}`}
+                                  aria={`Charge série ${i + 1}`}
                                 />
                               </>
                             )}

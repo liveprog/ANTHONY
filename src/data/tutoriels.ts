@@ -147,4 +147,34 @@ export const ETAPES: Record<string, string[]> = {
     'Descends en gardant les coudes près des côtes, corps en planche du talon à la tête.',
     'Pousse jusqu’à l’extension complète ; va jusqu’à ne plus pouvoir faire une répétition propre.',
   ],
+  'suspension-barre': [
+    'Prise pleine main, pouces autour de la barre, bras tendus, épaules actives.',
+    'Corps gainé, jambes serrées : tiens 20 à 30 secondes sans balancer.',
+    'Lâche avant que la prise ne glisse, puis secoue les avant-bras entre les séries.',
+  ],
+  'tractions-assistees': [
+    'Règle l’assistance, prise paume vers toi, bras tendus et épaules basses au départ.',
+    'Descends les omoplates puis tire jusqu’à passer le menton au-dessus de la barre.',
+    'Redescends en contrôlant jusqu’à l’extension complète ; à 3 séries de 10, baisse l’aide de 5 kg.',
+  ],
+  'negatives-tractions': [
+    'Installe-toi en haut, menton au-dessus de la barre, en montant sur une marche ou en sautant.',
+    'Descends en 5 secondes pleines, en comptant, épaules engagées jusqu’au bout.',
+    'Remonte sans forcer avec les jambes : seule la descente compte.',
+  ],
+  'dips-assistes': [
+    'Bras tendus sur les poignées, épaules basses, buste légèrement penché en avant.',
+    'Descends jusqu’aux épaules au niveau des coudes, coudes près du corps.',
+    'Pousse jusqu’à l’extension complète sans laisser les épaules rouler vers l’avant.',
+  ],
+  'negatives-dips': [
+    'Pars en haut, bras tendus, en montant sur une marche.',
+    'Descends en 5 secondes pleines, buste gainé, jusqu’aux épaules au niveau des coudes.',
+    'Remonte avec l’aide des jambes et recommence.',
+  ],
+  'curl-halteres-alternes': [
+    'Debout, haltères le long du corps, coudes collés au buste.',
+    'Monte un bras en tournant la paume vers le haut, serre une demi-seconde.',
+    'Déroule complètement ce bras avant de monter l’autre, sans balancer le buste.',
+  ],
 }

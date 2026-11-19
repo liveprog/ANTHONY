@@ -346,6 +346,26 @@ function Equipement({ type, s, vue }: { type: Materiel; s: Squelette; vue: 'cote
         </g>
       )
     }
+    case 'elastique': {
+      const haut: Point = [milieuPoignets[0], milieuPoignets[1] + 6]
+      const bas: Point = [
+        (s.cheville[0] + s.chevilleLoin[0]) / 2,
+        (s.cheville[1] + s.chevilleLoin[1]) / 2,
+      ]
+      const milieu: Point = [(haut[0] + bas[0]) / 2 + 14, (haut[1] + bas[1]) / 2]
+      return (
+        <g>
+          <path
+            d={`M ${haut[0]} ${haut[1]} Q ${milieu[0]} ${milieu[1]} ${bas[0]} ${bas[1]}`}
+            fill="none"
+            stroke={LIME}
+            strokeWidth="3.5"
+            strokeLinecap="round"
+            opacity="0.85"
+          />
+        </g>
+      )
+    }
     case 'barres-paralleles':
       return (
         <g>
@@ -474,7 +494,8 @@ export default function DemoExercice({
                 m === 'barre-fixe' ||
                 m === 'poulie-haute' ||
                 m === 'corde' ||
-                m === 'caisse',
+                m === 'caisse' ||
+                m === 'elastique',
             )
             .map((m) => (
               <Equipement key={m} type={m} s={s} vue={animation.vue} />

@@ -27,6 +27,8 @@ export type Exercice = {
   secondaires: MuscleId[]
   conseils: string[]
   erreur: string
+  /** Étiquette du champ de charge dans la séance (défaut : « kg », ou « kg+ » en saisie reps). */
+  libelleCharge?: string
 }
 
 export const EXERCICES: Exercice[] = [
@@ -368,10 +370,10 @@ export const EXERCICES: Exercice[] = [
     principaux: ['fessiers', 'ischios'],
     secondaires: ['mollets', 'quadriceps', 'lombaires'],
     conseils: [
-      'Inclinaison 10-12 %, vitesse 5-6 km/h, 25-30 min : tu dois pouvoir parler, mais pas chanter.',
-      'Ne t’accroche pas aux poignées : le travail disparaît si tu te déleste.',
+      'Pente 6 %, vitesse 4,5 km/h, 30 min — 15 min les soirs d’école : tu dois pouvoir parler, mais pas chanter.',
+      'Ne t’accroche pas aux poignées : le travail disparaît si tu te délestes.',
       'Buste droit, pas penché en avant sur le tapis.',
-      'Optionnel les mardis et mercredis : c’est de la récupération active, pas une séance.',
+      'C’est la fin de séance : de la dépense facile, pas un effort de plus.',
     ],
     erreur: 'Monter la vitesse au point de courir : la dépense change peu et les articulations prennent les impacts.',
   },
@@ -464,6 +466,100 @@ export const EXERCICES: Exercice[] = [
       'Descente contrôlée jusqu’à frôler le sol, puis extension complète des bras.',
     ],
     erreur: 'Écarter les coudes en T pour arracher les dernières répétitions : les triceps sortent du mouvement et les épaules prennent tout.',
+  },
+  {
+    id: 'suspension-barre',
+    nom: 'Suspension à la barre',
+    categorie: 'isolation',
+    saisie: 'temps',
+    principaux: ['avantBras', 'dorsaux'],
+    secondaires: ['trapezes', 'abdos', 'deltoidePosterieur'],
+    conseils: [
+      'Prise pleine main, pouces autour de la barre, bras tendus sans être mous.',
+      'Épaules actives : descends légèrement les omoplates au lieu de pendre comme un sac.',
+      'Corps gainé, jambes serrées, aucune oscillation.',
+      'Respire calmement et lâche avant que la prise ne glisse, pas après.',
+    ],
+    erreur: 'Rester pendu épaules collées aux oreilles : la prise fatigue et l’articulation travaille à la place du dos.',
+  },
+  {
+    id: 'tractions-assistees',
+    nom: 'Tractions assistées',
+    categorie: 'compose',
+    saisie: 'reps',
+    libelleCharge: 'aide',
+    principaux: ['dorsaux', 'biceps'],
+    secondaires: ['trapezes', 'deltoidePosterieur', 'avantBras', 'abdos'],
+    conseils: [
+      'Prise paume vers toi (supination), mains à largeur d’épaules.',
+      'Descends les omoplates avant de plier les bras : le mouvement part du dos.',
+      'Monte jusqu’à passer le menton au-dessus de la barre, descends jusqu’à l’extension complète.',
+      'Quand tu réussis 3 séries de 10, baisse l’assistance de 5 kg à la séance suivante.',
+    ],
+    erreur: 'Mettre tellement d’assistance que tu rebondis en haut : la machine fait le travail et le dos n’apprend rien.',
+  },
+  {
+    id: 'negatives-tractions',
+    nom: 'Descentes lentes de traction',
+    categorie: 'compose',
+    saisie: 'reps',
+    libelleCharge: 'lest',
+    principaux: ['dorsaux', 'biceps'],
+    secondaires: ['trapezes', 'avantBras', 'deltoidePosterieur', 'abdos'],
+    conseils: [
+      'Pars en haut : saute ou monte sur une marche, menton au-dessus de la barre.',
+      'Descends en 5 secondes pleines, en comptant, jusqu’à l’extension complète des bras.',
+      'Garde les épaules engagées tout du long, surtout sur les derniers centimètres.',
+      'Remonte sans forcer (marche ou saut) : seule la descente compte.',
+    ],
+    erreur: 'Lâcher la descente à mi-chemin : c’est précisément la fin du mouvement qui construit la force pour la traction complète.',
+  },
+  {
+    id: 'dips-assistes',
+    nom: 'Dips assistés',
+    categorie: 'compose',
+    saisie: 'reps',
+    libelleCharge: 'aide',
+    principaux: ['pectoraux', 'triceps'],
+    secondaires: ['deltoideAnterieur', 'abdos'],
+    conseils: [
+      'Bras tendus au départ, épaules basses, loin des oreilles.',
+      'Descends jusqu’à ce que les épaules arrivent au niveau des coudes, pas plus bas.',
+      'Buste légèrement penché en avant pour les pectoraux, plus vertical pour les triceps.',
+      'Baisse l’assistance dès que les 10 répétitions passent facilement sur toutes les séries.',
+    ],
+    erreur: 'Descendre trop bas avec les épaules qui roulent vers l’avant : l’articulation prend tout et la coiffe souffre.',
+  },
+  {
+    id: 'negatives-dips',
+    nom: 'Descentes lentes de dips',
+    categorie: 'compose',
+    saisie: 'reps',
+    libelleCharge: 'lest',
+    principaux: ['pectoraux', 'triceps'],
+    secondaires: ['deltoideAnterieur', 'abdos'],
+    conseils: [
+      'Installe-toi en haut, bras tendus, en montant sur une marche ou en sautant.',
+      'Descends en 5 secondes pleines, coudes près du corps, jusqu’aux épaules au niveau des coudes.',
+      'Garde les épaules basses et le buste gainé pendant toute la descente.',
+      'Remonte avec l’aide des jambes : seule la phase lente compte.',
+    ],
+    erreur: 'Se laisser tomber sur les deux dernières secondes : la partie basse, la plus utile, est perdue.',
+  },
+  {
+    id: 'curl-halteres-alternes',
+    nom: 'Curl biceps haltères alternés',
+    categorie: 'isolation',
+    saisie: 'charge',
+    principaux: ['biceps'],
+    secondaires: ['avantBras', 'deltoideAnterieur'],
+    conseils: [
+      'Bras le long du corps, paumes tournées vers le haut en montant (supination).',
+      'Un bras à la fois : l’autre reste tendu et immobile, coudes collés au buste.',
+      'Serre le biceps une demi-seconde en haut, sans avancer l’épaule.',
+      'Déroule complètement le bras avant d’attaquer le côté opposé.',
+    ],
+    erreur: 'Balancer le buste à chaque alternance : le mouvement devient un lancer et les lombaires encaissent.',
   },
 ]
 
