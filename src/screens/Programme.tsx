@@ -1,9 +1,9 @@
 import type { Navigation } from '../App'
 import {
-  EXCEPTIONS,
   REGLES,
   SEMAINE,
   exceptionPour,
+  exceptionsAVenir,
   jourDuJour,
   nomDuJour,
   toutesLesPrescriptions,
@@ -21,6 +21,7 @@ const ETIQUETTE_TYPE = {
 
 export default function Programme({ nav }: { nav: Navigation }) {
   const exception = exceptionPour()
+  const exceptions = exceptionsAVenir()
   const aujourdhui = jourDuJour()
   const repos = useRepos()
   const seances = useSeances()
@@ -143,13 +144,12 @@ export default function Programme({ nav }: { nav: Navigation }) {
         </ul>
       </section>
 
-      {EXCEPTIONS.length > 0 && (
+      {exceptions.length > 0 && (
         <section className="px-4 mt-4">
           <Carte className="p-3.5 border-amber-400/25 bg-amber-400/[0.05]">
             <p className="text-[12.5px] leading-relaxed text-amber-100/85">
-              <span className="font-bold">Exception au calendrier.</span>{' '}
-              {EXCEPTIONS.map((e) => e.texte).join(' ')} Les vendredis suivants restent des jours de
-              repos.
+              <span className="font-bold">À noter.</span> {exceptions.map((e) => e.texte).join(' ')}{' '}
+              Les vendredis suivants restent des jours de repos.
             </p>
           </Carte>
         </section>

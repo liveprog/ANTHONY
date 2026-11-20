@@ -42,80 +42,21 @@ export type Jour = {
  *
  * `id` est l'identité STABLE d'une séance : les temps de repos personnalisés (clé « id:exercice »),
  * la séance en cours et les exceptions datées s'y rattachent. `jour` est le jour où elle a lieu.
- * Les deux se sont séparés le 20 novembre 2026, quand Anthony a permuté samedi et lundi : la séance
- * « lundi » (Pecs · Dos · Biceps) se fait désormais le samedi, et la séance « samedi »
- * (Street · Jambes) le lundi. On a déplacé les séances d'un jour à l'autre sans renommer leurs
- * identifiants, pour ne rien orpheliner. Ne pas « corriger » les identifiants.
+ * Les deux ne coïncident plus, volontairement : la séance « lundi » (Pecs · Dos · Biceps) se fait
+ * le samedi, et la séance « samedi » (Street) le mercredi. Le lundi est un jour de repos, d'où son
+ * propre identifiant. On déplace les séances d'un jour à l'autre sans renommer leurs identifiants,
+ * pour ne rien orpheliner. Ne pas « corriger » les identifiants.
  */
 export const SEMAINE: Jour[] = [
   {
-    id: 'samedi',
+    id: 'repos-lundi',
     jour: 'Lundi',
-    titre: 'Street · Jambes',
-    type: 'seance',
-    resume: 'Barre, dips et jambes',
-    court: 'street',
-    duree: '≈ 55 min',
-    blocs: [
-      {
-        titre: 'Barre',
-        exercices: [
-          { exerciceId: 'suspension-barre', series: 3, reps: '20-30 s', reposSecondes: 60 },
-          {
-            exerciceId: 'tractions-assistees',
-            series: 4,
-            reps: '6-10',
-            reposSecondes: 120,
-            note: 'paume vers toi — à 3 × 10, baisse l’aide de 5 kg',
-          },
-          {
-            exerciceId: 'negatives-tractions',
-            series: 3,
-            reps: '3-5',
-            reposSecondes: 120,
-            note: 'descente en 5 s',
-          },
-        ],
-      },
-      {
-        titre: 'Dips',
-        exercices: [
-          { exerciceId: 'dips-assistes', series: 4, reps: '6-10', reposSecondes: 120 },
-          {
-            exerciceId: 'negatives-dips',
-            series: 3,
-            reps: '3-5',
-            reposSecondes: 90,
-            note: 'descente en 5 s',
-          },
-        ],
-      },
-      {
-        titre: 'Jambes',
-        exercices: [
-          {
-            exerciceId: 'squat-ou-presse',
-            series: 3,
-            reps: '10-12',
-            reposSecondes: 90,
-            note: 'presse à cuisses',
-          },
-          { exerciceId: 'mollets-debout', series: 3, reps: '15-20', reposSecondes: 60 },
-        ],
-      },
-      {
-        titre: 'Fin de séance',
-        exercices: [
-          {
-            exerciceId: 'marche-inclinee',
-            series: 1,
-            reps: '30 min',
-            reposSecondes: 0,
-            note: 'pente 6 %, 4,5 km/h',
-          },
-        ],
-      },
-    ],
+    titre: 'Repos complet',
+    type: 'repos',
+    resume: 'Récupération après le dimanche',
+    court: 'repos',
+    blocs: [],
+    note: 'Repos complet. Après la course et la séance full body du dimanche, c’est le jour où tu récupères : les jambes sont reposées pour mardi.'
   },
   {
     id: 'mardi',
@@ -169,30 +110,44 @@ export const SEMAINE: Jour[] = [
     ],
   },
   {
-    id: 'mercredi',
+    id: 'samedi',
     jour: 'Mercredi',
-    titre: 'Abdos',
+    titre: 'Street',
     type: 'seance',
-    resume: 'À la maison ou à la salle',
-    note: 'Ta seule séance d’abdos de la semaine : le dimanche est maintenant réservé à la course.',
-    court: 'abdos',
-    duree: '≈ 25 min',
+    resume: 'Tractions et dips',
+    court: 'street',
+    duree: '≈ 45 min',
     blocs: [
       {
+        titre: 'Barre',
         exercices: [
+          { exerciceId: 'suspension-barre', series: 3, reps: '20-30 s', reposSecondes: 60 },
           {
-            exerciceId: 'crunch-poulie-haute',
-            series: 3,
-            reps: '15',
-            reposSecondes: 60,
-            note: 'à la maison : crunch, haltère de 2 kg sur la poitrine',
+            exerciceId: 'tractions-assistees',
+            series: 4,
+            reps: '6-10',
+            reposSecondes: 120,
+            note: 'paume vers toi — à 3 × 10, baisse l’aide de 5 kg',
           },
           {
-            exerciceId: 'releves-jambes-suspendu',
+            exerciceId: 'negatives-tractions',
             series: 3,
-            reps: '12',
-            reposSecondes: 60,
-            note: 'à la maison : au sol',
+            reps: '3-5',
+            reposSecondes: 120,
+            note: 'descente en 5 s',
+          },
+        ],
+      },
+      {
+        titre: 'Dips',
+        exercices: [
+          { exerciceId: 'dips-assistes', series: 4, reps: '6-10', reposSecondes: 120 },
+          {
+            exerciceId: 'negatives-dips',
+            series: 3,
+            reps: '3-5',
+            reposSecondes: 90,
+            note: 'descente en 5 s',
           },
         ],
       },
@@ -204,7 +159,7 @@ export const SEMAINE: Jour[] = [
             series: 1,
             reps: '30 min',
             reposSecondes: 0,
-            note: 'marche rapide ou marche inclinée',
+            note: 'pente 6 %, 4,5 km/h',
           },
         ],
       },
@@ -368,7 +323,7 @@ export const SEMAINE: Jour[] = [
             series: 3,
             reps: '10-12',
             reposSecondes: 120,
-            note: 'presse conseillée : les jambes travaillent encore lundi',
+            note: 'presse conseillée : les jambes lourdes sont mardi',
           },
           {
             exerciceId: 'chest-press-incline-machine',
@@ -412,7 +367,7 @@ export const EXCEPTIONS: Exception[] = [
   {
     date: '2026-11-20',
     jourId: 'lundi',
-    texte: 'Exception unique : ce vendredi, tu fais la séance Pecs · Dos · Biceps.',
+    texte: 'Exceptionnellement, le vendredi 20 novembre, tu fais la séance Pecs · Dos · Biceps.',
   },
 ]
 
@@ -420,6 +375,12 @@ function cleDate(d: Date): string {
   const mois = `${d.getMonth() + 1}`.padStart(2, '0')
   const jour = `${d.getDate()}`.padStart(2, '0')
   return `${d.getFullYear()}-${mois}-${jour}`
+}
+
+/** Exceptions d'aujourd'hui ou à venir : une exception passée ne doit plus s'afficher. */
+export function exceptionsAVenir(date = new Date()): Exception[] {
+  const aujourdhui = cleDate(date)
+  return EXCEPTIONS.filter((e) => e.date >= aujourdhui)
 }
 
 export function exceptionPour(date = new Date()): Exception | undefined {
