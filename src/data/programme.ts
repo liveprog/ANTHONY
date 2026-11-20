@@ -38,17 +38,16 @@ export type Jour = {
 }
 
 /**
- * La semaine va du lundi au dimanche (c'est l'ordre d'affichage) : 3 séances de salle (jambes le
- * mardi, haut du corps le samedi, full body avec abdos le dimanche), 2 courses faciles (jeudi et
- * dimanche matin) et 3 jours de repos (lundi, mercredi, vendredi).
+ * La semaine va du lundi au dimanche (c'est l'ordre d'affichage) : 3 séances de salle (haut du corps
+ * le mardi, bas du corps le mercredi, petit full body avec abdos le samedi), 2 courses faciles
+ * (jeudi et dimanche) et 2 jours de repos (lundi et vendredi).
  *
  * `id` est l'identité STABLE d'une séance : les temps de repos personnalisés (clé « id:exercice »),
  * la séance en cours et les exceptions datées s'y rattachent. `jour` est le jour où elle a lieu.
- * Les deux ne coïncident plus, volontairement : la séance « lundi » (Pecs · Dos · Biceps) se fait
- * le samedi. Les jours de repos et la course du jeudi ont leur propre identifiant, et les séances
- * supprimées (Street, haut du corps du jeudi) n'en ont plus : leurs réglages ne s'affichent plus.
- * On déplace les séances d'un jour à l'autre sans renommer leurs identifiants.
- * Ne pas « corriger » les identifiants.
+ * Les deux ne coïncident plus, volontairement : la séance « lundi » est le haut du corps (mardi),
+ * « mardi » le bas du corps (mercredi), « dimanche » le full body (samedi). Les jours de repos et
+ * les courses ont leur propre identifiant. On déplace les séances d'un jour à l'autre sans renommer
+ * leurs identifiants, pour que rien ne soit orphelin. Ne pas « corriger » les identifiants.
  */
 export const SEMAINE: Jour[] = [
   {
@@ -62,11 +61,72 @@ export const SEMAINE: Jour[] = [
     note: 'Repos complet. Après la course et la séance full body du dimanche, c’est le jour où tu récupères : les jambes sont reposées pour mardi.'
   },
   {
-    id: 'mardi',
+    id: 'lundi',
     jour: 'Mardi',
-    titre: 'Jambes lourdes',
+    titre: 'Haut du corps',
     type: 'seance',
-    resume: 'Bas du corps',
+    resume: 'Épaules, dos, pecs, biceps, triceps',
+    court: 'haut du corps',
+    duree: '≈ 55 min',
+    blocs: [
+      {
+        exercices: [
+          { exerciceId: 'developpe-militaire-halteres', series: 4, reps: '8-10', reposSecondes: 120 },
+          { exerciceId: 'developpe-couche-barre', series: 3, reps: '10-12', reposSecondes: 150 },
+          { exerciceId: 'tirage-vertical', series: 3, reps: '8-10', reposSecondes: 120 },
+          { exerciceId: 'tirage-horizontal', series: 3, reps: '8-10', reposSecondes: 120 },
+        ],
+      },
+      {
+        titre: 'Enchaînement 1 · Dos et biceps',
+        enchainement: true,
+        note: '0 s entre les deux exercices, 75 s après la paire.',
+        exercices: [
+          { exerciceId: 'face-pull', series: 3, reps: '15', reposSecondes: 0 },
+          {
+            exerciceId: 'curl-halteres-alternes',
+            series: 3,
+            reps: '10-12',
+            reposSecondes: 75,
+            echec: 'derniere',
+          },
+        ],
+      },
+      {
+        titre: 'Enchaînement 2 · Épaules et triceps',
+        enchainement: true,
+        note: '0 s entre les deux exercices, 60 s après la paire.',
+        exercices: [
+          {
+            exerciceId: 'elevations-laterales',
+            series: 3,
+            reps: '12-15',
+            reposSecondes: 0,
+            echec: 'derniere',
+          },
+          { exerciceId: 'extensions-triceps', series: 3, reps: '10-12', reposSecondes: 60 },
+        ],
+      },
+      {
+        titre: 'Fin de séance',
+        exercices: [
+          {
+            exerciceId: 'marche-inclinee',
+            series: 1,
+            reps: '15-30 min',
+            reposSecondes: 0,
+            note: 'pente 6 %, 4,5 km/h',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'mardi',
+    jour: 'Mercredi',
+    titre: 'Bas du corps',
+    type: 'seance',
+    resume: 'Jambes uniquement',
     court: 'jambes',
     duree: '≈ 50 min',
     blocs: [
@@ -113,16 +173,6 @@ export const SEMAINE: Jour[] = [
     ],
   },
   {
-    id: 'repos-mercredi',
-    jour: 'Mercredi',
-    titre: 'Repos complet',
-    type: 'repos',
-    resume: 'Récupération',
-    court: 'repos',
-    blocs: [],
-    note: 'Repos complet : le milieu de semaine sert à récupérer entre les jambes de mardi et le petit footing de jeudi.'
-  },
-  {
     id: 'course-jeudi',
     jour: 'Jeudi',
     titre: 'Petit footing',
@@ -154,97 +204,26 @@ export const SEMAINE: Jour[] = [
     resume: 'Aucune séance',
     court: 'repos',
     blocs: [],
-    note: 'Repos complet. Exception unique : le vendredi 20 novembre 2026, tu fais la séance Pecs · Dos · Biceps (habituellement le samedi). Le vendredi suivant redevient un jour de repos.',
-  },
-  {
-    id: 'lundi',
-    jour: 'Samedi',
-    titre: 'Pecs · Dos · Biceps',
-    type: 'seance',
-    resume: 'Haut du corps',
-    court: 'pecs · dos',
-    duree: '≈ 55 min',
-    blocs: [
-      {
-        exercices: [
-          { exerciceId: 'developpe-couche-barre', series: 3, reps: '10-12', reposSecondes: 150 },
-          { exerciceId: 'tirage-vertical', series: 3, reps: '8-10', reposSecondes: 120 },
-          {
-            exerciceId: 'chest-press-incline-machine',
-            series: 3,
-            reps: '8-12',
-            reposSecondes: 90,
-            echec: 'derniere',
-          },
-          {
-            exerciceId: 'rowing-haltere-un-bras',
-            series: 3,
-            reps: '8-10',
-            reposSecondes: 90,
-            note: 'par bras',
-          },
-        ],
-      },
-      {
-        titre: 'Enchaînement',
-        enchainement: true,
-        note: '0 s entre les deux exercices, 75 s après la paire.',
-        exercices: [
-          { exerciceId: 'elevations-laterales', series: 3, reps: '12-15', reposSecondes: 0 },
-          {
-            exerciceId: 'curl-biceps-barre',
-            series: 3,
-            reps: '10-12',
-            reposSecondes: 75,
-            echec: 'derniere',
-          },
-        ],
-      },
-      {
-        titre: 'Fin de séance',
-        exercices: [
-          {
-            exerciceId: 'marche-inclinee',
-            series: 1,
-            reps: '15-30 min',
-            reposSecondes: 0,
-            note: 'pente 6 %, 4,5 km/h',
-          },
-        ],
-      },
-    ],
+    note: 'Repos complet. Exception unique : le vendredi 20 novembre 2026, tu fais la séance Haut du corps (habituellement le mardi). Le vendredi suivant redevient un jour de repos.',
   },
   {
     id: 'dimanche',
-    jour: 'Dimanche',
-    titre: 'Course · Full body',
+    jour: 'Samedi',
+    titre: 'Full body',
     type: 'seance',
-    resume: 'Footing le matin, full body le soir',
+    resume: 'Petite séance : jambes, haut du corps, abdos',
     court: 'full body',
-    note: 'Matin : footing dehors. Soir, vers 16-17 h : séance full body courte à la salle (jambes, haut du corps, abdos).',
-    duree: '25 min + 45 min',
+    duree: '≈ 35 min',
+    note: 'Séance courte : les gros mouvements de tout le corps, plus les abdos de la semaine.',
     blocs: [
       {
-        titre: 'Matin · Course',
-        exercices: [
-          {
-            exerciceId: 'footing',
-            series: 1,
-            reps: '25 min',
-            reposSecondes: 0,
-            note: 'dehors, allure facile, tu peux parler en courant',
-          },
-        ],
-      },
-      {
-        titre: 'Soir · Full body',
         exercices: [
           {
             exerciceId: 'squat-ou-presse',
             series: 3,
             reps: '10-12',
             reposSecondes: 120,
-            note: 'presse conseillée : les jambes lourdes sont mardi',
+            note: 'presse conseillée : les jambes lourdes sont mercredi',
           },
           {
             exerciceId: 'chest-press-incline-machine',
@@ -256,21 +235,48 @@ export const SEMAINE: Jour[] = [
         ],
       },
       {
-        titre: 'Enchaînement 1 · Jambes et épaules',
-        enchainement: true,
-        note: '0 s entre les deux exercices, 75 s après la paire.',
-        exercices: [
-          { exerciceId: 'leg-curl', series: 3, reps: '10-12', reposSecondes: 0 },
-          { exerciceId: 'elevations-laterales', series: 3, reps: '12-15', reposSecondes: 75 },
-        ],
-      },
-      {
-        titre: 'Enchaînement 2 · Abdos',
+        titre: 'Enchaînement · Abdos',
         enchainement: true,
         note: '0 s entre les deux exercices, 60 s après la paire.',
         exercices: [
           { exerciceId: 'releves-jambes-suspendu', series: 3, reps: '12', reposSecondes: 0 },
           { exerciceId: 'crunch-poulie-haute', series: 3, reps: '15', reposSecondes: 60 },
+        ],
+      },
+      {
+        titre: 'Fin de séance',
+        exercices: [
+          {
+            exerciceId: 'marche-inclinee',
+            series: 1,
+            reps: '30 min',
+            reposSecondes: 0,
+            note: 'pente 6 %, 4,5 km/h',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'course-dimanche',
+    jour: 'Dimanche',
+    titre: 'Course',
+    type: 'course',
+    resume: 'Footing à allure facile',
+    court: 'course',
+    duree: '≈ 25 min',
+    note: 'Footing dehors, allure facile. Il compte comme de la récupération active, pas comme une séance.',
+    blocs: [
+      {
+        titre: 'Course',
+        exercices: [
+          {
+            exerciceId: 'footing',
+            series: 1,
+            reps: '25 min',
+            reposSecondes: 0,
+            note: 'dehors, allure facile, tu peux parler en courant',
+          },
         ],
       },
     ],
@@ -288,7 +294,7 @@ export const EXCEPTIONS: Exception[] = [
   {
     date: '2026-11-20',
     jourId: 'lundi',
-    texte: 'Exceptionnellement, le vendredi 20 novembre, tu fais la séance Pecs · Dos · Biceps.',
+    texte: 'Exceptionnellement, le vendredi 20 novembre, tu fais la séance Haut du corps.',
   },
 ]
 

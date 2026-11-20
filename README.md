@@ -24,20 +24,22 @@ ce contexte (dev local, hébergement statique), elle retombe sur le `localStorag
 
 ## Les quatre onglets
 
-**Programme** — une semaine légère : **3 séances de salle**, **2 courses** faciles et **3 jours de
-repos**. Lundi repos, Jambes lourdes le mardi (≈ 50 min), mercredi repos, petit footing de 20 min le
-jeudi, vendredi repos, Pecs·Dos·Biceps le samedi (≈ 55 min), et le dimanche Course·Full body :
-footing de 25 min dehors le matin, puis vers 16-17 h une séance full body courte à la salle
-(≈ 45 min : jambes, haut du corps, abdos). Les abdos se font une seule fois par semaine (dimanche),
-il n'y a jamais deux jours de jambes de suite, et les courses comptent comme de la récupération
-active, pas comme des séances. Les séances du mardi et du samedi se terminent par la marche
-inclinée (pente 6 %, 4,5 km/h). Chaque jour détaille ses exercices, ses séries, ses séries à
-l'échec et ses enchaînements (deux exercices sans repos entre les deux).
+**Programme** — une semaine courte et optimisée : **3 séances de salle**, **2 courses** faciles et
+**2 jours de repos**. Lundi repos, **Haut du corps** le mardi (≈ 55 min : développé militaire,
+développé couché, tirage vertical et horizontal, puis tirage à la corde + curl, élévations latérales
++ extensions triceps), **Bas du corps** le mercredi (≈ 50 min, uniquement les jambes), petit footing
+de 20 min le jeudi, vendredi repos, petit **Full body** le samedi (≈ 35 min : squat ou presse,
+développé incliné, tirage horizontal, abdos), et footing de 25 min le dimanche. Les abdos se font une
+seule fois par semaine (full body), il n'y a jamais deux jours de jambes de suite, et les courses
+comptent comme de la récupération active. Chaque séance de salle se termine par la marche inclinée
+(pente 6 %, 4,5 km/h). Chaque jour détaille ses exercices, ses séries, ses séries à l'échec et ses
+enchaînements (deux exercices sans repos entre les deux).
 
 Dans `src/data/programme.ts`, `id` est l'identité stable d'une séance et `jour` le jour où elle a
-lieu : Pecs·Dos·Biceps a été déplacée au samedi sans renommer son identifiant, pour que ses temps de
-repos personnalisés, la séance en cours et les exceptions la suivent. Les séances supprimées
-(Street, haut du corps du jeudi) n'ont plus d'identifiant actif : leurs réglages ne s'affichent plus.
+lieu : le haut du corps (identifiant `lundi`) se fait le mardi, le bas du corps (`mardi`) le mercredi
+et le full body (`dimanche`) le samedi. Les séances ont été déplacées sans renommer leurs
+identifiants, pour que leurs temps de repos personnalisés, la séance en cours et les exceptions les
+suivent. Les réglages d'un exercice qui n'est plus dans une séance ne s'affichent plus.
 
 Un jour peut être remplacé à une date précise : `EXCEPTIONS` associe une date à une séance du
 programme (vendredi 20 novembre 2026 = séance Pecs·Dos·Biceps), `jourDuJour()` la respecte, et
