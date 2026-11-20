@@ -24,11 +24,20 @@ ce contexte (dev local, hébergement statique), elle retombe sur le `localStorag
 
 ## Les quatre onglets
 
-**Programme** — la semaine complète, du lundi au dimanche : trois jours de repos complet
-(lundi, mardi, mercredi), Course·Street le jeudi (≈ 50 min), Jambes le vendredi (≈ 1 h),
-Haut du corps A — pecs et dos — le samedi (≈ 1 h), Haut du corps B — épaules, dos et bras — le
-dimanche (≈ 1 h). Chaque jour détaille ses exercices, ses séries, ses séries à l'échec et ses
-enchaînements (deux exercices sans repos entre les deux).
+**Programme** — la semaine complète, du lundi au dimanche : Street·Jambes (≈ 55 min), Jambes
+lourdes (≈ 50 min), Abdos (≈ 25 min, la seule séance d'abdos de la semaine), Épaules·Pecs·Dos·Bras
+(≈ 55 min), repos le vendredi, Pecs·Dos·Biceps (≈ 55 min) le samedi, Course (≈ 25 min, dehors) le
+dimanche. La plupart des séances se terminent par la marche inclinée (pente 6 %, 4,5 km/h). Chaque
+jour détaille ses exercices, ses séries, ses séries à l'échec et ses enchaînements (deux exercices
+sans repos entre les deux).
+
+Dans `src/data/programme.ts`, `id` est l'identité stable d'une séance et `jour` le jour où elle a
+lieu : samedi et lundi ont été permutés en déplaçant les séances, sans renommer leurs identifiants,
+pour que les temps de repos personnalisés, la séance en cours et les exceptions les suivent.
+
+Un jour peut être remplacé à une date précise : `EXCEPTIONS` associe une date à une séance du
+programme (vendredi 20 novembre 2026 = séance Pecs·Dos·Biceps), `jourDuJour()` la respecte, et
+l'accueil affiche la raison ainsi que le vrai jour de la semaine.
 
 Le temps de repos est porté par le programme, **séance par séance** : il s'affiche en pastille à
 côté de chaque exercice, le même exercice pouvant être enchaîné un jour (0 s) et posé un autre
