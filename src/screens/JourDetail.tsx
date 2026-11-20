@@ -143,7 +143,7 @@ export default function JourDetail({ jourId, nav }: { jourId: string; nav: Navig
 
         {jour.type !== 'repos' && (
           <Bouton className="w-full" onClick={() => nav.demarrerJour(jour.id)}>
-            Démarrer cette séance
+            {jour.type === 'course' ? 'Démarrer cette course' : 'Démarrer cette séance'}
           </Bouton>
         )}
       </div>

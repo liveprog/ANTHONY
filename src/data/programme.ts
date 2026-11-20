@@ -22,7 +22,7 @@ export type Bloc = {
   exercices: Prescription[]
 }
 
-export type TypeJour = 'seance' | 'repos' | 'libre'
+export type TypeJour = 'seance' | 'repos' | 'libre' | 'course'
 
 export type Jour = {
   id: string
@@ -38,14 +38,17 @@ export type Jour = {
 }
 
 /**
- * La semaine va du lundi au dimanche (c'est l'ordre d'affichage).
+ * La semaine va du lundi au dimanche (c'est l'ordre d'affichage) : 3 séances de salle (jambes le
+ * mardi, haut du corps le samedi, full body avec abdos le dimanche), 2 courses faciles (jeudi et
+ * dimanche matin) et 3 jours de repos (lundi, mercredi, vendredi).
  *
  * `id` est l'identité STABLE d'une séance : les temps de repos personnalisés (clé « id:exercice »),
  * la séance en cours et les exceptions datées s'y rattachent. `jour` est le jour où elle a lieu.
  * Les deux ne coïncident plus, volontairement : la séance « lundi » (Pecs · Dos · Biceps) se fait
- * le samedi, et la séance « samedi » (Street) le mercredi. Le lundi est un jour de repos, d'où son
- * propre identifiant. On déplace les séances d'un jour à l'autre sans renommer leurs identifiants,
- * pour ne rien orpheliner. Ne pas « corriger » les identifiants.
+ * le samedi. Les jours de repos et la course du jeudi ont leur propre identifiant, et les séances
+ * supprimées (Street, haut du corps du jeudi) n'en ont plus : leurs réglages ne s'affichent plus.
+ * On déplace les séances d'un jour à l'autre sans renommer leurs identifiants.
+ * Ne pas « corriger » les identifiants.
  */
 export const SEMAINE: Jour[] = [
   {
@@ -110,116 +113,34 @@ export const SEMAINE: Jour[] = [
     ],
   },
   {
-    id: 'samedi',
+    id: 'repos-mercredi',
     jour: 'Mercredi',
-    titre: 'Street',
-    type: 'seance',
-    resume: 'Tractions et dips',
-    court: 'street',
-    duree: '≈ 45 min',
-    blocs: [
-      {
-        titre: 'Barre',
-        exercices: [
-          { exerciceId: 'suspension-barre', series: 3, reps: '20-30 s', reposSecondes: 60 },
-          {
-            exerciceId: 'tractions-assistees',
-            series: 4,
-            reps: '6-10',
-            reposSecondes: 120,
-            note: 'paume vers toi — à 3 × 10, baisse l’aide de 5 kg',
-          },
-          {
-            exerciceId: 'negatives-tractions',
-            series: 3,
-            reps: '3-5',
-            reposSecondes: 120,
-            note: 'descente en 5 s',
-          },
-        ],
-      },
-      {
-        titre: 'Dips',
-        exercices: [
-          { exerciceId: 'dips-assistes', series: 4, reps: '6-10', reposSecondes: 120 },
-          {
-            exerciceId: 'negatives-dips',
-            series: 3,
-            reps: '3-5',
-            reposSecondes: 90,
-            note: 'descente en 5 s',
-          },
-        ],
-      },
-      {
-        titre: 'Fin de séance',
-        exercices: [
-          {
-            exerciceId: 'marche-inclinee',
-            series: 1,
-            reps: '30 min',
-            reposSecondes: 0,
-            note: 'pente 6 %, 4,5 km/h',
-          },
-        ],
-      },
-    ],
+    titre: 'Repos complet',
+    type: 'repos',
+    resume: 'Récupération',
+    court: 'repos',
+    blocs: [],
+    note: 'Repos complet : le milieu de semaine sert à récupérer entre les jambes de mardi et le petit footing de jeudi.'
   },
   {
-    id: 'jeudi',
+    id: 'course-jeudi',
     jour: 'Jeudi',
-    titre: 'Épaules · Pecs · Dos · Bras',
-    type: 'seance',
-    resume: 'Haut du corps',
-    court: 'épaules',
-    duree: '≈ 55 min',
+    titre: 'Petit footing',
+    type: 'course',
+    resume: 'Course facile, récupération active',
+    court: 'course',
+    duree: '≈ 20 min',
+    note: 'Footing court et facile, dehors. Il compte comme de la récupération active, pas comme une séance : pas de haut du corps ce jour-là.',
     blocs: [
       {
-        exercices: [
-          { exerciceId: 'developpe-militaire-halteres', series: 4, reps: '8-10', reposSecondes: 120 },
-          { exerciceId: 'developpe-couche-barre', series: 3, reps: '10-12', reposSecondes: 120 },
-          { exerciceId: 'tirage-horizontal', series: 4, reps: '8-10', reposSecondes: 120 },
-        ],
-      },
-      {
-        titre: 'Enchaînement 1',
-        enchainement: true,
-        note: '0 s entre les deux exercices, 75 s après la paire.',
-        exercices: [
-          { exerciceId: 'face-pull', series: 3, reps: '15', reposSecondes: 0 },
-          {
-            exerciceId: 'curl-halteres-alternes',
-            series: 3,
-            reps: '10-12',
-            reposSecondes: 75,
-            echec: 'derniere',
-          },
-        ],
-      },
-      {
-        titre: 'Enchaînement 2',
-        enchainement: true,
-        note: '0 s entre les deux exercices, 60 s après la paire.',
+        titre: 'Course',
         exercices: [
           {
-            exerciceId: 'elevations-laterales',
-            series: 3,
-            reps: '12-15',
-            reposSecondes: 0,
-            echec: 'derniere',
-          },
-          { exerciceId: 'extensions-triceps', series: 3, reps: '10-12', reposSecondes: 60 },
-        ],
-      },
-      {
-        titre: 'Fin de séance',
-        exercices: [
-          {
-            exerciceId: 'marche-inclinee',
+            exerciceId: 'footing',
             series: 1,
-            reps: '30 min',
+            reps: '20 min',
             reposSecondes: 0,
-            note: 'pente 6 %, 4,5 km/h',
+            note: 'allure facile, tu peux parler en courant',
           },
         ],
       },
@@ -421,6 +342,14 @@ export function joursAvecExercice(exerciceId: string): { jour: Jour; prescriptio
       .filter((p) => p.exerciceId === exerciceId)
       .map((prescription) => ({ jour, prescription })),
   )
+}
+
+/** Clés « jour:exercice » de repos personnalisés qui correspondent encore à un exercice du programme. */
+export function reposPersonnalisesActifs(repos: Record<string, number>): string[] {
+  return Object.keys(repos).filter((cle) => {
+    const [jourId, exerciceId] = cle.split(':')
+    return !!jourId && !!exerciceId && !!prescriptionDe(jourId, exerciceId)
+  })
 }
 
 /** Exercice enchaîné juste après celui-ci, dans le même bloc. */

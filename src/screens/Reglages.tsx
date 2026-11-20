@@ -3,7 +3,13 @@ import type { Navigation } from '../App'
 import { EntetePage } from '../components/Entete'
 import { Bouton, Carte, Compteur, Titre } from '../components/Ui'
 import { exercice } from '../data/exercices'
-import { JOURS_PAR_ID, REGLES, estEnchaine, libelleRepos } from '../data/programme'
+import {
+  JOURS_PAR_ID,
+  REGLES,
+  estEnchaine,
+  libelleRepos,
+  reposPersonnalisesActifs,
+} from '../data/programme'
 import { bip } from '../lib/chrono'
 import {
   libelleMode,
@@ -56,7 +62,7 @@ export default function Reglages({ nav }: { nav: Navigation }) {
   const sauvegarde = useEtatSauvegarde()
   const repos = useRepos()
   const [confirmation, setConfirmation] = useState(false)
-  const persos = Object.keys(repos)
+  const persos = reposPersonnalisesActifs(repos)
 
   return (
     <div className="pb-6">

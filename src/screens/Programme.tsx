@@ -6,6 +6,7 @@ import {
   exceptionsAVenir,
   jourDuJour,
   nomDuJour,
+  reposPersonnalisesActifs,
   toutesLesPrescriptions,
 } from '../data/programme'
 import { exercice } from '../data/exercices'
@@ -17,6 +18,7 @@ const ETIQUETTE_TYPE = {
   seance: { texte: 'Séance', ton: 'lime' as const },
   repos: { texte: 'Repos', ton: 'sombre' as const },
   libre: { texte: 'Libre', ton: 'neutre' as const },
+  course: { texte: 'Course', ton: 'neutre' as const },
 }
 
 export default function Programme({ nav }: { nav: Navigation }) {
@@ -26,7 +28,7 @@ export default function Programme({ nav }: { nav: Navigation }) {
   const repos = useRepos()
   const seances = useSeances()
   const faites = seances.filter((s) => s.terminee).length
-  const persos = Object.keys(repos).length
+  const persos = reposPersonnalisesActifs(repos).length
 
   return (
     <div className="pb-6">
@@ -74,7 +76,7 @@ export default function Programme({ nav }: { nav: Navigation }) {
             <div className="flex gap-2 mt-4">
               {aujourdhui.type !== 'repos' && (
                 <Bouton className="flex-1" onClick={() => nav.demarrerJour(aujourdhui.id)}>
-                  Démarrer la séance
+                  {aujourdhui.type === 'course' ? 'Démarrer la course' : 'Démarrer la séance'}
                 </Bouton>
               )}
               <Bouton
