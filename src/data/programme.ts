@@ -37,50 +37,70 @@ export type Jour = {
   note?: string
 }
 
-/** La semaine va du lundi au dimanche. */
+/**
+ * La semaine va du lundi au dimanche (c'est l'ordre d'affichage).
+ *
+ * `id` est l'identité STABLE d'une séance : les temps de repos personnalisés (clé « id:exercice »),
+ * la séance en cours et les exceptions datées s'y rattachent. `jour` est le jour où elle a lieu.
+ * Les deux se sont séparés le 20 novembre 2026, quand Anthony a permuté samedi et lundi : la séance
+ * « lundi » (Pecs · Dos · Biceps) se fait désormais le samedi, et la séance « samedi »
+ * (Street · Jambes) le lundi. On a déplacé les séances d'un jour à l'autre sans renommer leurs
+ * identifiants, pour ne rien orpheliner. Ne pas « corriger » les identifiants.
+ */
 export const SEMAINE: Jour[] = [
   {
-    id: 'lundi',
+    id: 'samedi',
     jour: 'Lundi',
-    titre: 'Pecs · Dos · Biceps',
+    titre: 'Street · Jambes',
     type: 'seance',
-    resume: 'Haut du corps',
-    court: 'pecs · dos',
+    resume: 'Barre, dips et jambes',
+    court: 'street',
     duree: '≈ 55 min',
     blocs: [
       {
+        titre: 'Barre',
         exercices: [
-          { exerciceId: 'developpe-couche-barre', series: 3, reps: '10-12', reposSecondes: 150 },
-          { exerciceId: 'tirage-vertical', series: 3, reps: '8-10', reposSecondes: 120 },
+          { exerciceId: 'suspension-barre', series: 3, reps: '20-30 s', reposSecondes: 60 },
           {
-            exerciceId: 'chest-press-incline-machine',
-            series: 3,
-            reps: '8-12',
-            reposSecondes: 90,
-            echec: 'derniere',
+            exerciceId: 'tractions-assistees',
+            series: 4,
+            reps: '6-10',
+            reposSecondes: 120,
+            note: 'paume vers toi — à 3 × 10, baisse l’aide de 5 kg',
           },
           {
-            exerciceId: 'rowing-haltere-un-bras',
+            exerciceId: 'negatives-tractions',
             series: 3,
-            reps: '8-10',
-            reposSecondes: 90,
-            note: 'par bras',
+            reps: '3-5',
+            reposSecondes: 120,
+            note: 'descente en 5 s',
           },
         ],
       },
       {
-        titre: 'Enchaînement',
-        enchainement: true,
-        note: '0 s entre les deux exercices, 75 s après la paire.',
+        titre: 'Dips',
         exercices: [
-          { exerciceId: 'elevations-laterales', series: 3, reps: '12-15', reposSecondes: 0 },
+          { exerciceId: 'dips-assistes', series: 4, reps: '6-10', reposSecondes: 120 },
           {
-            exerciceId: 'curl-biceps-barre',
+            exerciceId: 'negatives-dips',
+            series: 3,
+            reps: '3-5',
+            reposSecondes: 90,
+            note: 'descente en 5 s',
+          },
+        ],
+      },
+      {
+        titre: 'Jambes',
+        exercices: [
+          {
+            exerciceId: 'squat-ou-presse',
             series: 3,
             reps: '10-12',
-            reposSecondes: 75,
-            echec: 'derniere',
+            reposSecondes: 90,
+            note: 'presse à cuisses',
           },
+          { exerciceId: 'mollets-debout', series: 3, reps: '15-20', reposSecondes: 60 },
         ],
       },
       {
@@ -89,7 +109,7 @@ export const SEMAINE: Jour[] = [
           {
             exerciceId: 'marche-inclinee',
             series: 1,
-            reps: '15-30 min',
+            reps: '30 min',
             reposSecondes: 0,
             note: 'pente 6 %, 4,5 km/h',
           },
@@ -154,6 +174,7 @@ export const SEMAINE: Jour[] = [
     titre: 'Abdos',
     type: 'seance',
     resume: 'À la maison ou à la salle',
+    note: 'Ta seule séance d’abdos de la semaine : le dimanche est maintenant réservé à la course.',
     court: 'abdos',
     duree: '≈ 25 min',
     blocs: [
@@ -173,14 +194,6 @@ export const SEMAINE: Jour[] = [
             reposSecondes: 60,
             note: 'à la maison : au sol',
           },
-          {
-            exerciceId: 'ab-wheel-rollout',
-            series: 3,
-            reps: '10',
-            reposSecondes: 60,
-            note: 'à la maison : dead bug',
-          },
-          { exerciceId: 'planche', series: 3, reps: '45 s', reposSecondes: 45 },
         ],
       },
       {
@@ -265,61 +278,50 @@ export const SEMAINE: Jour[] = [
     resume: 'Aucune séance',
     court: 'repos',
     blocs: [],
-    note: 'Repos complet. Exception unique : le vendredi 20 novembre 2026, tu fais la séance du lundi (pecs, dos, biceps). Le vendredi suivant redevient un jour de repos.',
+    note: 'Repos complet. Exception unique : le vendredi 20 novembre 2026, tu fais la séance Pecs · Dos · Biceps (habituellement le samedi). Le vendredi suivant redevient un jour de repos.',
   },
   {
-    id: 'samedi',
+    id: 'lundi',
     jour: 'Samedi',
-    titre: 'Street · Jambes',
+    titre: 'Pecs · Dos · Biceps',
     type: 'seance',
-    resume: 'Barre, dips et jambes',
-    court: 'street',
+    resume: 'Haut du corps',
+    court: 'pecs · dos',
     duree: '≈ 55 min',
     blocs: [
       {
-        titre: 'Barre',
         exercices: [
-          { exerciceId: 'suspension-barre', series: 3, reps: '20-30 s', reposSecondes: 60 },
+          { exerciceId: 'developpe-couche-barre', series: 3, reps: '10-12', reposSecondes: 150 },
+          { exerciceId: 'tirage-vertical', series: 3, reps: '8-10', reposSecondes: 120 },
           {
-            exerciceId: 'tractions-assistees',
-            series: 4,
-            reps: '6-10',
-            reposSecondes: 120,
-            note: 'paume vers toi — à 3 × 10, baisse l’aide de 5 kg',
-          },
-          {
-            exerciceId: 'negatives-tractions',
+            exerciceId: 'chest-press-incline-machine',
             series: 3,
-            reps: '3-5',
-            reposSecondes: 120,
-            note: 'descente en 5 s',
-          },
-        ],
-      },
-      {
-        titre: 'Dips',
-        exercices: [
-          { exerciceId: 'dips-assistes', series: 4, reps: '6-10', reposSecondes: 120 },
-          {
-            exerciceId: 'negatives-dips',
-            series: 3,
-            reps: '3-5',
+            reps: '8-12',
             reposSecondes: 90,
-            note: 'descente en 5 s',
+            echec: 'derniere',
+          },
+          {
+            exerciceId: 'rowing-haltere-un-bras',
+            series: 3,
+            reps: '8-10',
+            reposSecondes: 90,
+            note: 'par bras',
           },
         ],
       },
       {
-        titre: 'Jambes',
+        titre: 'Enchaînement',
+        enchainement: true,
+        note: '0 s entre les deux exercices, 75 s après la paire.',
         exercices: [
+          { exerciceId: 'elevations-laterales', series: 3, reps: '12-15', reposSecondes: 0 },
           {
-            exerciceId: 'squat-ou-presse',
+            exerciceId: 'curl-biceps-barre',
             series: 3,
             reps: '10-12',
-            reposSecondes: 90,
-            note: 'presse à cuisses',
+            reposSecondes: 75,
+            echec: 'derniere',
           },
-          { exerciceId: 'mollets-debout', series: 3, reps: '15-20', reposSecondes: 60 },
         ],
       },
       {
@@ -328,7 +330,7 @@ export const SEMAINE: Jour[] = [
           {
             exerciceId: 'marche-inclinee',
             series: 1,
-            reps: '30 min',
+            reps: '15-30 min',
             reposSecondes: 0,
             note: 'pente 6 %, 4,5 km/h',
           },
@@ -339,11 +341,12 @@ export const SEMAINE: Jour[] = [
   {
     id: 'dimanche',
     jour: 'Dimanche',
-    titre: 'Course · Abdos',
+    titre: 'Course',
     type: 'seance',
-    resume: 'Footing et gainage',
+    resume: 'Footing à allure facile',
     court: 'course',
-    duree: '≈ 35 min',
+    note: 'À faire dehors. Pas de salle ce jour-là : les abdos sont le mercredi.',
+    duree: '≈ 25 min',
     blocs: [
       {
         titre: 'Course',
@@ -355,13 +358,6 @@ export const SEMAINE: Jour[] = [
             reposSecondes: 0,
             note: 'allure facile, tu peux parler en courant',
           },
-        ],
-      },
-      {
-        titre: 'Abdos',
-        exercices: [
-          { exerciceId: 'releves-jambes-suspendu', series: 3, reps: '12', reposSecondes: 60 },
-          { exerciceId: 'crunch-poulie-haute', series: 3, reps: '15', reposSecondes: 60 },
         ],
       },
     ],
@@ -379,7 +375,7 @@ export const EXCEPTIONS: Exception[] = [
   {
     date: '2026-11-20',
     jourId: 'lundi',
-    texte: 'Exception unique : ce vendredi, tu fais la séance du lundi (pecs, dos, biceps).',
+    texte: 'Exception unique : ce vendredi, tu fais la séance Pecs · Dos · Biceps.',
   },
 ]
 
@@ -395,13 +391,19 @@ export function exceptionPour(date = new Date()): Exception | undefined {
 
 export const JOURS_PAR_ID: Record<string, Jour> = Object.fromEntries(SEMAINE.map((j) => [j.id, j]))
 
-/** Index JS getDay() (0 = dimanche) -> id du jour du programme. */
-const PAR_INDEX_JS = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi']
+/** Index JS getDay() (0 = dimanche) -> nom du jour, tel qu'écrit dans `jour`. */
+const NOMS_JOURS = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi']
+
+/** Nom du vrai jour de la semaine (pas celui de la séance : le vendredi d'une exception, c'est « Vendredi »). */
+export function nomDuJour(date = new Date()): string {
+  return NOMS_JOURS[date.getDay()]
+}
 
 export function jourDuJour(date = new Date()): Jour {
   const exception = exceptionPour(date)
   if (exception && JOURS_PAR_ID[exception.jourId]) return JOURS_PAR_ID[exception.jourId]
-  return JOURS_PAR_ID[PAR_INDEX_JS[date.getDay()]]
+  const nom = NOMS_JOURS[date.getDay()]
+  return SEMAINE.find((j) => j.jour === nom) ?? SEMAINE[0]
 }
 
 export function toutesLesPrescriptions(jour: Jour): Prescription[] {

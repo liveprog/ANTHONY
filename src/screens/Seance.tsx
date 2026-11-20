@@ -8,8 +8,10 @@ import {
   SEMAINE,
   estEnchaine,
   exerciceEnchaineApres,
+  exceptionPour,
   jourDuJour,
   libelleRepos,
+  nomDuJour,
   toutesLesPrescriptions,
   type Prescription,
 } from '../data/programme'
@@ -135,6 +137,8 @@ export default function Seance({
 
   const jourId = jourChoisi ?? jourDuJour().id
   const jour = JOURS_PAR_ID[jourId]
+  // Le jour d'une exception, c'est le vrai jour de la semaine, pas le jour habituel de la séance.
+  const nomAffiche = exceptionPour() && jourId === jourDuJour().id ? nomDuJour() : jour.jour
 
   // Reprend la séance en cours si elle correspond, sinon en prépare une nouvelle.
   useEffect(() => {
@@ -242,7 +246,7 @@ export default function Seance({
     <div className="pb-6">
       <EnteteOnglet
         titre={jour.titre}
-        sous={`${jour.jour}${jour.duree ? ` · ${jour.duree}` : ''} · ${validees}/${total} séries validées`}
+        sous={`${nomAffiche}${jour.duree ? ` · ${jour.duree}` : ''} · ${validees}/${total} séries validées`}
       />
 
       <div className="px-4 space-y-4">

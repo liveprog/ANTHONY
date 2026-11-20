@@ -5,6 +5,7 @@ import {
   SEMAINE,
   exceptionPour,
   jourDuJour,
+  nomDuJour,
   toutesLesPrescriptions,
 } from '../data/programme'
 import { exercice } from '../data/exercices'
@@ -30,7 +31,7 @@ export default function Programme({ nav }: { nav: Navigation }) {
     <div className="pb-6">
       <EnteteOnglet
         titre="Antho Fit"
-        sous={`${aujourdhui.jour} · ${aujourdhui.titre}`}
+        sous={`${nomDuJour()} · ${aujourdhui.titre}`}
         action={
           <button
             type="button"
@@ -100,7 +101,7 @@ export default function Programme({ nav }: { nav: Navigation }) {
         <ul className="space-y-2">
           {SEMAINE.map((jour) => {
             const exos = toutesLesPrescriptions(jour)
-            const estAujourdhui = jour.id === aujourdhui.id
+            const estAujourdhui = jour.jour === nomDuJour()
             return (
               <li key={jour.id}>
                 <Carte
