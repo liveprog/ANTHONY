@@ -25,9 +25,10 @@ ce contexte (dev local, hébergement statique), elle retombe sur le `localStorag
 ## Les quatre onglets
 
 **Programme** — la semaine complète, du lundi au dimanche : Street·Jambes (≈ 55 min), Jambes
-lourdes (≈ 50 min), Abdos (≈ 25 min, la seule séance d'abdos de la semaine), Épaules·Pecs·Dos·Bras
-(≈ 55 min), repos le vendredi, Pecs·Dos·Biceps (≈ 55 min) le samedi, Course (≈ 25 min, dehors) le
-dimanche. La plupart des séances se terminent par la marche inclinée (pente 6 %, 4,5 km/h). Chaque
+lourdes (≈ 50 min), Abdos (≈ 25 min), Épaules·Pecs·Dos·Bras (≈ 55 min), repos le vendredi,
+Pecs·Dos·Biceps (≈ 55 min) le samedi, et le dimanche Course·Full body : footing de 25 min dehors le
+matin, puis vers 16-17 h une séance full body courte à la salle (≈ 45 min : jambes, haut du corps,
+abdos). La plupart des séances se terminent par la marche inclinée (pente 6 %, 4,5 km/h). Chaque
 jour détaille ses exercices, ses séries, ses séries à l'échec et ses enchaînements (deux exercices
 sans repos entre les deux).
 

@@ -341,23 +341,60 @@ export const SEMAINE: Jour[] = [
   {
     id: 'dimanche',
     jour: 'Dimanche',
-    titre: 'Course',
+    titre: 'Course · Full body',
     type: 'seance',
-    resume: 'Footing à allure facile',
-    court: 'course',
-    note: 'À faire dehors. Pas de salle ce jour-là : les abdos sont le mercredi.',
-    duree: '≈ 25 min',
+    resume: 'Footing le matin, full body le soir',
+    court: 'full body',
+    note: 'Matin : footing dehors. Soir, vers 16-17 h : séance full body courte à la salle (jambes, haut du corps, abdos).',
+    duree: '25 min + 45 min',
     blocs: [
       {
-        titre: 'Course',
+        titre: 'Matin · Course',
         exercices: [
           {
             exerciceId: 'footing',
             series: 1,
             reps: '25 min',
             reposSecondes: 0,
-            note: 'allure facile, tu peux parler en courant',
+            note: 'dehors, allure facile, tu peux parler en courant',
           },
+        ],
+      },
+      {
+        titre: 'Soir · Full body',
+        exercices: [
+          {
+            exerciceId: 'squat-ou-presse',
+            series: 3,
+            reps: '10-12',
+            reposSecondes: 120,
+            note: 'presse conseillée : les jambes travaillent encore lundi',
+          },
+          {
+            exerciceId: 'chest-press-incline-machine',
+            series: 3,
+            reps: '10-12',
+            reposSecondes: 90,
+          },
+          { exerciceId: 'tirage-horizontal', series: 3, reps: '10-12', reposSecondes: 90 },
+        ],
+      },
+      {
+        titre: 'Enchaînement 1 · Jambes et épaules',
+        enchainement: true,
+        note: '0 s entre les deux exercices, 75 s après la paire.',
+        exercices: [
+          { exerciceId: 'leg-curl', series: 3, reps: '10-12', reposSecondes: 0 },
+          { exerciceId: 'elevations-laterales', series: 3, reps: '12-15', reposSecondes: 75 },
+        ],
+      },
+      {
+        titre: 'Enchaînement 2 · Abdos',
+        enchainement: true,
+        note: '0 s entre les deux exercices, 60 s après la paire.',
+        exercices: [
+          { exerciceId: 'releves-jambes-suspendu', series: 3, reps: '12', reposSecondes: 0 },
+          { exerciceId: 'crunch-poulie-haute', series: 3, reps: '15', reposSecondes: 60 },
         ],
       },
     ],
