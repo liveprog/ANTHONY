@@ -38,16 +38,17 @@ export type Jour = {
 }
 
 /**
- * La semaine va du lundi au dimanche (c'est l'ordre d'affichage) : 3 séances de salle (haut du corps
- * le mardi, bas du corps le mercredi, petit full body avec abdos le samedi), 2 courses faciles
- * (jeudi et dimanche) et 2 jours de repos (lundi et vendredi).
+ * La semaine va du lundi au dimanche (c'est l'ordre d'affichage) : 4 séances de salle (haut du corps
+ * le mardi, bas du corps le mercredi, tractions · dips · abdos le vendredi, petit full body le
+ * samedi), 2 courses faciles (jeudi et dimanche) et 1 jour de repos (lundi).
  *
  * `id` est l'identité STABLE d'une séance : les temps de repos personnalisés (clé « id:exercice »),
  * la séance en cours et les exceptions datées s'y rattachent. `jour` est le jour où elle a lieu.
  * Les deux ne coïncident plus, volontairement : la séance « lundi » est le haut du corps (mardi),
- * « mardi » le bas du corps (mercredi), « dimanche » le full body (samedi). Les jours de repos et
- * les courses ont leur propre identifiant. On déplace les séances d'un jour à l'autre sans renommer
- * leurs identifiants, pour que rien ne soit orphelin. Ne pas « corriger » les identifiants.
+ * « mardi » le bas du corps (mercredi), « dimanche » le full body (samedi). Les jours de repos, les
+ * courses et la séance du vendredi ont leur propre identifiant. On déplace les séances d'un jour à
+ * l'autre sans renommer leurs identifiants, pour que rien ne soit orphelin.
+ * Ne pas « corriger » les identifiants.
  */
 export const SEMAINE: Jour[] = [
   {
@@ -197,24 +198,96 @@ export const SEMAINE: Jour[] = [
     ],
   },
   {
-    id: 'vendredi',
+    id: 'tractions-vendredi',
     jour: 'Vendredi',
-    titre: 'Repos complet',
-    type: 'repos',
-    resume: 'Aucune séance',
-    court: 'repos',
-    blocs: [],
-    note: 'Repos complet. Exception unique : le vendredi 20 novembre 2026, tu fais la séance Haut du corps (habituellement le mardi). Le vendredi suivant redevient un jour de repos.',
+    titre: 'Tractions · Dips · Abdos',
+    type: 'seance',
+    resume: 'Tractions, dips, épaules, biceps, abdos',
+    court: 'tractions',
+    duree: '≈ 55 min',
+    note: 'Ta séance pour progresser aux tractions et aux dips (avec de l’aide, puis les descentes lentes), tout en travaillant épaules, biceps et abdos.',
+    blocs: [
+      {
+        titre: 'Tractions et dips',
+        exercices: [
+          {
+            exerciceId: 'tractions-assistees',
+            series: 4,
+            reps: '6-10',
+            reposSecondes: 120,
+            note: 'paume vers toi — à 3 × 10, baisse l’aide de 5 kg',
+          },
+          { exerciceId: 'dips-assistes', series: 4, reps: '6-10', reposSecondes: 120 },
+        ],
+      },
+      {
+        titre: 'Enchaînement 1 · Descentes lentes',
+        enchainement: true,
+        note: '0 s entre les deux exercices, 120 s après la paire.',
+        exercices: [
+          {
+            exerciceId: 'negatives-tractions',
+            series: 3,
+            reps: '3-5',
+            reposSecondes: 0,
+            note: 'descente en 5 s',
+          },
+          {
+            exerciceId: 'negatives-dips',
+            series: 3,
+            reps: '3-5',
+            reposSecondes: 120,
+            note: 'descente en 5 s',
+          },
+        ],
+      },
+      {
+        titre: 'Enchaînement 2 · Épaules et biceps',
+        enchainement: true,
+        note: '0 s entre les deux exercices, 75 s après la paire.',
+        exercices: [
+          { exerciceId: 'elevations-laterales', series: 3, reps: '12-15', reposSecondes: 0 },
+          {
+            exerciceId: 'curl-biceps-barre',
+            series: 3,
+            reps: '10-12',
+            reposSecondes: 75,
+            echec: 'derniere',
+          },
+        ],
+      },
+      {
+        titre: 'Enchaînement 3 · Abdos',
+        enchainement: true,
+        note: '0 s entre les deux exercices, 60 s après la paire.',
+        exercices: [
+          { exerciceId: 'releves-jambes-suspendu', series: 3, reps: '12', reposSecondes: 0 },
+          { exerciceId: 'crunch-poulie-haute', series: 3, reps: '15', reposSecondes: 60 },
+        ],
+      },
+      {
+        titre: 'Fin de séance',
+        exercices: [
+          {
+            exerciceId: 'marche-inclinee',
+            series: 1,
+            reps: '15-30 min',
+            reposSecondes: 0,
+            note: 'pente 6 %, 4,5 km/h',
+          },
+        ],
+      },
+    ],
   },
   {
     id: 'dimanche',
     jour: 'Samedi',
     titre: 'Full body',
     type: 'seance',
-    resume: 'Petite séance : jambes, haut du corps, abdos',
+    resume: 'Jambes, haut du corps, abdos',
     court: 'full body',
-    duree: '≈ 35 min',
-    note: 'Séance courte : les gros mouvements de tout le corps, plus les abdos de la semaine.',
+    duree: '≈ 30 min',
+    note: 'Séance courte : les gros mouvements de tout le corps. Les abdos de la veille (relevés, crunch) laissent la place à la planche, pour ne pas refaire les mêmes.',
     blocs: [
       {
         exercices: [
@@ -235,13 +308,8 @@ export const SEMAINE: Jour[] = [
         ],
       },
       {
-        titre: 'Enchaînement · Abdos',
-        enchainement: true,
-        note: '0 s entre les deux exercices, 60 s après la paire.',
-        exercices: [
-          { exerciceId: 'releves-jambes-suspendu', series: 3, reps: '12', reposSecondes: 0 },
-          { exerciceId: 'crunch-poulie-haute', series: 3, reps: '15', reposSecondes: 60 },
-        ],
+        titre: 'Abdos',
+        exercices: [{ exerciceId: 'planche', series: 3, reps: '45 s', reposSecondes: 60 }],
       },
       {
         titre: 'Fin de séance',
@@ -290,13 +358,7 @@ export type Exception = {
   texte: string
 }
 
-export const EXCEPTIONS: Exception[] = [
-  {
-    date: '2026-11-20',
-    jourId: 'lundi',
-    texte: 'Exceptionnellement, le vendredi 20 novembre, tu fais la séance Haut du corps.',
-  },
-]
+export const EXCEPTIONS: Exception[] = []
 
 function cleDate(d: Date): string {
   const mois = `${d.getMonth() + 1}`.padStart(2, '0')

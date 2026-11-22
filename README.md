@@ -24,16 +24,18 @@ ce contexte (dev local, hébergement statique), elle retombe sur le `localStorag
 
 ## Les quatre onglets
 
-**Programme** — une semaine courte et optimisée : **3 séances de salle**, **2 courses** faciles et
-**2 jours de repos**. Lundi repos, **Haut du corps** le mardi (≈ 55 min : développé militaire,
-développé couché, tirage vertical et horizontal, puis tirage à la corde + curl, élévations latérales
-+ extensions triceps), **Bas du corps** le mercredi (≈ 50 min, uniquement les jambes), petit footing
-de 20 min le jeudi, vendredi repos, petit **Full body** le samedi (≈ 35 min : squat ou presse,
-développé incliné, tirage horizontal, abdos), et footing de 25 min le dimanche. Les abdos se font une
-seule fois par semaine (full body), il n'y a jamais deux jours de jambes de suite, et les courses
-comptent comme de la récupération active. Chaque séance de salle se termine par la marche inclinée
-(pente 6 %, 4,5 km/h). Chaque jour détaille ses exercices, ses séries, ses séries à l'échec et ses
-enchaînements (deux exercices sans repos entre les deux).
+**Programme** — **4 séances de salle**, **2 courses** faciles et **1 jour de repos**. Lundi repos,
+**Haut du corps** le mardi (≈ 55 min : développé militaire, développé couché, tirage vertical et
+horizontal, puis tirage à la corde + curl aux haltères, élévations latérales + extensions triceps),
+**Bas du corps** le mercredi (≈ 50 min, uniquement les jambes), petit footing de 20 min le jeudi,
+**Tractions · Dips · Abdos** le vendredi (≈ 55 min : tractions et dips assistés, descentes lentes,
+élévations latérales + curl à la barre, relevés de jambes + crunch), petit **Full body** le samedi
+(≈ 30 min : squat ou presse, développé incliné, tirage horizontal, planche), et footing de 25 min le
+dimanche. Les abdos sont travaillés deux fois (vendredi et samedi, avec des exercices différents),
+il n'y a jamais deux jours de jambes de suite, et les courses comptent comme de la récupération
+active. Chaque séance de salle se termine par la marche inclinée (pente 6 %, 4,5 km/h). Chaque
+jour détaille ses exercices, ses séries, ses séries à l'échec et ses enchaînements (deux exercices
+sans repos entre les deux). La liste « La semaine » affiche les muscles travaillés chaque jour.
 
 Dans `src/data/programme.ts`, `id` est l'identité stable d'une séance et `jour` le jour où elle a
 lieu : le haut du corps (identifiant `lundi`) se fait le mardi, le bas du corps (`mardi`) le mercredi
@@ -42,8 +44,8 @@ identifiants, pour que leurs temps de repos personnalisés, la séance en cours 
 suivent. Les réglages d'un exercice qui n'est plus dans une séance ne s'affichent plus.
 
 Un jour peut être remplacé à une date précise : `EXCEPTIONS` associe une date à une séance du
-programme (vendredi 20 novembre 2026 = séance Pecs·Dos·Biceps), `jourDuJour()` la respecte, et
-l'accueil affiche la raison ainsi que le vrai jour de la semaine.
+programme (la liste est vide pour l'instant), `jourDuJour()` la respecte, et l'accueil affiche la
+raison ainsi que le vrai jour de la semaine ; une exception passée ne s'affiche plus.
 
 Le temps de repos est porté par le programme, **séance par séance** : il s'affiche en pastille à
 côté de chaque exercice, le même exercice pouvant être enchaîné un jour (0 s) et posé un autre

@@ -9,7 +9,6 @@ import {
   reposPersonnalisesActifs,
   toutesLesPrescriptions,
 } from '../data/programme'
-import { exercice } from '../data/exercices'
 import { EnteteOnglet } from '../components/Entete'
 import { Bouton, Carte, Etiquette, Titre } from '../components/Ui'
 import { useRepos, useSeances } from '../lib/donnees'
@@ -103,7 +102,6 @@ export default function Programme({ nav }: { nav: Navigation }) {
         </Titre>
         <ul className="space-y-2">
           {SEMAINE.map((jour) => {
-            const exos = toutesLesPrescriptions(jour)
             const estAujourdhui = jour.jour === nomDuJour()
             return (
               <li key={jour.id}>
@@ -126,14 +124,7 @@ export default function Programme({ nav }: { nav: Navigation }) {
                         <h3 className="font-bold truncate">{jour.titre}</h3>
                         {estAujourdhui && <Etiquette ton="lime">Auj.</Etiquette>}
                       </div>
-                      <p className="text-[12.5px] text-white/40 truncate">
-                        {exos.length > 0
-                          ? exos
-                              .slice(0, 3)
-                              .map((p) => exercice(p.exerciceId).nom)
-                              .join(' · ')
-                          : 'Récupération, pas de séance'}
-                      </p>
+                      <p className="text-[12.5px] text-white/40 truncate">{jour.resume}</p>
                     </div>
                     <svg viewBox="0 0 24 24" className="w-5 h-5 text-white/25 shrink-0" fill="none" stroke="currentColor" strokeWidth="2">
                       <path d="M9.5 5 16 12l-6.5 7" strokeLinecap="round" strokeLinejoin="round" />
