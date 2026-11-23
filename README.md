@@ -25,17 +25,23 @@ ce contexte (dev local, hébergement statique), elle retombe sur le `localStorag
 ## Les quatre onglets
 
 **Programme** — **4 séances de salle**, **2 courses** faciles et **1 jour de repos**. Lundi repos,
-**Haut du corps** le mardi (≈ 55 min : développé militaire, développé couché, tirage vertical et
-horizontal, puis tirage à la corde + curl aux haltères, élévations latérales + extensions triceps),
-**Bas du corps** le mercredi (≈ 50 min, uniquement les jambes), petit footing de 20 min le jeudi,
-**Tractions · Dips · Abdos** le vendredi (≈ 55 min : tractions et dips assistés, descentes lentes,
-élévations latérales + curl à la barre, relevés de jambes + crunch), petit **Full body** le samedi
-(≈ 30 min : squat ou presse, développé incliné, tirage horizontal, planche), et footing de 25 min le
-dimanche. Les abdos sont travaillés deux fois (vendredi et samedi, avec des exercices différents),
-il n'y a jamais deux jours de jambes de suite, et les courses comptent comme de la récupération
-active. Chaque séance de salle se termine par la marche inclinée (pente 6 %, 4,5 km/h). Chaque
-jour détaille ses exercices, ses séries, ses séries à l'échec et ses enchaînements (deux exercices
-sans repos entre les deux). La liste « La semaine » affiche les muscles travaillés chaque jour.
+**Haut du corps** le mardi (≈ 30-35 min, lourd : développé militaire + tirage vertical, développé
+couché + tirage horizontal, élévations latérales + tirage à la corde, curl aux haltères + extensions
+triceps, tout enchaîné par paires), **Bas du corps** le mercredi (≈ 30-35 min, uniquement les
+jambes : squat ou presse + mollets, soulevé de terre roumain, fentes, curl des ischios), petit
+footing de 20 min le jeudi, **Tractions · Dips · Abdos** le vendredi (≈ 55 min : tractions et dips
+assistés, descentes lentes, élévations latérales + curl à la barre, relevés de jambes + crunch),
+petit **Full body** le samedi (≈ 30 min : squat ou presse, développé incliné, tirage horizontal,
+planche), et footing de 25 min le dimanche. Les séances du mardi et du mercredi sont courtes pour
+laisser le temps de faire la marche inclinée derrière ; elles gardent tous leurs exercices mais en
+réduisant les séries d'accessoires et en enchaînant les exercices par paires, avec des charges
+lourdes (6-8 répétitions sur les gros mouvements) et la dernière série à l'échec sur les tirages
+et l'isolation. Les abdos sont travaillés deux fois (vendredi et samedi, avec des exercices
+différents), il n'y a jamais deux jours de jambes de suite, et les courses comptent comme de la
+récupération active. Chaque séance de salle se termine par la marche inclinée (pente 6 %,
+4,5 km/h). Chaque jour détaille ses exercices, ses séries, ses séries à l'échec et ses
+enchaînements (deux exercices sans repos entre les deux). La liste « La semaine » affiche les
+muscles travaillés chaque jour.
 
 Dans `src/data/programme.ts`, `id` est l'identité stable d'une séance et `jour` le jour où elle a
 lieu : le haut du corps (identifiant `lundi`) se fait le mardi, le bas du corps (`mardi`) le mercredi
