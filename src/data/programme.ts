@@ -69,19 +69,19 @@ export const SEMAINE: Jour[] = [
     resume: 'Épaules, dos, pecs, biceps, triceps',
     court: 'haut du corps',
     duree: '≈ 30-35 min',
-    note: 'Séance courte et lourde, tout enchaîné par paires. Charge lourde ; dernière série à l’échec sur les tirages et l’isolation ; sur le développé couché et le militaire, tu gardes 1 à 2 répétitions en réserve. Une série d’échauffement légère avant le premier gros exercice.',
+    note: 'Presque autant de séries qu’une séance complète (24), en deux fois moins de temps : les exercices sont enchaînés par paires, donc le repos est partagé. Charge lourde ; dernière série à l’échec sur les tirages et l’isolation ; sur le développé couché et le militaire, tu gardes 1 à 2 répétitions en réserve. Une série d’échauffement légère avant le premier gros exercice.',
     blocs: [
       {
         titre: 'Enchaînement 1 · Épaules et dos',
         enchainement: true,
-        note: '0 s entre les deux exercices, 90 s après la paire.',
+        note: '0 s entre les deux exercices, 75 s après la paire.',
         exercices: [
           { exerciceId: 'developpe-militaire-halteres', series: 3, reps: '6-8', reposSecondes: 0 },
           {
             exerciceId: 'tirage-vertical',
             series: 3,
             reps: '8-10',
-            reposSecondes: 90,
+            reposSecondes: 75,
             echec: 'derniere',
           },
         ],
@@ -89,14 +89,14 @@ export const SEMAINE: Jour[] = [
       {
         titre: 'Enchaînement 2 · Pecs et dos',
         enchainement: true,
-        note: '0 s entre les deux exercices, 90 s après la paire.',
+        note: '0 s entre les deux exercices, 75 s après la paire.',
         exercices: [
           { exerciceId: 'developpe-couche-barre', series: 3, reps: '6-8', reposSecondes: 0 },
           {
             exerciceId: 'tirage-horizontal',
             series: 3,
             reps: '8-10',
-            reposSecondes: 90,
+            reposSecondes: 75,
             echec: 'derniere',
           },
         ],
@@ -108,12 +108,12 @@ export const SEMAINE: Jour[] = [
         exercices: [
           {
             exerciceId: 'elevations-laterales',
-            series: 2,
+            series: 3,
             reps: '12-15',
             reposSecondes: 0,
             echec: 'derniere',
           },
-          { exerciceId: 'face-pull', series: 2, reps: '15', reposSecondes: 45 },
+          { exerciceId: 'face-pull', series: 3, reps: '15', reposSecondes: 45 },
         ],
       },
       {
@@ -123,14 +123,14 @@ export const SEMAINE: Jour[] = [
         exercices: [
           {
             exerciceId: 'curl-halteres-alternes',
-            series: 2,
+            series: 3,
             reps: '10-12',
             reposSecondes: 0,
             echec: 'derniere',
           },
           {
             exerciceId: 'extensions-triceps',
-            series: 2,
+            series: 3,
             reps: '10-12',
             reposSecondes: 60,
             echec: 'derniere',
@@ -159,10 +159,10 @@ export const SEMAINE: Jour[] = [
     resume: 'Jambes uniquement',
     court: 'jambes',
     duree: '≈ 30-35 min',
-    note: 'Séance courte et lourde. Tu gardes 1 à 2 répétitions en réserve sur le squat et le soulevé de terre roumain ; dernière série à l’échec sur les mollets et le curl des ischios. Une série d’échauffement légère avant le squat.',
+    note: 'Les mêmes 15 séries qu’une séance complète, en moins de temps : le squat est enchaîné aux mollets et les fentes au curl des ischios, donc le repos est partagé. Tu gardes 1 à 2 répétitions en réserve sur le squat et le soulevé de terre roumain ; dernière série à l’échec sur les mollets et le curl des ischios. Une série d’échauffement légère avant le squat.',
     blocs: [
       {
-        titre: 'Enchaînement · Squat et mollets',
+        titre: 'Enchaînement 1 · Squat et mollets',
         enchainement: true,
         note: '0 s entre les deux exercices, 120 s après la paire.',
         exercices: [
@@ -179,18 +179,25 @@ export const SEMAINE: Jour[] = [
       {
         exercices: [
           { exerciceId: 'souleve-de-terre-roumain', series: 3, reps: '8-10', reposSecondes: 120 },
+        ],
+      },
+      {
+        titre: 'Enchaînement 2 · Fentes et ischios',
+        enchainement: true,
+        note: '0 s entre les deux exercices, 90 s après la paire.',
+        exercices: [
           {
             exerciceId: 'fentes-marchees',
-            series: 2,
+            series: 3,
             reps: '10',
-            reposSecondes: 90,
+            reposSecondes: 0,
             note: 'par jambe',
           },
           {
             exerciceId: 'leg-curl',
-            series: 2,
+            series: 3,
             reps: '10-12',
-            reposSecondes: 60,
+            reposSecondes: 90,
             echec: 'derniere',
           },
         ],

@@ -32,11 +32,11 @@ jambes : squat ou presse + mollets, soulevé de terre roumain, fentes, curl des 
 footing de 20 min le jeudi, **Tractions · Dips · Abdos** le vendredi (≈ 55 min : tractions et dips
 assistés, descentes lentes, élévations latérales + curl à la barre, relevés de jambes + crunch),
 petit **Full body** le samedi (≈ 30 min : squat ou presse, développé incliné, tirage horizontal,
-planche), et footing de 25 min le dimanche. Les séances du mardi et du mercredi sont courtes pour
-laisser le temps de faire la marche inclinée derrière ; elles gardent tous leurs exercices mais en
-réduisant les séries d'accessoires et en enchaînant les exercices par paires, avec des charges
-lourdes (6-8 répétitions sur les gros mouvements) et la dernière série à l'échec sur les tirages
-et l'isolation. Les abdos sont travaillés deux fois (vendredi et samedi, avec des exercices
+planche), et footing de 25 min le dimanche. Les séances du mardi et du mercredi sont courtes pour laisser le temps de faire la marche
+inclinée derrière, sans rien perdre : elles gardent tous leurs exercices et presque toutes leurs
+séries (24 et 15, contre 25 et 15 dans une séance complète), le gain de temps venant des
+enchaînements par paires, où le repos est partagé. Charges lourdes (6-8 répétitions sur les gros
+mouvements) et dernière série à l'échec sur les tirages et l'isolation. Les abdos sont travaillés deux fois (vendredi et samedi, avec des exercices
 différents), il n'y a jamais deux jours de jambes de suite, et les courses comptent comme de la
 récupération active. Chaque séance de salle se termine par la marche inclinée (pente 6 %,
 4,5 km/h). Chaque jour détaille ses exercices, ses séries, ses séries à l'échec et ses
