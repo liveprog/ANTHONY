@@ -24,30 +24,32 @@ ce contexte (dev local, hébergement statique), elle retombe sur le `localStorag
 
 ## Les quatre onglets
 
-**Programme** — **4 séances de salle**, **2 courses** faciles et **1 jour de repos**. Lundi repos,
-**Haut du corps** le mardi (≈ 30-35 min, lourd : développé militaire + tirage vertical, développé
-couché + tirage horizontal, élévations latérales + tirage à la corde, curl aux haltères + extensions
-triceps, tout enchaîné par paires), **Bas du corps** le mercredi (≈ 30-35 min, uniquement les
-jambes : squat ou presse + mollets, soulevé de terre roumain, fentes, curl des ischios), petit
-footing de 20 min le jeudi, **Tractions · Dips · Abdos** le vendredi (≈ 55 min : tractions et dips
-assistés, descentes lentes, élévations latérales + curl à la barre, relevés de jambes + crunch),
-petit **Full body** le samedi (≈ 30 min : squat ou presse, développé incliné, tirage horizontal,
-planche), et footing de 25 min le dimanche. Les séances du mardi et du mercredi sont courtes pour laisser le temps de faire la marche
-inclinée derrière, sans rien perdre : elles gardent tous leurs exercices et presque toutes leurs
-séries (24 et 15, contre 25 et 15 dans une séance complète), le gain de temps venant des
-enchaînements par paires, où le repos est partagé. Charges lourdes (6-8 répétitions sur les gros
-mouvements) et dernière série à l'échec sur les tirages et l'isolation. Les abdos sont travaillés deux fois (vendredi et samedi, avec des exercices
-différents), il n'y a jamais deux jours de jambes de suite, et les courses comptent comme de la
-récupération active. Chaque séance de salle se termine par la marche inclinée (pente 6 %,
-4,5 km/h). Chaque jour détaille ses exercices, ses séries, ses séries à l'échec et ses
-enchaînements (deux exercices sans repos entre les deux). La liste « La semaine » affiche les
-muscles travaillés chaque jour.
+**Programme** — la salle n'est possible que du **jeudi au dimanche** : **4 séances**, deux d'entre
+elles précédées d'un footing facile, puis **3 jours de repos** (lundi, mardi, mercredi).
+**Jeudi** : footing de 20 min puis **Haut du corps** (≈ 30-35 min, lourd : développé militaire +
+tirage vertical, développé couché + tirage horizontal, élévations latérales + tirage à la corde,
+curl aux haltères + extensions triceps, tout enchaîné par paires). **Vendredi** : **Bas du corps**
+(≈ 30-35 min, uniquement les jambes : squat ou presse + mollets, soulevé de terre roumain, fentes +
+curl des ischios). **Samedi** : **Tractions · Dips · Abdos** (≈ 55 min : tractions et dips
+assistés, descentes lentes, élévations latérales + curl à la barre, relevés de jambes + crunch).
+**Dimanche** : footing de 25 min puis petit **Full body** (≈ 30 min : squat ou presse, développé
+incliné, tirage horizontal, planche).
+
+L'ordre alterne haut et bas du corps : les jambes ne tombent jamais deux jours de suite, les deux
+séances lourdes de haut du corps (jeudi, samedi) sont séparées de 48 h, et le seul enchaînement de
+haut du corps est samedi → dimanche, avec le full body léger. Les séances gardent presque toutes
+leurs séries (24, 15, 26 et 12) grâce aux enchaînements par paires, où le repos est partagé, avec des
+charges lourdes (6-8 répétitions sur les gros mouvements) et la dernière série à l'échec sur les
+tirages et l'isolation. Chaque séance se termine par la marche inclinée (pente 6 %, 4,5 km/h). Les
+abdos sont travaillés deux fois (samedi et dimanche, avec des exercices différents). La liste « La
+semaine » affiche les muscles travaillés chaque jour.
 
 Dans `src/data/programme.ts`, `id` est l'identité stable d'une séance et `jour` le jour où elle a
-lieu : le haut du corps (identifiant `lundi`) se fait le mardi, le bas du corps (`mardi`) le mercredi
-et le full body (`dimanche`) le samedi. Les séances ont été déplacées sans renommer leurs
-identifiants, pour que leurs temps de repos personnalisés, la séance en cours et les exceptions les
-suivent. Les réglages d'un exercice qui n'est plus dans une séance ne s'affichent plus.
+lieu : le haut du corps (identifiant `lundi`) se fait le jeudi, le bas du corps (`mardi`) le vendredi
+et tractions · dips · abdos (`tractions-vendredi`) le samedi. Les séances ont été déplacées sans
+renommer leurs identifiants, pour que leurs temps de repos personnalisés, la séance en cours et les
+exceptions les suivent. Les réglages d'un exercice qui n'est plus dans une séance ne s'affichent
+plus.
 
 Un jour peut être remplacé à une date précise : `EXCEPTIONS` associe une date à une séance du
 programme (la liste est vide pour l'instant), `jourDuJour()` la respecte, et l'accueil affiche la

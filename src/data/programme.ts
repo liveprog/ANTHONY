@@ -38,16 +38,19 @@ export type Jour = {
 }
 
 /**
- * La semaine va du lundi au dimanche (c'est l'ordre d'affichage) : 4 séances de salle (haut du corps
- * le mardi, bas du corps le mercredi, tractions · dips · abdos le vendredi, petit full body le
- * samedi), 2 courses faciles (jeudi et dimanche) et 1 jour de repos (lundi).
+ * La semaine va du lundi au dimanche (c'est l'ordre d'affichage). La salle n'est possible que du
+ * jeudi au dimanche : 4 séances de salle, deux d'entre elles précédées d'un footing facile (jeudi
+ * et dimanche), puis 3 jours de repos (lundi, mardi, mercredi).
+ *
+ * Ordre choisi : haut du corps (jeudi), bas du corps (vendredi), tractions · dips · abdos (samedi),
+ * full body (dimanche). Il alterne haut et bas : les jambes ne tombent jamais deux jours de suite et
+ * les deux séances lourdes de haut du corps sont séparées de 48 h.
  *
  * `id` est l'identité STABLE d'une séance : les temps de repos personnalisés (clé « id:exercice »),
  * la séance en cours et les exceptions datées s'y rattachent. `jour` est le jour où elle a lieu.
- * Les deux ne coïncident plus, volontairement : la séance « lundi » est le haut du corps (mardi),
- * « mardi » le bas du corps (mercredi), « dimanche » le full body (samedi). Les jours de repos, les
- * courses et la séance du vendredi ont leur propre identifiant. On déplace les séances d'un jour à
- * l'autre sans renommer leurs identifiants, pour que rien ne soit orphelin.
+ * Les deux ne coïncident plus toujours, volontairement : la séance « lundi » est le haut du corps
+ * (jeudi), « mardi » le bas du corps (vendredi), « tractions-vendredi » se fait le samedi. On déplace
+ * les séances d'un jour à l'autre sans renommer leurs identifiants, pour que rien ne soit orphelin.
  * Ne pas « corriger » les identifiants.
  */
 export const SEMAINE: Jour[] = [
@@ -56,21 +59,53 @@ export const SEMAINE: Jour[] = [
     jour: 'Lundi',
     titre: 'Repos complet',
     type: 'repos',
-    resume: 'Récupération après le dimanche',
+    resume: 'Récupération',
     court: 'repos',
     blocs: [],
-    note: 'Repos complet. Après la course et la séance full body du dimanche, c’est le jour où tu récupères : les jambes sont reposées pour mardi.'
+    note: 'Repos complet : pas de salle en début de semaine. Tes quatre séances sont concentrées du jeudi au dimanche, et la récupération de ces trois jours fait partie du programme.'
+  },
+  {
+    id: 'repos-mardi',
+    jour: 'Mardi',
+    titre: 'Repos complet',
+    type: 'repos',
+    resume: 'Récupération',
+    court: 'repos',
+    blocs: [],
+    note: 'Repos complet : pas de salle en début de semaine. Ces trois jours de récupération préparent la semaine de jeudi à dimanche.'
+  },
+  {
+    id: 'repos-mercredi',
+    jour: 'Mercredi',
+    titre: 'Repos complet',
+    type: 'repos',
+    resume: 'Récupération',
+    court: 'repos',
+    blocs: [],
+    note: 'Repos complet : pas de salle en début de semaine. Ces trois jours de récupération préparent la semaine de jeudi à dimanche.'
   },
   {
     id: 'lundi',
-    jour: 'Mardi',
-    titre: 'Haut du corps',
+    jour: 'Jeudi',
+    titre: 'Course · Haut du corps',
     type: 'seance',
-    resume: 'Épaules, dos, pecs, biceps, triceps',
+    resume: 'Footing, puis épaules, dos, pecs, bras',
     court: 'haut du corps',
-    duree: '≈ 30-35 min',
-    note: 'Presque autant de séries qu’une séance complète (24), en deux fois moins de temps : les exercices sont enchaînés par paires, donc le repos est partagé. Charge lourde ; dernière série à l’échec sur les tirages et l’isolation ; sur le développé couché et le militaire, tu gardes 1 à 2 répétitions en réserve. Une série d’échauffement légère avant le premier gros exercice.',
+    duree: '20 min + 30-35 min',
+    note: 'Footing court dehors, puis la séance. Presque autant de séries qu’une séance complète (24), en deux fois moins de temps : les exercices sont enchaînés par paires, donc le repos est partagé. Charge lourde ; dernière série à l’échec sur les tirages et l’isolation ; sur le développé couché et le militaire, tu gardes 1 à 2 répétitions en réserve. Une série d’échauffement légère avant le premier gros exercice.',
     blocs: [
+      {
+        titre: 'Matin · Course',
+        exercices: [
+          {
+            exerciceId: 'footing',
+            series: 1,
+            reps: '20 min',
+            reposSecondes: 0,
+            note: 'dehors, allure facile, tu peux parler en courant',
+          },
+        ],
+      },
       {
         titre: 'Enchaînement 1 · Épaules et dos',
         enchainement: true,
@@ -153,7 +188,7 @@ export const SEMAINE: Jour[] = [
   },
   {
     id: 'mardi',
-    jour: 'Mercredi',
+    jour: 'Vendredi',
     titre: 'Bas du corps',
     type: 'seance',
     resume: 'Jambes uniquement',
@@ -217,32 +252,8 @@ export const SEMAINE: Jour[] = [
     ],
   },
   {
-    id: 'course-jeudi',
-    jour: 'Jeudi',
-    titre: 'Petit footing',
-    type: 'course',
-    resume: 'Course facile, récupération active',
-    court: 'course',
-    duree: '≈ 20 min',
-    note: 'Footing court et facile, dehors. Il compte comme de la récupération active, pas comme une séance : pas de haut du corps ce jour-là.',
-    blocs: [
-      {
-        titre: 'Course',
-        exercices: [
-          {
-            exerciceId: 'footing',
-            series: 1,
-            reps: '20 min',
-            reposSecondes: 0,
-            note: 'allure facile, tu peux parler en courant',
-          },
-        ],
-      },
-    ],
-  },
-  {
     id: 'tractions-vendredi',
-    jour: 'Vendredi',
+    jour: 'Samedi',
     titre: 'Tractions · Dips · Abdos',
     type: 'seance',
     resume: 'Tractions, dips, épaules, biceps, abdos',
@@ -324,14 +335,26 @@ export const SEMAINE: Jour[] = [
   },
   {
     id: 'dimanche',
-    jour: 'Samedi',
-    titre: 'Full body',
+    jour: 'Dimanche',
+    titre: 'Course · Full body',
     type: 'seance',
-    resume: 'Jambes, haut du corps, abdos',
+    resume: 'Footing + jambes, haut du corps, abdos',
     court: 'full body',
-    duree: '≈ 30 min',
-    note: 'Séance courte : les gros mouvements de tout le corps. Les abdos de la veille (relevés, crunch) laissent la place à la planche, pour ne pas refaire les mêmes.',
+    duree: '25 min + 30 min',
+    note: 'Footing le matin, puis une séance courte : les gros mouvements de tout le corps. Les abdos de la veille (relevés, crunch) laissent la place à la planche, pour ne pas refaire les mêmes.',
     blocs: [
+      {
+        titre: 'Matin · Course',
+        exercices: [
+          {
+            exerciceId: 'footing',
+            series: 1,
+            reps: '25 min',
+            reposSecondes: 0,
+            note: 'dehors, allure facile, tu peux parler en courant',
+          },
+        ],
+      },
       {
         exercices: [
           {
@@ -339,7 +362,7 @@ export const SEMAINE: Jour[] = [
             series: 3,
             reps: '10-12',
             reposSecondes: 120,
-            note: 'presse conseillée : les jambes lourdes sont mercredi',
+            note: 'presse conseillée : les jambes lourdes sont vendredi',
           },
           {
             exerciceId: 'chest-press-incline-machine',
@@ -363,30 +386,6 @@ export const SEMAINE: Jour[] = [
             reps: '30 min',
             reposSecondes: 0,
             note: 'pente 6 %, 4,5 km/h',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: 'course-dimanche',
-    jour: 'Dimanche',
-    titre: 'Course',
-    type: 'course',
-    resume: 'Footing à allure facile',
-    court: 'course',
-    duree: '≈ 25 min',
-    note: 'Footing dehors, allure facile. Il compte comme de la récupération active, pas comme une séance.',
-    blocs: [
-      {
-        titre: 'Course',
-        exercices: [
-          {
-            exerciceId: 'footing',
-            series: 1,
-            reps: '25 min',
-            reposSecondes: 0,
-            note: 'dehors, allure facile, tu peux parler en courant',
           },
         ],
       },
