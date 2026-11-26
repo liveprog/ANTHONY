@@ -24,16 +24,17 @@ ce contexte (dev local, hébergement statique), elle retombe sur le `localStorag
 
 ## Les quatre onglets
 
-**Programme** — la salle n'est possible que du **jeudi au dimanche** : **4 séances**, deux d'entre
-elles précédées d'un footing facile, puis **3 jours de repos** (lundi, mardi, mercredi).
-**Jeudi** : footing de 20 min puis **Haut du corps** (≈ 30-35 min, lourd : développé militaire +
-tirage vertical, développé couché + tirage horizontal, élévations latérales + tirage à la corde,
-curl aux haltères + extensions triceps, tout enchaîné par paires). **Vendredi** : **Bas du corps**
-(≈ 30-35 min, uniquement les jambes : squat ou presse + mollets, soulevé de terre roumain, fentes +
-curl des ischios). **Samedi** : **Tractions · Dips · Abdos** (≈ 55 min : tractions et dips
-assistés, descentes lentes, élévations latérales + curl à la barre, relevés de jambes + crunch).
-**Dimanche** : footing de 25 min puis petit **Full body** (≈ 30 min : squat ou presse, développé
-incliné, tirage horizontal, planche).
+**Programme** — la salle n'est possible que du **jeudi au dimanche**, et le footing ne se fait
+jamais le même jour que la salle : **4 séances de salle**, **2 footings** faciles sur les jours sans
+salle et **1 jour de repos complet**. **Lundi** : footing de 25 min (facultatif). **Mardi** : repos.
+**Mercredi** : petit footing de 20 min (facultatif). **Jeudi** : **Haut du corps** (≈ 30-35 min,
+lourd : développé militaire + tirage vertical, développé couché + tirage horizontal, élévations
+latérales + tirage à la corde, curl aux haltères + extensions triceps, tout enchaîné par paires).
+**Vendredi** : **Bas du corps** (≈ 30-35 min, uniquement les jambes : squat ou presse + mollets,
+soulevé de terre roumain, fentes + curl des ischios). **Samedi** : **Tractions · Dips · Abdos**
+(≈ 55 min : tractions et dips assistés, descentes lentes, élévations latérales + curl à la barre,
+relevés de jambes + crunch). **Dimanche** : petit **Full body** (≈ 30 min : squat ou presse,
+développé incliné, tirage horizontal, planche).
 
 L'ordre alterne haut et bas du corps : les jambes ne tombent jamais deux jours de suite, les deux
 séances lourdes de haut du corps (jeudi, samedi) sont séparées de 48 h, et le seul enchaînement de

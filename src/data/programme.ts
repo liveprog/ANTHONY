@@ -39,12 +39,13 @@ export type Jour = {
 
 /**
  * La semaine va du lundi au dimanche (c'est l'ordre d'affichage). La salle n'est possible que du
- * jeudi au dimanche : 4 séances de salle, deux d'entre elles précédées d'un footing facile (jeudi
- * et dimanche), puis 3 jours de repos (lundi, mardi, mercredi).
+ * jeudi au dimanche, et le footing ne peut pas se faire le même jour que la salle : 4 séances de
+ * salle (jeudi à dimanche), 2 footings faciles sur les jours sans salle (lundi et mercredi) et un
+ * jour de repos complet (mardi).
  *
- * Ordre choisi : haut du corps (jeudi), bas du corps (vendredi), tractions · dips · abdos (samedi),
- * full body (dimanche). Il alterne haut et bas : les jambes ne tombent jamais deux jours de suite et
- * les deux séances lourdes de haut du corps sont séparées de 48 h.
+ * Ordre des séances : haut du corps (jeudi), bas du corps (vendredi), tractions · dips · abdos
+ * (samedi), full body (dimanche). Il alterne haut et bas : les jambes ne tombent jamais deux jours
+ * de suite et les deux séances lourdes de haut du corps sont séparées de 48 h.
  *
  * `id` est l'identité STABLE d'une séance : les temps de repos personnalisés (clé « id:exercice »),
  * la séance en cours et les exceptions datées s'y rattachent. `jour` est le jour où elle a lieu.
@@ -55,14 +56,28 @@ export type Jour = {
  */
 export const SEMAINE: Jour[] = [
   {
-    id: 'repos-lundi',
+    id: 'course-lundi',
     jour: 'Lundi',
-    titre: 'Repos complet',
-    type: 'repos',
-    resume: 'Récupération',
-    court: 'repos',
-    blocs: [],
-    note: 'Repos complet : pas de salle en début de semaine. Tes quatre séances sont concentrées du jeudi au dimanche, et la récupération de ces trois jours fait partie du programme.'
+    titre: 'Footing',
+    type: 'course',
+    resume: 'Course facile, récupération active',
+    court: 'course',
+    duree: '≈ 25 min',
+    note: 'Footing facile dehors, sans salle ce jour-là. Facultatif si tu finis trop tard : il compte comme de la récupération active, pas comme une séance.',
+    blocs: [
+      {
+        titre: 'Course',
+        exercices: [
+          {
+            exerciceId: 'footing',
+            series: 1,
+            reps: '25 min',
+            reposSecondes: 0,
+            note: 'allure facile, tu peux parler en courant',
+          },
+        ],
+      },
+    ],
   },
   {
     id: 'repos-mardi',
@@ -72,40 +87,42 @@ export const SEMAINE: Jour[] = [
     resume: 'Récupération',
     court: 'repos',
     blocs: [],
-    note: 'Repos complet : pas de salle en début de semaine. Ces trois jours de récupération préparent la semaine de jeudi à dimanche.'
+    note: 'Repos complet : le seul jour sans rien, entre les deux footings. Pas de salle en début de semaine, la récupération fait partie du programme.'
   },
   {
-    id: 'repos-mercredi',
+    id: 'course-mercredi',
     jour: 'Mercredi',
-    titre: 'Repos complet',
-    type: 'repos',
-    resume: 'Récupération',
-    court: 'repos',
-    blocs: [],
-    note: 'Repos complet : pas de salle en début de semaine. Ces trois jours de récupération préparent la semaine de jeudi à dimanche.'
-  },
-  {
-    id: 'lundi',
-    jour: 'Jeudi',
-    titre: 'Course · Haut du corps',
-    type: 'seance',
-    resume: 'Footing, puis épaules, dos, pecs, bras',
-    court: 'haut du corps',
-    duree: '20 min + 30-35 min',
-    note: 'Footing court dehors, puis la séance. Presque autant de séries qu’une séance complète (24), en deux fois moins de temps : les exercices sont enchaînés par paires, donc le repos est partagé. Charge lourde ; dernière série à l’échec sur les tirages et l’isolation ; sur le développé couché et le militaire, tu gardes 1 à 2 répétitions en réserve. Une série d’échauffement légère avant le premier gros exercice.',
+    titre: 'Petit footing',
+    type: 'course',
+    resume: 'Course facile, récupération active',
+    court: 'course',
+    duree: '≈ 20 min',
+    note: 'Footing facile dehors, sans salle ce jour-là. Facultatif si tu finis trop tard : il compte comme de la récupération active, pas comme une séance.',
     blocs: [
       {
-        titre: 'Matin · Course',
+        titre: 'Course',
         exercices: [
           {
             exerciceId: 'footing',
             series: 1,
             reps: '20 min',
             reposSecondes: 0,
-            note: 'dehors, allure facile, tu peux parler en courant',
+            note: 'allure facile, tu peux parler en courant',
           },
         ],
       },
+    ],
+  },
+  {
+    id: 'lundi',
+    jour: 'Jeudi',
+    titre: 'Haut du corps',
+    type: 'seance',
+    resume: 'Épaules, dos, pecs, biceps, triceps',
+    court: 'haut du corps',
+    duree: '≈ 30-35 min',
+    note: 'Presque autant de séries qu’une séance complète (24), en deux fois moins de temps : les exercices sont enchaînés par paires, donc le repos est partagé. Charge lourde ; dernière série à l’échec sur les tirages et l’isolation ; sur le développé couché et le militaire, tu gardes 1 à 2 répétitions en réserve. Une série d’échauffement légère avant le premier gros exercice.',
+    blocs: [
       {
         titre: 'Enchaînement 1 · Épaules et dos',
         enchainement: true,
@@ -336,25 +353,13 @@ export const SEMAINE: Jour[] = [
   {
     id: 'dimanche',
     jour: 'Dimanche',
-    titre: 'Course · Full body',
+    titre: 'Full body',
     type: 'seance',
-    resume: 'Footing + jambes, haut du corps, abdos',
+    resume: 'Jambes, haut du corps, abdos',
     court: 'full body',
-    duree: '25 min + 30 min',
-    note: 'Footing le matin, puis une séance courte : les gros mouvements de tout le corps. Les abdos de la veille (relevés, crunch) laissent la place à la planche, pour ne pas refaire les mêmes.',
+    duree: '≈ 30 min',
+    note: 'Séance courte : les gros mouvements de tout le corps. Les abdos de la veille (relevés, crunch) laissent la place à la planche, pour ne pas refaire les mêmes.',
     blocs: [
-      {
-        titre: 'Matin · Course',
-        exercices: [
-          {
-            exerciceId: 'footing',
-            series: 1,
-            reps: '25 min',
-            reposSecondes: 0,
-            note: 'dehors, allure facile, tu peux parler en courant',
-          },
-        ],
-      },
       {
         exercices: [
           {
