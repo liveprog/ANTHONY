@@ -24,17 +24,16 @@ ce contexte (dev local, hébergement statique), elle retombe sur le `localStorag
 
 ## Les quatre onglets
 
-**Programme** — ni la salle ni la course ne sont possibles du lundi au mercredi : **4 séances de
-salle du jeudi au dimanche** et **3 jours de repos complet** (lundi, mardi, mercredi). **Jeudi** :
-**Haut du corps** (≈ 30-35 min, lourd : développé militaire + tirage vertical, développé couché +
-tirage horizontal, élévations latérales + tirage à la corde, curl aux haltères + extensions triceps,
-tout enchaîné par paires). **Vendredi** : **Bas du corps** (≈ 30-35 min, uniquement les jambes :
-squat ou presse + mollets, soulevé de terre roumain, fentes + curl des ischios). **Samedi** :
-**Tractions · Dips · Abdos** (≈ 55 min : tractions et dips assistés, descentes lentes, élévations
-latérales + curl à la barre, relevés de jambes + crunch). **Dimanche** : petit **Full body**
-(≈ 30 min : squat ou presse, développé incliné, tirage horizontal, planche). Il n'y a plus de
-footing : on ne court pas juste avant la salle, et il n'y a pas de jour libre ; le cardio vient de la
-marche inclinée qui termine chaque séance.
+**Programme** — la salle n'est possible que du **jeudi au dimanche** ; lundi et mercredi sont
+impossibles même pour courir. **Lundi** : repos. **Mardi** : footing facile de 25 min, le seul de la
+semaine, entre deux jours de repos. **Mercredi** : repos. **Jeudi** : **Haut du corps** (≈ 30-35 min,
+lourd : développé militaire + tirage vertical, développé couché + tirage horizontal, élévations
+latérales + tirage à la corde, curl aux haltères + extensions triceps, tout enchaîné par paires).
+**Vendredi** : **Bas du corps** (≈ 30-35 min, uniquement les jambes : squat ou presse + mollets,
+soulevé de terre roumain, fentes + curl des ischios). **Samedi** : **Tractions · Dips · Abdos**
+(≈ 55 min : tractions et dips assistés, descentes lentes, élévations latérales + curl à la barre,
+relevés de jambes + crunch). **Dimanche** : petit **Full body** (≈ 30 min : squat ou presse,
+développé incliné, tirage horizontal, planche). On ne court jamais le jour d'une séance de salle.
 
 L'ordre alterne haut et bas du corps : les jambes ne tombent jamais deux jours de suite, les deux
 séances lourdes de haut du corps (jeudi, samedi) sont séparées de 48 h, et le seul enchaînement de

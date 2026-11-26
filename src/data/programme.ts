@@ -38,10 +38,11 @@ export type Jour = {
 }
 
 /**
- * La semaine va du lundi au dimanche (c'est l'ordre d'affichage). Ni la salle ni la course ne sont
- * possibles du lundi au mercredi, et on ne court pas juste avant la salle : 4 séances de salle du
- * jeudi au dimanche, 3 jours de repos complet (lundi, mardi, mercredi). Le cardio vient de la marche
- * inclinée qui termine chaque séance.
+ * La semaine va du lundi au dimanche (c'est l'ordre d'affichage). La salle n'est possible que du
+ * jeudi au dimanche ; lundi et mercredi sont impossibles même pour courir ; on ne court pas juste
+ * avant la salle. D'où : 4 séances de salle (jeudi à dimanche), un seul footing facile le mardi, entre
+ * deux jours de repos complet (lundi et mercredi). Le cardio vient aussi de la marche inclinée qui
+ * termine chaque séance.
  *
  * Ordre des séances : haut du corps (jeudi), bas du corps (vendredi), tractions · dips · abdos
  * (samedi), full body (dimanche). Il alterne haut et bas : les jambes ne tombent jamais deux jours
@@ -63,17 +64,31 @@ export const SEMAINE: Jour[] = [
     resume: 'Récupération',
     court: 'repos',
     blocs: [],
-    note: 'Repos complet : ni salle ni course en début de semaine. Tes quatre séances sont concentrées du jeudi au dimanche, et la récupération de ces trois jours fait partie du programme.'
+    note: 'Repos complet : ni salle ni course ce jour-là. Tes quatre séances sont concentrées du jeudi au dimanche, et la récupération de ces trois jours fait partie du programme.'
   },
   {
-    id: 'repos-mardi',
+    id: 'course-mardi',
     jour: 'Mardi',
-    titre: 'Repos complet',
-    type: 'repos',
-    resume: 'Récupération',
-    court: 'repos',
-    blocs: [],
-    note: 'Repos complet : ni salle ni course en début de semaine. Ces trois jours de récupération préparent la semaine de jeudi à dimanche.'
+    titre: 'Footing',
+    type: 'course',
+    resume: 'Course facile, récupération active',
+    court: 'course',
+    duree: '≈ 25 min',
+    note: 'Footing facile dehors, sans salle ce jour-là. Il tombe entre deux jours de repos et compte comme de la récupération active, pas comme une séance.',
+    blocs: [
+      {
+        titre: 'Course',
+        exercices: [
+          {
+            exerciceId: 'footing',
+            series: 1,
+            reps: '25 min',
+            reposSecondes: 0,
+            note: 'allure facile, tu peux parler en courant',
+          },
+        ],
+      },
+    ],
   },
   {
     id: 'repos-mercredi',
@@ -83,7 +98,7 @@ export const SEMAINE: Jour[] = [
     resume: 'Récupération',
     court: 'repos',
     blocs: [],
-    note: 'Repos complet : ni salle ni course en début de semaine. Ces trois jours de récupération préparent la semaine de jeudi à dimanche.'
+    note: 'Repos complet : ni salle ni course ce jour-là. Ces trois jours de récupération préparent la semaine de jeudi à dimanche.'
   },
   {
     id: 'lundi',
