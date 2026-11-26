@@ -38,10 +38,10 @@ export type Jour = {
 }
 
 /**
- * La semaine va du lundi au dimanche (c'est l'ordre d'affichage). La salle n'est possible que du
- * jeudi au dimanche, et le footing ne peut pas se faire le même jour que la salle : 4 séances de
- * salle (jeudi à dimanche), 2 footings faciles sur les jours sans salle (lundi et mercredi) et un
- * jour de repos complet (mardi).
+ * La semaine va du lundi au dimanche (c'est l'ordre d'affichage). Ni la salle ni la course ne sont
+ * possibles du lundi au mercredi, et on ne court pas juste avant la salle : 4 séances de salle du
+ * jeudi au dimanche, 3 jours de repos complet (lundi, mardi, mercredi). Le cardio vient de la marche
+ * inclinée qui termine chaque séance.
  *
  * Ordre des séances : haut du corps (jeudi), bas du corps (vendredi), tractions · dips · abdos
  * (samedi), full body (dimanche). Il alterne haut et bas : les jambes ne tombent jamais deux jours
@@ -56,28 +56,14 @@ export type Jour = {
  */
 export const SEMAINE: Jour[] = [
   {
-    id: 'course-lundi',
+    id: 'repos-lundi',
     jour: 'Lundi',
-    titre: 'Footing',
-    type: 'course',
-    resume: 'Course facile, récupération active',
-    court: 'course',
-    duree: '≈ 25 min',
-    note: 'Footing facile dehors, sans salle ce jour-là. Facultatif si tu finis trop tard : il compte comme de la récupération active, pas comme une séance.',
-    blocs: [
-      {
-        titre: 'Course',
-        exercices: [
-          {
-            exerciceId: 'footing',
-            series: 1,
-            reps: '25 min',
-            reposSecondes: 0,
-            note: 'allure facile, tu peux parler en courant',
-          },
-        ],
-      },
-    ],
+    titre: 'Repos complet',
+    type: 'repos',
+    resume: 'Récupération',
+    court: 'repos',
+    blocs: [],
+    note: 'Repos complet : ni salle ni course en début de semaine. Tes quatre séances sont concentrées du jeudi au dimanche, et la récupération de ces trois jours fait partie du programme.'
   },
   {
     id: 'repos-mardi',
@@ -87,31 +73,17 @@ export const SEMAINE: Jour[] = [
     resume: 'Récupération',
     court: 'repos',
     blocs: [],
-    note: 'Repos complet : le seul jour sans rien, entre les deux footings. Pas de salle en début de semaine, la récupération fait partie du programme.'
+    note: 'Repos complet : ni salle ni course en début de semaine. Ces trois jours de récupération préparent la semaine de jeudi à dimanche.'
   },
   {
-    id: 'course-mercredi',
+    id: 'repos-mercredi',
     jour: 'Mercredi',
-    titre: 'Petit footing',
-    type: 'course',
-    resume: 'Course facile, récupération active',
-    court: 'course',
-    duree: '≈ 20 min',
-    note: 'Footing facile dehors, sans salle ce jour-là. Facultatif si tu finis trop tard : il compte comme de la récupération active, pas comme une séance.',
-    blocs: [
-      {
-        titre: 'Course',
-        exercices: [
-          {
-            exerciceId: 'footing',
-            series: 1,
-            reps: '20 min',
-            reposSecondes: 0,
-            note: 'allure facile, tu peux parler en courant',
-          },
-        ],
-      },
-    ],
+    titre: 'Repos complet',
+    type: 'repos',
+    resume: 'Récupération',
+    court: 'repos',
+    blocs: [],
+    note: 'Repos complet : ni salle ni course en début de semaine. Ces trois jours de récupération préparent la semaine de jeudi à dimanche.'
   },
   {
     id: 'lundi',
