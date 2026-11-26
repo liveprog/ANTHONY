@@ -24,16 +24,17 @@ ce contexte (dev local, hébergement statique), elle retombe sur le `localStorag
 
 ## Les quatre onglets
 
-**Programme** — la salle n'est possible que du **jeudi au dimanche** ; lundi et mercredi sont
-impossibles même pour courir. **Lundi** : repos. **Mardi** : footing facile de 25 min, le seul de la
-semaine, entre deux jours de repos. **Mercredi** : repos. **Jeudi** : **Haut du corps** (≈ 30-35 min,
-lourd : développé militaire + tirage vertical, développé couché + tirage horizontal, élévations
-latérales + tirage à la corde, curl aux haltères + extensions triceps, tout enchaîné par paires).
-**Vendredi** : **Bas du corps** (≈ 30-35 min, uniquement les jambes : squat ou presse + mollets,
-soulevé de terre roumain, fentes + curl des ischios). **Samedi** : **Tractions · Dips · Abdos**
-(≈ 55 min : tractions et dips assistés, descentes lentes, élévations latérales + curl à la barre,
-relevés de jambes + crunch). **Dimanche** : petit **Full body** (≈ 30 min : squat ou presse,
-développé incliné, tirage horizontal, planche). On ne court jamais le jour d'une séance de salle.
+**Programme** — la salle n'est possible que du **jeudi au dimanche** ; lundi, mardi et mercredi sont
+des jours de **repos complet**. On ne court jamais *avant* la salle, mais on peut courir *après* :
+le samedi et le dimanche, un footing facile clôt la journée, le soir, après la séance et sa marche
+inclinée. **Jeudi** : **Haut du corps** (≈ 30-35 min, lourd : développé militaire + tirage vertical,
+développé couché + tirage horizontal, élévations latérales + tirage à la corde, curl aux haltères +
+extensions triceps, tout enchaîné par paires). **Vendredi** : **Bas du corps** (≈ 30-35 min,
+uniquement les jambes : squat ou presse + mollets, soulevé de terre roumain, fentes + curl des
+ischios). **Samedi** : **Tractions · Dips · Abdos** (≈ 55 min : tractions et dips assistés, descentes
+lentes, élévations latérales + curl à la barre, relevés de jambes + crunch), puis footing de 20 min
+le soir. **Dimanche** : petit **Full body** (≈ 30 min : squat ou presse, développé incliné, tirage
+horizontal, planche), puis footing de 25 min le soir.
 
 L'ordre alterne haut et bas du corps : les jambes ne tombent jamais deux jours de suite, les deux
 séances lourdes de haut du corps (jeudi, samedi) sont séparées de 48 h, et le seul enchaînement de

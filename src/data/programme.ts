@@ -39,10 +39,9 @@ export type Jour = {
 
 /**
  * La semaine va du lundi au dimanche (c'est l'ordre d'affichage). La salle n'est possible que du
- * jeudi au dimanche ; lundi et mercredi sont impossibles même pour courir ; on ne court pas juste
- * avant la salle. D'où : 4 séances de salle (jeudi à dimanche), un seul footing facile le mardi, entre
- * deux jours de repos complet (lundi et mercredi). Le cardio vient aussi de la marche inclinée qui
- * termine chaque séance.
+ * jeudi au dimanche ; lundi, mardi et mercredi sont des jours de repos complet. On ne court jamais
+ * AVANT la salle, mais on peut courir juste APRÈS : le samedi et le dimanche, un footing facile
+ * clôt la journée, le soir, après la séance et sa marche inclinée.
  *
  * Ordre des séances : haut du corps (jeudi), bas du corps (vendredi), tractions · dips · abdos
  * (samedi), full body (dimanche). Il alterne haut et bas : les jambes ne tombent jamais deux jours
@@ -67,28 +66,14 @@ export const SEMAINE: Jour[] = [
     note: 'Repos complet : ni salle ni course ce jour-là. Tes quatre séances sont concentrées du jeudi au dimanche, et la récupération de ces trois jours fait partie du programme.'
   },
   {
-    id: 'course-mardi',
+    id: 'repos-mardi',
     jour: 'Mardi',
-    titre: 'Footing',
-    type: 'course',
-    resume: 'Course facile, récupération active',
-    court: 'course',
-    duree: '≈ 25 min',
-    note: 'Footing facile dehors, sans salle ce jour-là. Il tombe entre deux jours de repos et compte comme de la récupération active, pas comme une séance.',
-    blocs: [
-      {
-        titre: 'Course',
-        exercices: [
-          {
-            exerciceId: 'footing',
-            series: 1,
-            reps: '25 min',
-            reposSecondes: 0,
-            note: 'allure facile, tu peux parler en courant',
-          },
-        ],
-      },
-    ],
+    titre: 'Repos complet',
+    type: 'repos',
+    resume: 'Récupération',
+    court: 'repos',
+    blocs: [],
+    note: 'Repos complet : ni salle ni course ce jour-là. Ces trois jours de récupération préparent la semaine de jeudi à dimanche.'
   },
   {
     id: 'repos-mercredi',
@@ -260,10 +245,10 @@ export const SEMAINE: Jour[] = [
     jour: 'Samedi',
     titre: 'Tractions · Dips · Abdos',
     type: 'seance',
-    resume: 'Tractions, dips, épaules, biceps, abdos',
+    resume: 'Tractions, dips, biceps, abdos + footing',
     court: 'tractions',
-    duree: '≈ 55 min',
-    note: 'Ta séance pour progresser aux tractions et aux dips (avec de l’aide, puis les descentes lentes), tout en travaillant épaules, biceps et abdos.',
+    duree: '≈ 55 min + 20 min',
+    note: 'Ta séance pour progresser aux tractions et aux dips (avec de l’aide, puis les descentes lentes), tout en travaillant épaules, biceps et abdos. Le soir, un peu après la salle : footing facile de 20 min.',
     blocs: [
       {
         titre: 'Tractions et dips',
@@ -335,6 +320,18 @@ export const SEMAINE: Jour[] = [
           },
         ],
       },
+      {
+        titre: 'Soir · Course',
+        exercices: [
+          {
+            exerciceId: 'footing',
+            series: 1,
+            reps: '20 min',
+            reposSecondes: 0,
+            note: 'le soir, un peu après la salle — allure facile, tu peux parler en courant',
+          },
+        ],
+      },
     ],
   },
   {
@@ -342,10 +339,10 @@ export const SEMAINE: Jour[] = [
     jour: 'Dimanche',
     titre: 'Full body',
     type: 'seance',
-    resume: 'Jambes, haut du corps, abdos',
+    resume: 'Jambes, haut du corps, abdos + footing',
     court: 'full body',
-    duree: '≈ 30 min',
-    note: 'Séance courte : les gros mouvements de tout le corps. Les abdos de la veille (relevés, crunch) laissent la place à la planche, pour ne pas refaire les mêmes.',
+    duree: '≈ 30 min + 25 min',
+    note: 'Séance courte : les gros mouvements de tout le corps. Les abdos de la veille (relevés, crunch) laissent la place à la planche, pour ne pas refaire les mêmes. Le soir, un peu après la salle : footing facile de 25 min.',
     blocs: [
       {
         exercices: [
@@ -378,6 +375,18 @@ export const SEMAINE: Jour[] = [
             reps: '30 min',
             reposSecondes: 0,
             note: 'pente 6 %, 4,5 km/h',
+          },
+        ],
+      },
+      {
+        titre: 'Soir · Course',
+        exercices: [
+          {
+            exerciceId: 'footing',
+            series: 1,
+            reps: '25 min',
+            reposSecondes: 0,
+            note: 'le soir, un peu après la salle — allure facile, tu peux parler en courant',
           },
         ],
       },
