@@ -25,21 +25,24 @@ ce contexte (dev local, hébergement statique), elle retombe sur le `localStorag
 ## Les quatre onglets
 
 **Programme** — la salle n'est possible que du **jeudi au dimanche** ; lundi, mardi et mercredi sont
-des jours de **repos complet**. On ne court jamais *avant* la salle, mais on peut courir *après* :
-le samedi et le dimanche, un footing facile clôt la journée, le soir, après la séance et sa marche
-inclinée. **Jeudi** : **Haut du corps** (≈ 30-35 min, lourd : développé militaire + tirage vertical,
-développé couché + tirage horizontal, élévations latérales + tirage à la corde, curl aux haltères +
-extensions triceps, tout enchaîné par paires). **Vendredi** : **Bas du corps** (≈ 30-35 min,
-uniquement les jambes : squat ou presse + mollets, soulevé de terre roumain, fentes + curl des
-ischios). **Samedi** : **Tractions · Dips · Abdos** (≈ 55 min : tractions et dips assistés, descentes
-lentes, élévations latérales + curl à la barre, relevés de jambes + crunch), puis footing de 20 min
-le soir. **Dimanche** : petit **Full body** (≈ 30 min : squat ou presse, développé incliné, tirage
-horizontal, planche), puis footing de 25 min le soir.
+des jours de **repos complet**. **Jeudi et vendredi sont des séances courtes** (≈ 30-35 min, tout
+enchaîné par paires) ; **samedi et dimanche sont des séances complètes**, car le week-end il y a le
+temps. On ne court jamais *avant* la salle, mais on peut courir *après* : le samedi et le dimanche,
+un footing facile clôt la journée, le soir, après la séance et sa marche inclinée. **Jeudi** :
+**Haut du corps** (lourd : développé militaire + tirage vertical, développé couché + tirage
+horizontal, élévations latérales + tirage à la corde, curl aux haltères + extensions triceps).
+**Vendredi** : **Bas du corps** (uniquement les jambes : squat ou presse + mollets, soulevé de terre
+roumain, fentes + curl des ischios). **Samedi** : **Tractions · Dips · Abdos** (≈ 55 min : tractions
+et dips assistés, descentes lentes, élévations latérales + curl à la barre, relevés de jambes +
+crunch), puis footing de 20 min le soir. **Dimanche** : **Full body complet** (≈ 50 min, repos
+normaux : squat ou presse, développé incliné, tirage horizontal, curl des ischios, mollets, tirage à
+la corde, planche), puis footing de 25 min le soir ; il renforce ce que la semaine travaille peu
+(ischios, mollets, deltoïdes postérieurs).
 
 L'ordre alterne haut et bas du corps : les jambes ne tombent jamais deux jours de suite, les deux
 séances lourdes de haut du corps (jeudi, samedi) sont séparées de 48 h, et le seul enchaînement de
-haut du corps est samedi → dimanche, avec le full body léger. Les séances gardent presque toutes
-leurs séries (24, 15, 26 et 12) grâce aux enchaînements par paires, où le repos est partagé, avec des
+haut du corps est samedi → dimanche. Les séances courtes gardent presque toutes leurs séries (24
+et 15) grâce aux enchaînements par paires, où le repos est partagé, avec des
 charges lourdes (6-8 répétitions sur les gros mouvements) et la dernière série à l'échec sur les
 tirages et l'isolation. Chaque séance se termine par la marche inclinée (pente 6 %, 4,5 km/h). Les
 abdos sont travaillés deux fois (samedi et dimanche, avec des exercices différents). La liste « La

@@ -47,6 +47,9 @@ export type Jour = {
  * (samedi), full body (dimanche). Il alterne haut et bas : les jambes ne tombent jamais deux jours
  * de suite et les deux séances lourdes de haut du corps sont séparées de 48 h.
  *
+ * Durées : jeudi et vendredi sont des séances COURTES (≈ 30 min, tout en paires) ; samedi et dimanche
+ * sont des séances COMPLÈTES, car le week-end il y a le temps : ne pas les raccourcir.
+ *
  * `id` est l'identité STABLE d'une séance : les temps de repos personnalisés (clé « id:exercice »),
  * la séance en cours et les exceptions datées s'y rattachent. `jour` est le jour où elle a lieu.
  * Les deux ne coïncident plus toujours, volontairement : la séance « lundi » est le haut du corps
@@ -341,16 +344,16 @@ export const SEMAINE: Jour[] = [
     type: 'seance',
     resume: 'Jambes, haut du corps, abdos + footing',
     court: 'full body',
-    duree: '≈ 30 min + 25 min',
-    note: 'Séance courte : les gros mouvements de tout le corps. Les abdos de la veille (relevés, crunch) laissent la place à la planche, pour ne pas refaire les mêmes. Le soir, un peu après la salle : footing facile de 25 min.',
+    duree: '≈ 50 min + 25 min',
+    note: 'Séance complète du week-end : pas de paires, des repos normaux. Elle renforce ce que la semaine travaille peu : ischios, mollets et deltoïdes postérieurs. Les abdos de la veille (relevés, crunch) laissent la place à la planche. Tu gardes 1 à 2 répétitions en réserve sur le squat ; dernière série à l’échec sur le curl des ischios et les mollets. Le soir, un peu après la salle : footing facile de 25 min.',
     blocs: [
       {
         exercices: [
           {
             exerciceId: 'squat-ou-presse',
-            series: 3,
-            reps: '10-12',
-            reposSecondes: 120,
+            series: 4,
+            reps: '8-10',
+            reposSecondes: 150,
             note: 'presse conseillée : les jambes lourdes sont vendredi',
           },
           {
@@ -363,8 +366,30 @@ export const SEMAINE: Jour[] = [
         ],
       },
       {
-        titre: 'Abdos',
-        exercices: [{ exerciceId: 'planche', series: 3, reps: '45 s', reposSecondes: 60 }],
+        titre: 'Ischios et mollets',
+        exercices: [
+          {
+            exerciceId: 'leg-curl',
+            series: 3,
+            reps: '10-12',
+            reposSecondes: 60,
+            echec: 'derniere',
+          },
+          {
+            exerciceId: 'mollets-debout',
+            series: 3,
+            reps: '12-15',
+            reposSecondes: 60,
+            echec: 'derniere',
+          },
+        ],
+      },
+      {
+        titre: 'Épaules et abdos',
+        exercices: [
+          { exerciceId: 'face-pull', series: 3, reps: '15', reposSecondes: 45 },
+          { exerciceId: 'planche', series: 3, reps: '45 s', reposSecondes: 60 },
+        ],
       },
       {
         titre: 'Fin de séance',
